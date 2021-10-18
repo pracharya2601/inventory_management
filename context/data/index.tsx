@@ -1,58 +1,78 @@
-import { useReducer, useState } from "react";
-import { dataReducer, initialState } from "./dataReducer";
-import { initializeState, addData, addSingleData, deleteSingleData } from "./dataAction";
-import { datacontext } from "./datacontext";
-import { useRouter } from "next/router";
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { ProductContextType } from '@/interface/Context/ProductContext';
+import { CompanyTypes } from '@/interface/Workplace/Company';
+import { useRouter } from 'next/router';
+import { createContext, useState } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const initialProductContext: ProductContextType = {
+    isDataFetched: false,
+    productList: [],
+    initialData: [],
+    authenticated: false,
+    company: null,
+    productCatagoryList: [],
+    whichDataToFetched: '',
+    setProductList: (items: any[]) => {},
+    setInitialData: (items: any[]) => {},
+    setCompany: (company: any) => {},
+    setAuthenticated: (auth: boolean) => {},
+    productCatagoryURL: (ctName: string) => '',
+    isActiveCatagory: (ctName: string) => false,
+    setProductCatagoryList: (cat: any[]) => {},
+};
+export const productcontext = createContext(initialProductContext);
 
-const DataProvider = ({ children }) => {
-  const [data, setData] = useState({});
-  // const [state, dispatch] = useReducer(dataReducer, initialState);
-  const router = useRouter();
-  const id = router.query.id as string[];
-  const asPath = router.asPath.split('?');
-  const cachedKey = id && encodeURIComponent(asPath[0]);
-  const companyId = id && id[0];
-  const position = id && id[1];
-  const dataType = id && id[2];
-  const page = id && id[3] || 1;
+const DataProvider = ({ children }: { children: JSX.Element }) => {
+    const router = useRouter();
+    const id = router.query.id as string[];
+    const companyId = id && id[0];
+    const position = id && id[1];
+    const dataType = id && id[2];
+    const page = (id && id[3]) || 1;
+    const isDataFetched = companyId && position && dataType && page;
+    const whichDataToFetched = !id ? 'dashboard' : id && id.length === 1 ? 'company' : '';
 
+    const [productList, setProductList] = useState([]);
+    const [company, setCompany] = useState(null);
+    const [authenticated, setAuthenticated] = useState(false);
+    const [productCatagoryList, setProductCatagoryList] = useState([]);
 
-  // const stateInitialize = (data): void => {
-  //   dispatch(initializeState(data))
-  // }
-  // const addDataList = (companyId, dataType, data, pageNumber): void => {
-  //   dispatch(addData(companyId, dataType, data, pageNumber))
-  // }
-  // const addOrUpdateSingleData = (companyId, dataType, data): void => {
-  //   dispatch(addSingleData(companyId, dataType, data))
-  // }
-  // const deleteData = (companyId, dataType, dataId): void => {
-  //   dispatch(deleteSingleData(companyId, dataType, dataId))
-  // }
-  const addDataList = (dataId, passedData) => {
-    console.log("this is runnin inside context")
-    if (data[dataId]) {
-      return;
-    }
-    let newData = data;
-    newData[`${dataId}`] = passedData;
-    setData(newData);
-  }
+    const [initialData, setInitialData] = useState(productList);
 
-  return (
-    <datacontext.Provider
-      value={{
-        data,
-        // stateInitialize,
-        addDataList,
-        // addOrUpdateSingleData,
-        // deleteData,
-      }}
-    >
-      {children}
-    </datacontext.Provider>
-  )
-}
+    const productCatagoryURL = (catagoryName: string): string => {
+        return `http://localhost:3000/dashboards/${companyId}/${position}/${catagoryName}/1`;
+    };
+
+    const isActiveCatagory = (ctName: string): boolean => {
+        return dataType === ctName && true;
+    };
+
+    return (
+        <productcontext.Provider
+            value={{
+                isDataFetched: isDataFetched && true,
+                productList,
+                initialData,
+                setProductList,
+                setInitialData,
+                authenticated,
+                setAuthenticated,
+                company,
+                setCompany,
+                productCatagoryURL,
+                isActiveCatagory,
+                productCatagoryList,
+                setProductCatagoryList,
+                whichDataToFetched,
+            }}
+        >
+            {children}
+        </productcontext.Provider>
+    );
+};
 
 export default DataProvider;
