@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const DropdownSideBar = ({ children, label }: { children: JSX.Element | JSX.Element[]; label: string }) => {
     const [open, setOpen] = useState(true);
     return (
-        <div className="border-b-2 border-t-2">
+        <div className="border-l-3 border-r">
             <a
                 onClick={() => setOpen(!open)}
                 className="block py-2.5 px-4 rounded transition duration-200 bg-gray-200  dark:bg-gray-900 flex justify-between cursor-pointer"
@@ -22,7 +22,7 @@ const DropdownSideBar = ({ children, label }: { children: JSX.Element | JSX.Elem
                     />
                 </svg>
             </a>
-            <span className={`${!open && 'hidden'}`}>{children}</span>
+            <div className={`${!open && 'hidden'} shadow-lg`}>{children}</div>
         </div>
     );
 };

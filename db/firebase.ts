@@ -22,23 +22,22 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-
 const clientCredentials = {
-  apiKey: "AIzaSyB5sfB-j7n6Nh2-rIJlZL0JIK-eorjVC-k",
-  authDomain: "trendbase-4b283.firebaseapp.com",
-  databaseURL: "https://trendbase-4b283-default-rtdb.firebaseio.com",
-  projectId: "trendbase-4b283",
-  storageBucket: "trendbase-4b283.appspot.com",
-  messagingSenderId: "874029703633",
-  appId: "1:874029703633:web:f043245e6627a84f4480f0"
+    apiKey: 'AIzaSyB5sfB-j7n6Nh2-rIJlZL0JIK-eorjVC-k',
+    authDomain: 'trendbase-4b283.firebaseapp.com',
+    databaseURL: 'https://trendbase-4b283-default-rtdb.firebaseio.com',
+    projectId: 'trendbase-4b283',
+    storageBucket: 'trendbase-4b283.appspot.com',
+    messagingSenderId: '874029703633',
+    appId: '1:874029703633:web:f043245e6627a84f4480f0',
 };
 
 try {
-  firebase.initializeApp(clientCredentials);
+    firebase.initializeApp(clientCredentials);
 } catch (err) {
-  if (!/already exists/.test(err.message)) {
-    console.error('Firebase initialization error', err.stack);
-  }
+    if (!/already exists/.test(err.message)) {
+        console.error('Firebase initialization error', err.stack);
+    }
 }
 
 export default firebase;
