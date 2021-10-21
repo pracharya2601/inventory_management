@@ -1,15 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { getSession } from 'next-auth/client';
-import { Session } from 'next-auth';
-import { getUserById } from 'db/user';
-import { connectToDB } from 'db/connect';
+
 import { useRouter } from 'next/dist/client/router';
 import ComponentLayout from '@/components/layout/ComponentLayout';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import BusinessHeader from '@/components/layout/BusinessHeader';
-import { getOneWorkPlace } from 'db/workplace';
-import datas from '../../db.json';
 import React, { useContext, useEffect, useState } from 'react';
 import ProductList from '@/components/layout/product/ProductList';
 import SidebarBottomItems from '@/components/layout/sidebar/SidebarBottomItems';
@@ -20,6 +15,12 @@ import { uicontext } from '@context/ui';
 import { productcontext } from '@context/data';
 import { usercontext } from '@context/user';
 import SearchBar from '@/components/layout/searchbar';
+import { GetServerSideProps } from 'next';
+import { ssrPipe } from 'ssr/ssrPipe';
+import { withSession } from 'ssr/withSession';
+import { connectDb } from 'ssr/connectDb';
+import { withUser } from 'ssr/withUser';
+import { getProduct } from 'ssr/getProduct';
 
 interface Props {
     productList: any;
@@ -96,50 +97,6 @@ const Dashboards = ({ productList, company, authenticated, workplaces, user, pro
         </ComponentLayout>
     );
 };
-
-export async function getServerSideProps(context) {
-    const session: Session = await getSession(context);
-    if (!session || !session.user) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: `/signin?callbackUrl=/dashboard`,
-            },
-        };
-    }
-    const { db } = await connectToDB();
-    const user = JSON.parse(await getUserById(db, session.user.id));
-    const workplaces = user.workplaces || null;
-    let productList = [];
-    let company = null;
-    let productCatagory = [];
-    if (context.query.id) {
-        const userId = session.user.id;
-        const workPlaceId = context.query.id[0];
-        const staffPosition = context.query.id[1];
-        const productType = context.query.id[2];
-        const page = parseInt(context.query.id[3]);
-        const compdata = JSON.parse(await getOneWorkPlace(db, workPlaceId, staffPosition, userId));
-        company = compdata ? compdata[0] : null;
-        productList = datas;
-        productCatagory = [
-            { label: 'Inventory', id: 'inventory' },
-            { label: 'Stock', id: 'stock' },
-            { label: 'Processing', id: 'processing' },
-            { label: 'Delivered', id: 'delivered' },
-        ];
-    }
-    console.log('rendering .............');
-    return {
-        props: {
-            authenticated: session.user ? true : false,
-            user: session.user,
-            workplaces: workplaces ? workplaces : null,
-            productList,
-            company,
-            productCatagory,
-        },
-    };
-}
+export const getServerSideProps: GetServerSideProps = ssrPipe(withSession, connectDb, withUser, getProduct);
 
 export default Dashboards;
