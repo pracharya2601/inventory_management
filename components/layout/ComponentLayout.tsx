@@ -27,7 +27,7 @@ const ComponentLayout = ({ children, authenticated, sidebarItems, sidebarItemsBo
     const router = useRouter();
     useOutsideClick(sidebarRef, setOpen);
     return (
-        <div className="dark relative min-h-screen">
+        <div className="dark relative min-h-screen w-screen overflow-x-hidden">
             <div
                 className="bg-gray-300 z-20 pr-2 dark:bg-gray-800 text-black border-b dark:text-gray-100 flex justify-between w-screen absolute"
                 onClick={(e) => e.stopPropagation()}

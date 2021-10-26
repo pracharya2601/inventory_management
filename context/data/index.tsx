@@ -16,13 +16,15 @@ const initialProductContext: ProductContextType = {
     company: null,
     productCatagoryList: [],
     whichDataToFetched: '',
-    setProductList: (items: any[]) => {},
-    setInitialData: (items: any[]) => {},
-    setCompany: (company: any) => {},
-    setAuthenticated: (auth: boolean) => {},
-    productCatagoryURL: (ctName: string) => '',
-    isActiveCatagory: (ctName: string) => false,
-    setProductCatagoryList: (cat: any[]) => {},
+    viewingItem: null,
+    setProductList: (items) => {},
+    setInitialData: (items) => {},
+    setCompany: (company) => {},
+    setAuthenticated: (auth) => {},
+    productCatagoryURL: (ctName) => '',
+    isActiveCatagory: (ctName) => false,
+    setProductCatagoryList: (cat) => {},
+    setViewingItem: (item) => {},
 };
 export const productcontext = createContext(initialProductContext);
 
@@ -42,6 +44,7 @@ const DataProvider = ({ children }: { children: JSX.Element }) => {
     const [productCatagoryList, setProductCatagoryList] = useState([]);
 
     const [initialData, setInitialData] = useState(productList);
+    const [viewingItem, setViewingItem] = useState(null);
 
     const productCatagoryURL = (catagoryName: string): string => {
         return `http://localhost:3000/dashboards/${companyId}/${position}/${catagoryName}/1`;
@@ -68,6 +71,8 @@ const DataProvider = ({ children }: { children: JSX.Element }) => {
                 productCatagoryList,
                 setProductCatagoryList,
                 whichDataToFetched,
+                viewingItem,
+                setViewingItem,
             }}
         >
             {children}

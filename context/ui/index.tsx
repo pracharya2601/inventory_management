@@ -14,7 +14,7 @@ const UiProvider = ({ children }: { children: JSX.Element }) => {
     const [searchBar, setSearchBar] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState<string>('');
     return (
-        <uicontext.Provider value={{ searchBar: searchBar, searchTerm: searchTerm, setSearchBar, setSearchTerm }}>
+        <uicontext.Provider value={{ searchBar, searchTerm, setSearchBar, setSearchTerm }}>
             {children}
         </uicontext.Provider>
     );

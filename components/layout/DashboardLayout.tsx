@@ -16,8 +16,7 @@ const DashboardLayout = ({
     productHeading,
     pagination,
 }: DashboardLayoutProps) => {
-    const { isDataFetched, whichDataToFetched, company } = useContext(productcontext);
-    console.log(company);
+    const { isDataFetched, whichDataToFetched } = useContext(productcontext);
     if (whichDataToFetched === 'dashboard') {
         return (
             <div className="bg-gray-200 dark:bg-gray-900 min-h-full pt-10">
@@ -41,6 +40,7 @@ const DashboardLayout = ({
                     </div>
                 </div>
             )}
+            {/* {viewItem && viewItem} */}
         </div>
     );
 };

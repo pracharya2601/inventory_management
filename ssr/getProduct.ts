@@ -24,6 +24,8 @@ export const getProduct = async ({ session, query, db, ...rest }) => {
     }
     return {
         session,
+        query,
+        db,
         productList,
         productCatagory,
         company,

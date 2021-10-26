@@ -10,6 +10,7 @@ export interface ProductContextType {
     company: CompanyTypes | null;
     productCatagoryList: ProductCatagoryType[];
     whichDataToFetched: string;
+    viewingItem: ProductType | null;
     setProductList: (items: ProductType[]) => void;
     setInitialData: (items: ProductType[]) => void;
     setCompany: (company: CompanyTypes[]) => void;
@@ -17,4 +18,5 @@ export interface ProductContextType {
     productCatagoryURL: (ctName: string) => string;
     isActiveCatagory: (ctName: string) => boolean;
     setProductCatagoryList: (cat: ProductCatagoryType[]) => void;
+    setViewingItem: (item: ProductType) => void;
 }
