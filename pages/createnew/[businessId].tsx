@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { GetServerSideProps } from 'next';
 import { connectDb } from 'ssr/connectDb';
 import { ssrPipe } from 'ssr/ssrPipe';
