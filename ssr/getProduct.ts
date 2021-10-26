@@ -24,11 +24,8 @@ export const getProduct = async ({ session, query, db, ...rest }) => {
     }
     return {
         session,
-<<<<<<< HEAD
         query,
         db,
-=======
->>>>>>> 8da03960c04562c745638dd49908df8c26fdf684
         productList,
         productCatagory,
         company,

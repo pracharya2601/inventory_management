@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { GetServerSideProps } from 'next';
 import { connectDb } from 'ssr/connectDb';
 import { ssrPipe } from 'ssr/ssrPipe';
@@ -16,23 +14,20 @@ import { getBusiness } from 'ssr/getBusiness';
 import Dashboard from '@/components/layout/company/Dashboard';
 import BusinessInfo from '@/components/layout/company/BusinessInfo';
 import { BusinessStaffPosition, CompanyNav } from '@/components/layout/company/CompanyHeading';
+import { route } from 'next/dist/next-server/server/router';
 
 interface Props {
-    company: any;
     authenticated: boolean;
     workplaces: any;
     user: any;
 }
 
-const CreateNewItem = ({ authenticated, company, workplaces }: Props) => {
+const CreateNew = ({ authenticated, workplaces, user }: Props) => {
     const router = useRouter();
-    const { catagory, color, size, setCatagory, setColor, setSize } = useCreate();
-    console.log(catagory, color, size);
     const routeChange = (url: string) => {
         router.push(url);
     };
-    console.log(company);
-
+    console.log(router);
     return (
         <ComponentLayout
             authenticated={authenticated}
@@ -53,22 +48,10 @@ const CreateNewItem = ({ authenticated, company, workplaces }: Props) => {
                 </>
             }
             sidebarItemsBottom={<SidebarBottomItems></SidebarBottomItems>}
-        >
-            <Dashboard
-                popItem={<div>Pop Item</div>}
-                businessHeading={
-                    <BusinessInfo
-                        companyNav={<CompanyNav workplaceName={company.workplaceName} logoUrl={'/icon.png'} />}
-                        staffPosition={<BusinessStaffPosition positionLabel={'Admin'} />}
-                    />
-                }
-            >
-                <span>Hello</span>
-            </Dashboard>
-        </ComponentLayout>
+        ></ComponentLayout>
     );
 };
 
-export const getServerSideProps: GetServerSideProps = ssrPipe(withSession, connectDb, withUser, getBusiness);
+export const getServerSideProps: GetServerSideProps = ssrPipe(withSession, connectDb, withUser);
 
-export default CreateNewItem;
+export default CreateNew;

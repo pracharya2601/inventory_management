@@ -78,6 +78,7 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
                     <SidebarItem
                         onClick={() => router.push('/')}
                         label="Home Page"
+                        markIcon={router.asPath === '/' ? true : false}
                         icon={
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -98,6 +99,7 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
                     <SidebarItem
                         onClick={() => router.push('/dashboard')}
                         label="Dashboard"
+                        markIcon={router.asPath === '/dashboard' ? true : false}
                         icon={
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -115,8 +117,27 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
                             </svg>
                         }
                     />
-                    {sidebarItems}
-                    {sidebarItems}
+                    <SidebarItem
+                        label="Add New"
+                        onClick={() => router.push('/createnew')}
+                        markIcon={router.asPath === '/createnew' ? true : false}
+                        icon={
+                            <svg
+                                className="w-6 h-6"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                                ></path>
+                            </svg>
+                        }
+                    />
                     {sidebarItems}
                 </span>
                 <span className="gap-2 border-t-2 pt-1">{sidebarItemsBottom}</span>
