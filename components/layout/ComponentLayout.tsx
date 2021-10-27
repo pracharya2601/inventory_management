@@ -5,13 +5,13 @@ import { useOutsideClick } from '@/hooks/useOutsideClick';
 import { signOut, signIn } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import Sidebar from './sidebar';
-import { SigninButton, SignoutButton, HomeButton, MenuIconButton } from './NavButtons';
+import { SigninButton, SignoutButton, HomeButton, MenuIconButton, ProfileButton } from './NavButtons';
 
 export interface ComponentLayoutProps {
     authenticated?: boolean;
     sidebarItems?: JSX.Element;
     sidebarItemsBottom?: JSX.Element;
-    children?: JSX.Element;
+    children?: JSX.Element | JSX.Element[];
 }
 
 export interface SidebarItemProps {
@@ -32,10 +32,15 @@ const ComponentLayout = ({ children, authenticated, sidebarItems, sidebarItemsBo
                 className="bg-gray-300 z-20 pr-2 dark:bg-gray-800 text-black border-b dark:text-gray-100 flex justify-between w-screen absolute"
                 onClick={(e) => e.stopPropagation()}
             >
-                <MenuIconButton setOpen={setOpen} />
-                <HomeButton />
-                {!authenticated && <SigninButton />}
-                {authenticated && <SignoutButton />}
+                <span className="flex items-center">
+                    <MenuIconButton setOpen={setOpen} />
+                    <HomeButton />
+                </span>
+                <span className="flex items-center">
+                    {authenticated && <ProfileButton />}
+                    {!authenticated && <SigninButton />}
+                    {authenticated && <SignoutButton />}
+                </span>
             </div>
 
             <Sidebar

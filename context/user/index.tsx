@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { UserContextType } from '@/interface/Context/UserContext';
 
@@ -19,6 +19,7 @@ const UserProvider = ({ children }: { children: JSX.Element }) => {
     const companyId = id && id[0];
     const [user, setUser] = useState(null);
     const [workplaces, setWorkplaces] = useState([]);
+
 
     return (
         <usercontext.Provider

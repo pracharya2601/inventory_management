@@ -21,7 +21,6 @@ import { withSession } from 'ssr/withSession';
 import { connectDb } from 'ssr/connectDb';
 import { withUser } from 'ssr/withUser';
 import { getProduct } from 'ssr/getProduct';
-import SideBoard from '@/components/layout/sideboard';
 
 interface Props {
     productList: any;
