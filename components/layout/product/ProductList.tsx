@@ -1,18 +1,24 @@
-import { ProductType } from "@/interface/Product/ProductInterface";
-import React, { useState } from "react";
-import ProductRow from "./ProductRow";
+import { ProductType } from '@/interface/Product/ProductInterface';
+import React, { useContext } from 'react';
+import ProductRow from './ProductRow';
+import { productcontext } from '@context/data';
+import { useOpen } from '@/hooks/useOpen';
 
+const ProductList = () => {
+    const { productList, setViewingItem } = useContext(productcontext);
+    const { setOpen } = useOpen();
+    const viewItem = (item) => {
+        setViewingItem(item);
+        setOpen(true);
+    };
 
-const ProductList = ({ productList }: { productList: any[] }) => {
-  const [products, setProducts] = useState(productList || [])
-
-  return (
-    <>
-      {products.map((item: ProductType) => (
-        <ProductRow key={item._id} item={item} />
-      ))}
-    </>
-  )
-}
+    return (
+        <>
+            {productList.map((item: ProductType) => (
+                <ProductRow key={item._id} item={item} viewItem={() => viewItem(item)} />
+            ))}
+        </>
+    );
+};
 
 export default ProductList;

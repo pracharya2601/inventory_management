@@ -35,3 +35,5 @@ yarn-error.log*
 
 accessKey.json
 checking.ts
+
+db/firebase.ts
