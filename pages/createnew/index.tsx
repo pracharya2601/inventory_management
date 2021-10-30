@@ -38,13 +38,13 @@ const CreateNew = ({ authenticated, workplaces, user }: Props) => {
                             workplaces.map(({ positionLabel, workplaceId, workplaceName }) => (
                                 <SidebarItem
                                     key={workplaceId - workplaceName}
-                                    onClick={() => routeChange(`/dashboards/${workplaceId}/${positionLabel}/product/1`)}
+                                    onClick={() => routeChange(`/dashboard/${workplaceId}/${positionLabel}/product/1`)}
                                     label={workplaceName}
                                 />
                             ))}
-                        <SidebarItem onClick={() => router.push('/dashboards/newitem')} label="New Places" />
+                        <SidebarItem onClick={() => router.push('/dashboard/newitem')} label="New Places" />
                     </DropdownSideBar>
-                    <SidebarItem onClick={() => router.push('/dashboards/newitem')} label="New Places" />
+                    <SidebarItem onClick={() => router.push('/dashboard/newitem')} label="New Places" />
                 </>
             }
             sidebarItemsBottom={<SidebarBottomItems></SidebarBottomItems>}

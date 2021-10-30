@@ -7,6 +7,7 @@ import { uicontext } from '@context/ui';
 import { usercontext } from '@context/user';
 import { productcontext } from '@context/data';
 import clsx from 'clsx';
+import { WorkplaceTypes } from '@/interface/Workplace/WorkplaceListTypes';
 
 // eslint-disable-next-line react/prop-types
 const BusinessHeader = () => {
@@ -17,7 +18,8 @@ const BusinessHeader = () => {
     const { searchBar, setSearchBar, searchTerm } = useContext(uicontext);
     const { workplaces } = useContext(usercontext);
     const { isDataFetched } = useContext(productcontext);
-    const renderWorkplace = workplaces.length > 0 && workplaces.find((item) => item.workplaceId === companyId);
+    const renderWorkplace =
+        workplaces.length > 0 && workplaces.find((item: WorkplaceTypes) => item.workplaceId === companyId);
 
     const wrappedClass = clsx(`flex items-center gap-1 cursor-pointer py-1 px-2 border rounded ml-auto mr-3 `, {
         'hover:bg-green-900': !searchTerm,
@@ -29,10 +31,10 @@ const BusinessHeader = () => {
     };
 
     const businessLogoClick = () => {
-        if (router.asPath === `/dashboards/${companyId}`) {
+        if (router.asPath === `/dashboard/${companyId}`) {
             return;
         }
-        router.push(`/dashboards/${companyId}`);
+        router.push(`/dashboard/${companyId}`);
     };
 
     if (companyId) {

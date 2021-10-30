@@ -47,7 +47,7 @@ const DataProvider = ({ children }: { children: JSX.Element }) => {
     const [viewingItem, setViewingItem] = useState(null);
 
     const productCatagoryURL = (catagoryName: string): string => {
-        return `http://localhost:3000/dashboards/${companyId}/${position}/${catagoryName}/1`;
+        return `http://localhost:3000/dashboard/${companyId}/${position}/${catagoryName}/1`;
     };
 
     const isActiveCatagory = (ctName: string): boolean => {

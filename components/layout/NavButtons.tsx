@@ -35,7 +35,10 @@ export const HomeButton = () => (
 export const ProfileButton = () => {
     const { setAccountSidebar } = useContext(uicontext);
     return (
-        <div className=" ml-auto cursor-pointer" onClick={() => setAccountSidebar(true)}>
+        <div
+            className=" ml-auto cursor-pointer hover:ring-2 ring-blue rounded-full"
+            onClick={() => setAccountSidebar(true)}
+        >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path
                     fillRule="evenodd"

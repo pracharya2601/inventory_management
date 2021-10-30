@@ -21,6 +21,7 @@ import { withSession } from 'ssr/withSession';
 import { connectDb } from 'ssr/connectDb';
 import { withUser } from 'ssr/withUser';
 import { getProduct } from 'ssr/getProduct';
+import Workplaces from '@/components/layout/user/Workplaces';
 
 interface Props {
     productList: any;
@@ -78,7 +79,7 @@ const Dashboard = ({ productList, company, authenticated, workplaces, user, prod
             authenticated={authenticated}
             sidebarItems={
                 <>
-                    <DropdownSideBar label="Work Places">
+                    {/* <DropdownSideBar label="Work Places">
                         {workplaces &&
                             workplaces.map(({ positionLabel, workplaceId, workplaceName }) => (
                                 <SidebarItem
@@ -88,7 +89,13 @@ const Dashboard = ({ productList, company, authenticated, workplaces, user, prod
                                 />
                             ))}
                         <SidebarItem onClick={() => router.push('/dashboard/newitem')} label="New Places" />
-                    </DropdownSideBar>
+                    </DropdownSideBar> */}
+                    {workplaces && (
+                        <DropdownSideBar label="Workplaces" openStat={true}>
+                            <Workplaces />
+                        </DropdownSideBar>
+                    )}
+
                     <SidebarItem onClick={() => router.push('/dashboard/newitem')} label="New Places" />
                 </>
             }

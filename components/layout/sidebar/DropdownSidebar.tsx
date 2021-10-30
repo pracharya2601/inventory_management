@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 
-const DropdownSideBar = ({ children, label }: { children: JSX.Element | JSX.Element[]; label: string }) => {
-    const [open, setOpen] = useState(true);
+interface DropdownSideBarProps {
+    children: JSX.Element | JSX.Element[];
+    label: string;
+    openStat?: boolean;
+}
+
+const DropdownSideBar = ({ children, label, openStat }: DropdownSideBarProps) => {
+    const [open, setOpen] = useState<boolean>(openStat || false);
     return (
         <div className="border-l-3 border-r">
             <a
