@@ -32,3 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+accessKey.json
+checking.ts
