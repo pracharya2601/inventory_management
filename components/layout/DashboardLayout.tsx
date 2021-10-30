@@ -19,7 +19,6 @@ const DashboardLayout = ({
     pagination,
 }: DashboardLayoutProps) => {
     const { isDataFetched, whichDataToFetched } = useContext(productcontext);
-    const { accountSidebar, setAccountSidebar } = useContext(uicontext);
     if (whichDataToFetched === 'dashboard') {
         return (
             <div className="bg-gray-200 dark:bg-gray-900 min-h-full pt-10">
@@ -43,9 +42,6 @@ const DashboardLayout = ({
                     </div>
                 </div>
             )}
-            <SideboardOutline open={accountSidebar} setOpen={setAccountSidebar}>
-                <h1>Hello</h1>
-            </SideboardOutline>
         </div>
     );
 };
