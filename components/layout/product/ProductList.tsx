@@ -14,9 +14,10 @@ const ProductList = () => {
 
     return (
         <>
-            {productList.map((item: ProductType) => (
-                <ProductRow key={item._id} item={item} viewItem={() => viewItem(item)} />
-            ))}
+            {productList &&
+                productList.map((item: ProductType) => (
+                    <ProductRow key={item._id} item={item} viewItem={() => viewItem(item)} />
+                ))}
         </>
     );
 };

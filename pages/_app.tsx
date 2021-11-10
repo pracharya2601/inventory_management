@@ -4,13 +4,16 @@ import DataProvider from '@context/data';
 import React from 'react';
 import UiProvider from '@context/ui';
 import UserProvider from '@context/user';
+import ManageDataProvider from '@context/manage';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <UiProvider>
             <UserProvider>
                 <DataProvider>
-                    <Component {...pageProps} />
+                    <ManageDataProvider>
+                        <Component {...pageProps} />
+                    </ManageDataProvider>
                 </DataProvider>
             </UserProvider>
         </UiProvider>

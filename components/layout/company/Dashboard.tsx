@@ -4,10 +4,9 @@ import SideBoard from '@/components/layout/sideboard';
 interface DashboardProps {
     businessHeading: JSX.Element;
     children?: JSX.Element;
-    popItem?: JSX.Element;
 }
 
-const Dashboard = ({ businessHeading, children, popItem }: DashboardProps) => {
+const Dashboard = ({ businessHeading, children }: DashboardProps) => {
     return (
         <div className="bg-gray-200 dark:bg-gray-900 w-screen overflow-x-hidden min-h-full pt-10 overflow-x-hidden">
             {businessHeading && businessHeading}

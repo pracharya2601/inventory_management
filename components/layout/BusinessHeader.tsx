@@ -13,11 +13,12 @@ import { WorkplaceTypes } from '@/interface/Workplace/WorkplaceListTypes';
 const BusinessHeader = () => {
     const router = useRouter();
     const id = router.query.id as string[];
-    const companyId = id && id[0];
+    const businessId = router.query.businessId as string;
+    const companyId = (id && id[0]) || businessId;
 
     const { searchBar, setSearchBar, searchTerm } = useContext(uicontext);
     const { workplaces } = useContext(usercontext);
-    const { isDataFetched } = useContext(productcontext);
+    const { isDataFetched, company } = useContext(productcontext);
     const renderWorkplace =
         workplaces.length > 0 && workplaces.find((item: WorkplaceTypes) => item.workplaceId === companyId);
 
@@ -42,7 +43,7 @@ const BusinessHeader = () => {
             <div className="bg-gray-300 dark:bg-gray-800 sticky top-0 z-30 h-12 mt-1 flex justify-between border-b items-center px-2">
                 <span className="flex items-center gap-2 font-bold cursor-pointer" onClick={businessLogoClick}>
                     <Image src={'/icon.png'} height={20} width={20} />
-                    <p>{renderWorkplace.workplaceName}</p>
+                    <p>{company?.workplaceName}</p>
                 </span>
                 {isDataFetched && (
                     <p className={wrappedClass} onClick={onSearchIconClick}>

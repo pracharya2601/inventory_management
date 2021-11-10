@@ -9,7 +9,7 @@ export const withUser = async ({ session, db, ...rest }) => {
         return {
             session,
             user,
-            workplaces: user.workplaces,
+            workplaces: user?.workplaces || [],
             db,
             ...rest,
         };

@@ -9,14 +9,15 @@ const ProductNavbar = () => {
     const { setSearchBar } = useContext(uicontext);
     return (
         <div className="bg-gray-300 dark:bg-gray-800 sticky top-0 z-40 h-12  pr-px pl-px overflow-x-auto flex justify-start items-end">
-            {productCatagoryList.map(({ label, id }) => (
-                <ProductCatagoryButton
-                    key={id}
-                    active={isActiveCatagory(id)}
-                    label={label}
-                    url={productCatagoryURL(id)}
-                />
-            ))}
+            {productCatagoryList &&
+                productCatagoryList.map(({ label, id }) => (
+                    <ProductCatagoryButton
+                        key={id}
+                        active={isActiveCatagory(id)}
+                        label={label}
+                        url={productCatagoryURL(id)}
+                    />
+                ))}
             <span onClick={() => setSearchBar(true)}>
                 <ProductCatagoryButton
                     key={'search_tab'}

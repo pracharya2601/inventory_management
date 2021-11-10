@@ -2,6 +2,8 @@ import { useOutsideClick } from '@/hooks/useOutsideClick';
 import Link from 'next/dist/client/link';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
+import Workplaces from '../user/Workplaces';
+import SidebarBottomItems from './SidebarBottomItems';
 import { SidebarItem } from './SidebarItem';
 
 interface SideBarProps {
@@ -138,9 +140,12 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
                             </svg>
                         }
                     />
+                    <Workplaces />
                     {sidebarItems}
                 </span>
-                <span className="gap-2 border-t-2 pt-1">{sidebarItemsBottom}</span>
+                <span className="gap-2 border-t-2 pt-1">
+                    <SidebarBottomItems>{sidebarItemsBottom}</SidebarBottomItems>
+                </span>
             </nav>
         </div>
     );

@@ -19,17 +19,15 @@ export const getOneWorkPlace = async (db: Db, id: string, userType: StaffType, u
 
 export const createWorkPlace = async (
     db: Db,
-    workplace: { workplaceName: string; workplaceCode: string },
-    user: { userId: string; fullName: string; email: string },
-    productCatagory,
+    body: { workplaceName: string; workplaceCode: string; productCatagory },
+    user: { userId: string; fullName: string; email: string; imgUrl: string },
 ) => {
     const newDate = new Date().toDateString();
     const _id = new ObjectId();
     const data = {
         _id: _id,
-        ...workplace,
+        ...body,
         createdAt: newDate,
-        section: productCatagory || ['draft', 'stock', 'processing', 'delivered'],
         admin: [
             {
                 ...user,
@@ -40,7 +38,7 @@ export const createWorkPlace = async (
         staffs: [],
     };
     try {
-        await db.collection('workplaces').insertOne(data);
+        //await db.collection('workplaces').insertOne(data);
         //send email to user about work space creation
         return data;
     } catch (e) {

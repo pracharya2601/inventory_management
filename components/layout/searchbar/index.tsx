@@ -20,7 +20,7 @@ const SearchBar = () => {
     const onSubmitHandle = (e) => {
         e.preventDefault();
         setProductList(initialData);
-        router.push(urlPath + '?search=' + searchTerm);
+        router.push(urlPath + '?search=' + searchTerm + '&&dataType=' + dataType);
     };
 
     const onHandleChange = (e) => {
@@ -41,7 +41,7 @@ const SearchBar = () => {
 
     return (
         <span
-            className="p-2 border rounded-xl bg-gray-900 fixed top-10 left-10 right-10 md:left-20 md:right-20 lg:right-32 lg:left-32  z-50"
+            className="p-2 w-full px-5 py-12 border bg-gray-300 dark:bg-gray-900 fixed top-0 z-50 shadow-lg"
             ref={searchBarRef}
         >
             <form onSubmit={onSubmitHandle}>
@@ -51,6 +51,7 @@ const SearchBar = () => {
                     onChange={onHandleChange}
                     onClear={() => handleClear()}
                     autofocus
+                    square
                     icon={
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

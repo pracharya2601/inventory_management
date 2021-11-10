@@ -11,6 +11,7 @@ const SideBoard = ({ label, children }: SideBoardProps) => {
     const sideboardRef = useRef(null);
     const [open, setOpen] = useState(false);
     useOutsideClick(sideboardRef, setOpen);
+
     return (
         <>
             {label && (
