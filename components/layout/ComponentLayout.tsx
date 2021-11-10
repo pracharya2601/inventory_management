@@ -6,8 +6,9 @@ import { signOut, signIn } from 'next-auth/client';
 import { useRouter } from 'next/dist/client/router';
 import Sidebar from './sidebar';
 import SideboardOutline from './sideboard/SideboardOutline';
-import { SigninButton, SignoutButton, HomeButton, MenuIconButton, ProfileButton } from './NavButtons';
+import { SigninButton, SignoutButton, HomeButton, MenuIconButton, ProfileButton, NotificationButton } from './NavButtons';
 import { uicontext } from '@context/ui';
+import DropDownMenu, { DropDownItem } from '../elements/ddm/DropDownMenu';
 
 export interface ComponentLayoutProps {
     authenticated?: boolean;
@@ -26,7 +27,7 @@ export interface SidebarItemProps {
 const ComponentLayout = ({ children, authenticated, sidebarItems, sidebarItemsBottom }: ComponentLayoutProps) => {
     const sidebarRef = useRef(null);
     const [open, setOpen] = useState(false);
-    const { accountSidebar, setAccountSidebar } = useContext(uicontext);
+    const { accountSidebar, setAccountSidebar, notificationSidebar, setNotificationSidebar, previewItm, setPreviewItm } = useContext(uicontext);
     const router = useRouter();
     useOutsideClick(sidebarRef, setOpen);
     return (
@@ -40,6 +41,8 @@ const ComponentLayout = ({ children, authenticated, sidebarItems, sidebarItemsBo
                     <HomeButton />
                 </span>
                 <span className="flex items-center">
+
+                    {authenticated && <NotificationButton />}
                     {authenticated && <ProfileButton />}
                     {!authenticated && <SigninButton />}
                     {authenticated && <SignoutButton />}
@@ -54,6 +57,12 @@ const ComponentLayout = ({ children, authenticated, sidebarItems, sidebarItemsBo
             />
             <SideboardOutline open={accountSidebar} setOpen={setAccountSidebar}>
                 <h1>Account</h1>
+            </SideboardOutline>
+            <SideboardOutline open={notificationSidebar} setOpen={setNotificationSidebar} size="small">
+                <h1>Notification</h1>
+            </SideboardOutline>
+            <SideboardOutline open={previewItm} setOpen={setPreviewItm}>
+                <h1>Previewing Item</h1>
             </SideboardOutline>
             <div className="flex-1 dark:bg-gray-900 dark:text-white h-screen overflow-auto">{children}</div>
         </div>

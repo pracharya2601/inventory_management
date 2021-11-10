@@ -18,7 +18,7 @@ interface Props {
     icon?: JSX.Element;
     items?: DDMItem[];
     withBackground?: boolean;
-    children?: JSX.Element[];
+    children?: JSX.Element | JSX.Element[];
 }
 
 export interface DDMItem {
@@ -92,7 +92,7 @@ const DropDownMenu = (props: Props) => {
             {(props.forceOpen || isOpen) && (
                 <div
                     className={clsx(
-                        'origin-top-right absolute z-20',
+                        'origin-top-right absolute z-50',
                         {
                             'right-0': props.dropSide === 'left' || !props.dropSide,
                             'left-0': props.dropSide === 'right',

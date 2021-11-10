@@ -43,7 +43,7 @@ const Dashboard = ({ productList, company, authenticated, workplaces, user, prod
     } = useContext(productcontext);
 
     const { setUser, setWorkplaces } = useContext(usercontext);
-
+    console.log(router);
     useEffect(() => {
         setUser(user);
         setWorkplaces(workplaces);
@@ -56,10 +56,6 @@ const Dashboard = ({ productList, company, authenticated, workplaces, user, prod
 
     const { searchBar, searchTerm } = useContext(uicontext);
 
-    const routeChange = (url: string) => {
-        router.push(url);
-    };
-    console.log('This is item', viewingItem);
     const renderData = (
         <>
             {searchBar && <SearchBar />}

@@ -5,16 +5,19 @@ interface SideboardOutline {
     setOpen: (i: boolean) => void;
     open: boolean;
     children?: JSX.Element | JSX.Element[];
+    size?: 'small' | 'normal' | 'full';
 }
 
-const SideboardOutline = ({ setOpen, open, children }: SideboardOutline) => {
+const SideboardOutline = ({ setOpen, open, children, size }: SideboardOutline) => {
     const sideboardRef = useRef(null);
     useOutsideClick(sideboardRef, setOpen);
     return (
         <div
-            className={` ${
-                !open && 'translate-x-full'
-            } flex flex-col  z-50 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 w-full md:w-9/12 lg:w-3/5 space-y-6 pt-4 absolute inset-y-0 right-0 transform transition duration-200 ease-in-out `}
+            className={` ${!open && 'translate-x-full'
+                } 
+            flex flex-col w-full 
+            ${size === 'small' ? ' md:w-80 lg:w-96' : size === 'full' ? '' : 'md:w-9/12 lg:w-3/5'}
+            z-50 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 space-y-6 pt-4 absolute inset-y-0 right-0 transform transition duration-200 ease-in-out `}
             ref={sideboardRef}
         >
             {open && (

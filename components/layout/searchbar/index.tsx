@@ -6,7 +6,7 @@ import { productcontext } from '@context/data';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 
 const SearchBar = () => {
-    const { searchTerm, setSearchTerm, setSearchBar } = useContext(uicontext);
+    const { searchBar, searchTerm, setSearchTerm, setSearchBar } = useContext(uicontext);
     const { initialData, setProductList, productCatagoryURL } = useContext(productcontext);
     const router = useRouter();
     const id = router.query.id as string[];
@@ -41,7 +41,7 @@ const SearchBar = () => {
 
     return (
         <span
-            className="p-2 w-full px-5 py-12 border bg-gray-300 dark:bg-gray-900 fixed top-0 z-50 shadow-lg"
+            className={`p-2 w-full px-5 py-12 border bg-gray-300 dark:bg-gray-900 fixed top-0 z-50 shadow-lg`}
             ref={searchBarRef}
         >
             <form onSubmit={onSubmitHandle}>

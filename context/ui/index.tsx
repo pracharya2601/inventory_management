@@ -8,9 +8,13 @@ export const uicontext = createContext({
     searchBar: false,
     searchTerm: '',
     accountSidebar: false,
-    setSearchTerm: (term: string) => {},
-    setSearchBar: (type: boolean) => {},
-    setAccountSidebar: (stat: boolean) => {},
+    notificationSidebar: false,
+    previewItm: false,
+    setSearchTerm: (term: string) => { },
+    setSearchBar: (type: boolean) => { },
+    setAccountSidebar: (stat: boolean) => { },
+    setNotificationSidebar: (stat: boolean) => { },
+    setPreviewItm: (stat: boolean) => { },
 });
 
 const UiProvider = ({ children }: { children: JSX.Element }) => {
@@ -18,6 +22,8 @@ const UiProvider = ({ children }: { children: JSX.Element }) => {
     const [searchBar, setSearchBar] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [accountSidebar, setAccountSidebar] = useState<boolean>(false);
+    const [notificationSidebar, setNotificationSidebar] = useState<boolean>(false);
+    const [previewItm, setPreviewItm] = useState<boolean>(false);
 
     useEffect(() => {
         if (router.query.search) {
@@ -28,7 +34,7 @@ const UiProvider = ({ children }: { children: JSX.Element }) => {
 
     return (
         <uicontext.Provider
-            value={{ searchBar, searchTerm, accountSidebar, setSearchBar, setSearchTerm, setAccountSidebar }}
+            value={{ searchBar, searchTerm, accountSidebar, setSearchBar, setSearchTerm, setAccountSidebar, notificationSidebar, setNotificationSidebar, previewItm, setPreviewItm }}
         >
             {children}
         </uicontext.Provider>

@@ -4,6 +4,9 @@ import React from 'react';
 import { useContext } from 'react';
 import { uicontext } from '@context/ui';
 
+type NotificationProps = {
+    onClick?: () => void;
+}
 export const MenuIconButton = ({ setOpen }: { setOpen: (stat: boolean) => void }) => (
     <button
         className="mobile-menu-button p-2 focus:outline-none focus:bg-gray-200 dark:focus:bg-gray-700 "
@@ -31,6 +34,21 @@ export const HomeButton = () => (
         </a>
     </Link>
 );
+
+export const NotificationButton = () => {
+    const { setNotificationSidebar } = useContext(uicontext);
+    return (
+        <div className=" ml-auto mr-3 relative cursor-pointer" onClick={() => setNotificationSidebar(true)}>
+            <span className="flex h-2 w-2 absolute top-0 right-0">
+                <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-purple-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-purple-500"></span>
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+            </svg>
+        </div>
+    )
+}
 
 export const ProfileButton = () => {
     const { setAccountSidebar } = useContext(uicontext);
