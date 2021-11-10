@@ -60,12 +60,6 @@ const TableHead = () => (
                 scope="col"
                 className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
             >
-                Count
-            </th>
-            <th
-                scope="col"
-                className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-            >
                 Color
             </th>
             <th
@@ -73,6 +67,12 @@ const TableHead = () => (
                 className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
             >
                 Size
+            </th>
+            <th
+                scope="col"
+                className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
+            >
+                Count
             </th>
             <th
                 scope="col"

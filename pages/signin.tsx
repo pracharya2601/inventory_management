@@ -1,49 +1,71 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+import React from 'react';
 import { signIn, getSession } from 'next-auth/client';
-import Button from "@/components/elements/Button";
-
+import Button from '@/components/elements/Button';
+import { HomeButton } from '@/components/layout/NavButtons';
 
 const Signin = (props) => {
-  console.log("is this undefinex", props.callbackUrl)
-  return (
-    <div className="flex flex-col m-auto mt-5 w-full sm:w-96 max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
-      <div className="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
-        Login To Your Account
-      </div>
-      <div className="flex flex-col gap-4 item-center">
-        <Button
-          label="Facebook"
-          color="blue"
-          fullwidth
-          onClick={() => signIn("facebook")}
-          icon={
-            <svg width="20" height="20" fill="currentColor" className="mr-2" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z">
-              </path>
-            </svg>
-          }
-        />
-        <Button
-          label="Google"
-          color="red"
-          fullwidth
-          onClick={() => signIn("google", { callbackUrl: `http://localhost:3000${props.callbackUrl}` })}
-          icon={
-            <svg width="20" height="20" fill="currentColor" className="mr-2" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-              <path d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z">
-              </path>
-            </svg>
-          }
-        />
-        <Button
-          label="Github"
-          color="gray"
-          fullwidth
-          onClick={() => signIn("github")}
-          icon={
-            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-              width="20" height="20" viewBox="0 0 438.549 438.549" fill="currentColor">
-              <path d="M409.132,114.573c-19.608-33.596-46.205-60.194-79.798-79.8C295.736,15.166,259.057,5.365,219.271,5.365
+    console.log('is this undefinex', props.callbackUrl);
+    return (
+        <div className="flex flex-col m-auto mt-5 w-full w-3/4 md:w-96 max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
+            <div className=" flex flex-col items-center mb-6 text-md font-light text-gray-600 dark:text-white">
+                <HomeButton />
+                <p>Login to your account</p>
+            </div>
+            <div className="flex flex-col gap-4 item-center">
+                <Button
+                    label="Facebook"
+                    color="blue"
+                    fullwidth
+                    onClick={() => signIn('facebook')}
+                    icon={
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            className="mr-2"
+                            viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"></path>
+                        </svg>
+                    }
+                />
+                <Button
+                    label="Google"
+                    color="red"
+                    fullwidth
+                    onClick={() => signIn('google', { callbackUrl: `http://localhost:3000${props.callbackUrl}` })}
+                    icon={
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            className="mr-2"
+                            viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z"></path>
+                        </svg>
+                    }
+                />
+                <Button
+                    label="Github"
+                    color="gray"
+                    fullwidth
+                    onClick={() => signIn('github')}
+                    icon={
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            x="0px"
+                            y="0px"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 438.549 438.549"
+                            fill="currentColor"
+                        >
+                            <path
+                                d="M409.132,114.573c-19.608-33.596-46.205-60.194-79.798-79.8C295.736,15.166,259.057,5.365,219.271,5.365
               c-39.781,0-76.472,9.804-110.063,29.408c-33.596,19.605-60.192,46.204-79.8,79.8C9.803,148.168,0,184.854,0,224.63
               c0,47.78,13.94,90.745,41.827,128.906c27.884,38.164,63.906,64.572,108.063,79.227c5.14,0.954,8.945,0.283,11.419-1.996
               c2.475-2.282,3.711-5.14,3.711-8.562c0-0.571-0.049-5.708-0.144-15.417c-0.098-9.709-0.144-18.179-0.144-25.406l-6.567,1.136
@@ -62,26 +84,27 @@ const Signin = (props) => {
               c-6.191,7.521-13.901,13.85-23.131,18.986c-9.232,5.14-18.182,8.85-26.84,11.136c-8.662,2.286-18.415,4.004-29.263,5.146
               c9.894,8.562,14.842,22.077,14.842,40.539v60.237c0,3.422,1.19,6.279,3.572,8.562c2.379,2.279,6.136,2.95,11.276,1.995
               c44.163-14.653,80.185-41.062,108.068-79.226c27.88-38.161,41.825-81.126,41.825-128.906
-              C438.536,184.851,428.728,148.168,409.132,114.573z"/>
-            </svg>
-          }
-        />
-      </div>
-    </div>
-  )
-}
+              C438.536,184.851,428.728,148.168,409.132,114.573z"
+                            />
+                        </svg>
+                    }
+                />
+            </div>
+        </div>
+    );
+};
 export default Signin;
 
 export async function getServerSideProps(context: any) {
-  const session = await getSession(context);
-  console.log(context.query)
-  if (session && session.user) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: "/"
-      }
+    const session = await getSession(context);
+    console.log(context.query);
+    if (session && session.user) {
+        return {
+            redirect: {
+                permanent: false,
+                destination: '/',
+            },
+        };
     }
-  }
-  return { props: { callbackUrl: context.query.callbackUrl || "" } }
+    return { props: { callbackUrl: context.query.callbackUrl || '' } };
 }

@@ -14,12 +14,12 @@ const SideboardOutline = ({ setOpen, open, children }: SideboardOutline) => {
         <div
             className={` ${
                 !open && 'translate-x-full'
-            } flex flex-col z-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 w-full md:w-9/12 lg:w-3/5 space-y-6 pt-4 absolute inset-y-0 right-0 transform transition duration-200 ease-in-out `}
+            } flex flex-col  z-50 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 w-full md:w-9/12 lg:w-3/5 space-y-6 pt-4 absolute inset-y-0 right-0 transform transition duration-200 ease-in-out `}
             ref={sideboardRef}
         >
             {open && (
                 <button
-                    className="mobile-menu-button p-1 focus:outline-none text-white hover:bg-gray-600 absolute m-1 top-0 right-0 rounded"
+                    className="mobile-menu-button p-1 bg-gray-900 focus:outline-none text-white hover:bg-gray-600 absolute m-1 top-0 right-0 rounded"
                     onClick={() => setOpen(false)}
                 >
                     <svg

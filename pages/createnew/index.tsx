@@ -1,20 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { GetServerSideProps } from 'next';
 import { connectDb } from 'ssr/connectDb';
 import { ssrPipe } from 'ssr/ssrPipe';
 import { withSession } from 'ssr/withSession';
 import { withUser } from 'ssr/withUser';
 import { useRouter } from 'next/router';
-import { useCreate } from '@/hooks/useCreate';
 import ComponentLayout from '@/components/layout/ComponentLayout';
-import SidebarBottomItems from '@/components/layout/sidebar/SidebarBottomItems';
-import React from 'react';
-import DropdownSideBar from '@/components/layout/sidebar/DropdownSidebar';
-import { SidebarItem } from '@/components/layout/sidebar/SidebarItem';
-import { getBusiness } from 'ssr/getBusiness';
-import Dashboard from '@/components/layout/company/Dashboard';
-import BusinessInfo from '@/components/layout/company/BusinessInfo';
-import { BusinessStaffPosition, CompanyNav } from '@/components/layout/company/CompanyHeading';
-import { route } from 'next/dist/next-server/server/router';
+import React, { useContext, useEffect } from 'react';
+import { managecontext } from '@context/manage';
+import DashboardLayout from '@/components/layout/DashboardLayout';
+import Button from '@/components/elements/Button';
 
 interface Props {
     authenticated: boolean;
@@ -22,33 +17,29 @@ interface Props {
     user: any;
 }
 
-const CreateNew = ({ authenticated, workplaces, user }: Props) => {
+const CreateNew = (props: Props) => {
     const router = useRouter();
-    const routeChange = (url: string) => {
-        router.push(url);
-    };
-    console.log(router);
+    const { updateData, removeData } = useContext(managecontext);
+
+    useEffect(() => {
+        updateData(props);
+        return () => removeData();
+    }, []);
     return (
-        <ComponentLayout
-            authenticated={authenticated}
-            sidebarItems={
-                <>
-                    <DropdownSideBar label="Work Places">
-                        {workplaces &&
-                            workplaces.map(({ positionLabel, workplaceId, workplaceName }) => (
-                                <SidebarItem
-                                    key={workplaceId - workplaceName}
-                                    onClick={() => routeChange(`/dashboard/${workplaceId}/${positionLabel}/product/1`)}
-                                    label={workplaceName}
-                                />
-                            ))}
-                        <SidebarItem onClick={() => router.push('/dashboard/newitem')} label="New Places" />
-                    </DropdownSideBar>
-                    <SidebarItem onClick={() => router.push('/dashboard/newitem')} label="New Places" />
-                </>
-            }
-            sidebarItemsBottom={<SidebarBottomItems></SidebarBottomItems>}
-        ></ComponentLayout>
+        <ComponentLayout authenticated={props.authenticated}>
+            <>
+                <div className="p-2 pt-12">
+                    <div className="flex justify-center items-center p-10 h-36 bg-gray-100 dark:bg-gray-800">
+                        <Button label="Create New Copany" />
+                    </div>
+                </div>
+                <div className="p-2">
+                    <div className="flex justify-center items-center p-10 h-36 bg-gray-100 dark:bg-gray-800">
+                        <Button label="Join Company" color="green" />
+                    </div>
+                </div>
+            </>
+        </ComponentLayout>
     );
 };
 

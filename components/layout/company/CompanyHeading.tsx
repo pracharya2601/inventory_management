@@ -1,21 +1,27 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { productcontext } from '@context/data';
 import Image from 'next/image';
+import router, { useRouter } from 'next/router';
+import { useContext } from 'react';
 
-interface Props {
-    workplaceName: string;
-    logoUrl: string;
-    businessLogoClick?: () => void;
-}
+export const CompanyNav = () => {
+    const { company } = useContext(productcontext);
+    const router = useRouter();
+    const logoUrl = '/icon.png';
 
-export const CompanyNav = ({ workplaceName, logoUrl, businessLogoClick }: Props) => {
     return (
-        <span className="flex items-center gap-2 font-bold cursor-pointer" onClick={businessLogoClick}>
+        <span
+            className="flex items-center gap-2 font-bold cursor-pointer"
+            onClick={() => router.push(`/dashboard/${company._id}`)}
+        >
             <Image src={logoUrl} height={20} width={20} />
-            <p>{workplaceName}</p>
+            <p>{company.workplaceName}</p>
         </span>
     );
 };
 
-export const BusinessStaffPosition = ({ positionLabel }: { positionLabel: string }) => {
+export const BusinessStaffPosition = () => {
+    const { company } = useContext(productcontext);
     return (
         <p className="capitalize flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -25,7 +31,7 @@ export const BusinessStaffPosition = ({ positionLabel }: { positionLabel: string
                     clipRule="evenodd"
                 />
             </svg>
-            {positionLabel}
+            {'Admin'}
         </p>
     );
 };

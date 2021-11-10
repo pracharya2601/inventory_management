@@ -4,12 +4,13 @@ interface DropdownSideBarProps {
     children: JSX.Element | JSX.Element[];
     label: string;
     openStat?: boolean;
+    sideborder?: boolean;
 }
 
-const DropdownSideBar = ({ children, label, openStat }: DropdownSideBarProps) => {
+const DropdownSideBar = ({ children, label, openStat, sideborder }: DropdownSideBarProps) => {
     const [open, setOpen] = useState<boolean>(openStat || false);
     return (
-        <div className="border-l-3 border-r">
+        <div className={`${sideborder && 'border-l-3 border-r'} mb-2`}>
             <a
                 onClick={() => setOpen(!open)}
                 className="block py-2.5 px-4 rounded transition duration-200 bg-gray-200  dark:bg-gray-900 flex justify-between cursor-pointer"
