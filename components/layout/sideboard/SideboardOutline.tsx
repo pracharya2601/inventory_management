@@ -13,8 +13,7 @@ const SideboardOutline = ({ setOpen, open, children, size }: SideboardOutline) =
     useOutsideClick(sideboardRef, setOpen);
     return (
         <div
-            className={` ${!open && 'translate-x-full'
-                } 
+            className={` ${!open && 'translate-x-full'} 
             flex flex-col w-full 
             ${size === 'small' ? ' md:w-80 lg:w-96' : size === 'full' ? '' : 'md:w-9/12 lg:w-3/5'}
             z-50 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 space-y-6 pt-4 absolute inset-y-0 right-0 transform transition duration-200 ease-in-out `}

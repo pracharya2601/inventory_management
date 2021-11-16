@@ -1,12 +1,12 @@
-import { useState } from "react"
-import { useOutsideClick } from "./useOutsideClick";
+import { useState } from 'react';
+import { useOutsideClick } from './useOutsideClick';
 
 export const useDropdown = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const setOpen = (tp: boolean): void => {
-    setIsOpen(tp)
-  }
+    const setOpen = (tp: boolean): void => {
+        setIsOpen(tp);
+    };
 
-  return [isOpen, setOpen, setIsOpen] as const
-}
+    return [isOpen, setOpen, setIsOpen] as const;
+};

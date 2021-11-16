@@ -2,6 +2,7 @@
 import { productcontext } from '@context/data';
 import { uicontext } from '@context/ui';
 import React, { useContext } from 'react';
+import CreatenewLayout from './createnewLayout';
 import SideboardOutline from './sideboard/SideboardOutline';
 interface DashboardLayoutProps {
     children?: JSX.Element | JSX.Element[];
@@ -22,7 +23,15 @@ const DashboardLayout = ({
     if (whichDataToFetched === 'dashboard') {
         return (
             <div className="bg-gray-200 dark:bg-gray-900 min-h-full pt-10">
-                <p>Dashboard Context here</p>
+                <CreatenewLayout />
+            </div>
+        );
+    }
+    if (whichDataToFetched === 'company') {
+        return (
+            <div className="bg-gray-200 dark:bg-gray-900 min-h-full pt-10">
+                {businessHeading}
+                <CreatenewLayout />
             </div>
         );
     }
@@ -47,7 +56,7 @@ const DashboardLayout = ({
 };
 export default DashboardLayout;
 
-const TableHead = () => (
+export const TableHead = () => (
     <thead>
         <tr>
             <th

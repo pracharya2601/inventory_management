@@ -1,6 +1,6 @@
 import { getOneWorkPlace } from 'db/workplace';
 
-export const getBusiness = async ({ session, db, user, query, ...rest }) => {
+export const getBusiness = async ({ session, db, user, query, productCatagory, ...rest }) => {
     let company = null;
     const { workplaces } = user;
     const businessId = query && (query.businessId || query.id[0]);
@@ -12,8 +12,9 @@ export const getBusiness = async ({ session, db, user, query, ...rest }) => {
         session,
         query,
         db,
-        company,
+        company: { ...company, productCatagory },
         user,
+        productCatagory: [...productCatagory],
         ...rest,
     };
 };

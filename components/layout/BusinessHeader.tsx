@@ -24,7 +24,6 @@ const BusinessHeader = () => {
 
     const wrappedClass = clsx(`flex items-center gap-1 cursor-pointer py-1 px-2 border rounded ml-auto mr-3 `, {
         'hover:bg-green-900': !searchTerm,
-        'bg-red-500 hover:bg-red-900 animate-pulse': searchTerm && !searchBar,
     });
 
     const onSearchIconClick = () => {

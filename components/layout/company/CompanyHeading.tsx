@@ -1,27 +1,59 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import Button from '@/components/elements/Button';
+import { appContext } from '@context/appcontext';
 import { productcontext } from '@context/data';
 import Image from 'next/image';
 import router, { useRouter } from 'next/router';
 import { useContext } from 'react';
 
 export const CompanyNav = () => {
-    const { company } = useContext(productcontext);
+    const {
+        state: {
+            workplace: { companydata },
+        },
+    } = useContext(appContext);
     const router = useRouter();
     const logoUrl = '/icon.png';
 
     return (
         <span
             className="flex items-center gap-2 font-bold cursor-pointer"
-            onClick={() => router.push(`/dashboard/${company._id}`)}
+            onClick={() => router.push(`/dashboard/${companydata?._id}`)}
         >
             <Image src={logoUrl} height={20} width={20} />
-            <p>{company.workplaceName}</p>
+            <p>{companydata?.workplaceName}</p>
         </span>
     );
 };
 
+export const SearchIcon = ({ onClick }: { onClick: () => void }) => {
+    return (
+        <Button
+            size="xs"
+            customClass="ml-auto mr-3"
+            variant="outlined"
+            onClick={onClick}
+            icon={
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                </svg>
+            }
+        />
+    );
+};
+
 export const BusinessStaffPosition = () => {
-    const { company } = useContext(productcontext);
     return (
         <p className="capitalize flex items-center gap-1">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

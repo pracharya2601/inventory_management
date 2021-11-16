@@ -1,53 +1,75 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRouter } from 'next/dist/client/router';
 import Input from '@/components/elements/Input';
-import React, { useContext, useRef } from 'react';
-import { uicontext } from '@context/ui';
-import { productcontext } from '@context/data';
-import { useOutsideClick } from '@/hooks/useOutsideClick';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { appContext } from '@context/appcontext';
+import { action } from '@context/action';
+import { ProductList, ProductType } from '@/interface/Product/ProductInterface';
 
 const SearchBar = () => {
-    const { searchBar, searchTerm, setSearchTerm, setSearchBar } = useContext(uicontext);
-    const { initialData, setProductList, productCatagoryURL } = useContext(productcontext);
     const router = useRouter();
     const id = router.query.id as string[];
-    const dataType = id && id[2];
 
-    const urlPath = productCatagoryURL('search');
+    const [searchTerm, setSearchTerm] = useState('');
 
-    const searchBarRef = useRef(null);
-    useOutsideClick(searchBarRef, setSearchBar);
+    const {
+        state: {
+            workplace: {
+                productList: { dataType, data, initialData },
+            },
+            route: { asPath, pathName },
+        },
+        dispatch,
+    } = useContext(appContext);
+
+    useEffect(() => {
+        const s = pathName?.search as string;
+        if (s) {
+            setSearchTerm(s);
+        }
+    }, []);
 
     const onSubmitHandle = (e) => {
         e.preventDefault();
-        setProductList(initialData);
-        router.push(urlPath + '?search=' + searchTerm + '&&dataType=' + dataType);
+        console.log('Submitted');
+        router.push(`/dashboard/${pathName?.id[0]}/${pathName?.id[1]}/${pathName?.id[2]}/1?search=${searchTerm}`);
     };
 
     const onHandleChange = (e) => {
         const { value } = e.target;
         const searchValue = value.toLowerCase();
-        const filteredData = initialData.filter((data) => {
+        setSearchTerm(value);
+        const filteredData: ProductList = initialData.filter((data: ProductType) => {
             return data.name.toLowerCase().search(searchValue) != -1;
         });
-        setSearchTerm(value);
-        setProductList(filteredData);
+        dispatch(
+            action.getSearchFilter({
+                filteredData,
+                dataType: 'search',
+            }),
+        );
     };
+
     const handleClear = () => {
-        setSearchBar(false);
         setSearchTerm('');
-        setProductList(initialData);
-        router.push(urlPath);
+        dispatch(
+            action.toggleAction({
+                id: 'viewSearchBar',
+                open: false,
+            }),
+        );
+        dispatch(action.getSearchFilter({ filteredData: initialData, dataType: dataType }));
+        if (pathName?.search) {
+            router.push(`/dashboard/${pathName?.id[0]}/${pathName?.id[1]}/${pathName?.id[2]}/1`);
+        }
     };
 
     return (
-        <span
-            className={`p-2 w-full px-5 py-12 border bg-gray-300 dark:bg-gray-900 fixed top-0 z-50 shadow-lg`}
-            ref={searchBarRef}
-        >
+        <span className={`p-2 w-full px-5 py-12 border bg-gray-300 dark:bg-gray-900 fixed top-0 left-0 z-50 shadow-lg`}>
             <form onSubmit={onSubmitHandle}>
                 <Input
                     value={searchTerm}
-                    placeholder={`Searching on catagory ${dataType} and press enter or return`}
+                    placeholder={`Searching on catagory ${dataType} and press Enter or return`}
                     onChange={onHandleChange}
                     onClear={() => handleClear()}
                     autofocus

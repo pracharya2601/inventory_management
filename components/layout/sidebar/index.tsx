@@ -2,7 +2,6 @@ import { useOutsideClick } from '@/hooks/useOutsideClick';
 import Link from 'next/dist/client/link';
 import { useRouter } from 'next/router';
 import React, { useRef } from 'react';
-import Workplaces from '../user/Workplaces';
 import SidebarBottomItems from './SidebarBottomItems';
 import { SidebarItem } from './SidebarItem';
 
@@ -24,7 +23,6 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
             } flex flex-col z-50 bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform transition duration-200 ease-in-out`}
             ref={sidebarRef}
         >
-            {/* <div className={`${!open && '-translate-x-full'} z-10 bg-gray-800 text-blue-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform lg:relative lg:translate-x-0 transition duration-200 ease-in-out`} ref={sidebarRef}> */}
             <button
                 className={`bg-${
                     open ? 'red' : 'blue'
@@ -78,27 +76,6 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
             <nav className="flex-1 flex flex-col justify-between h-full overflow-x-visible overflow-y-auto">
                 <span className="pb-1">
                     <SidebarItem
-                        onClick={() => router.push('/')}
-                        label="Home Page"
-                        markIcon={router.asPath === '/' ? true : false}
-                        icon={
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="h-6 w-6"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                                />
-                            </svg>
-                        }
-                    />
-                    <SidebarItem
                         onClick={() => router.push('/dashboard')}
                         label="Dashboard"
                         markIcon={router.asPath === '/dashboard' ? true : false}
@@ -140,7 +117,6 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
                             </svg>
                         }
                     />
-                    <Workplaces />
                     {sidebarItems}
                 </span>
                 <span className="gap-2 border-t-2 pt-1">

@@ -1,74 +1,71 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
-import { useRouter } from 'next/dist/client/router';
-import ComponentLayout from '@/components/layout/ComponentLayout';
-import DashboardLayout from '@/components/layout/DashboardLayout';
-import BusinessHeader from '@/components/layout/BusinessHeader';
-import React, { useContext, useEffect, useState } from 'react';
-import ProductList from '@/components/layout/product/ProductList';
-import ProductNavbar from '@/components/layout/product/ProductNavbar';
-import { uicontext } from '@context/ui';
-import { productcontext } from '@context/data';
-import { usercontext } from '@context/user';
-import SearchBar from '@/components/layout/searchbar';
+import React, { useContext, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { ssrPipe } from 'ssr/ssrPipe';
 import { withSession } from 'ssr/withSession';
 import { connectDb } from 'ssr/connectDb';
 import { withUser } from 'ssr/withUser';
 import { getProduct } from 'ssr/getProduct';
-import Workplaces from '@/components/layout/user/Workplaces';
-
+import { useFirstRender } from '@/hooks/useFirstRender';
+import { action } from '@context/action';
+import ComponentWrapper from '@/components/layout/ComponentWrapper';
+import BusinessInfo from '@/components/layout/company/BusinessInfo';
+import { BusinessStaffPosition, CompanyNav } from '@/components/layout/company/CompanyHeading';
+import Dashboard from '@/components/layout/company/Dashboard';
+import { appContext } from '@context/appcontext';
+import { TableHead } from '@/components/layout/DashboardLayout';
+import { ProductType } from '@/interface/Product/ProductInterface';
+import ProductRow from '@/components/layout/product/ProductRow';
+import CreatenewLayout from '@/components/layout/createnewLayout';
+import ProductLayout from '@/components/layout/product/ProductLayout';
 interface Props {
     productList: any;
     company: any;
     authenticated: boolean;
     workplaces: any;
     user: any;
-    productCatagory: any;
+    productCatagory: any[];
 }
 
-const Dashboard = ({ productList, company, authenticated, workplaces, user, productCatagory }: Props) => {
-    const router = useRouter();
+const DashboardPage = ({ authenticated, workplaces, user, company, productList, productCatagory }: Props) => {
     const {
-        isDataFetched,
-        setProductList,
-        setInitialData,
-        setCompany,
-        setAuthenticated,
-        setProductCatagoryList,
-        whichDataToFetched,
-        viewingItem,
-    } = useContext(productcontext);
+        state: {
+            workplace: {
+                productList: { data, dataType },
+            },
+            route: { renderingPage },
+        },
+    } = useContext(appContext);
 
-    const { setUser, setWorkplaces } = useContext(usercontext);
-    console.log(router);
-    useEffect(() => {
-        setUser(user);
-        setWorkplaces(workplaces);
-        setProductList(productList);
-        setInitialData(productList);
-        setCompany(company);
-        setAuthenticated(authenticated);
-        setProductCatagoryList(productCatagory);
-    }, []);
-
-    const { searchBar, searchTerm } = useContext(uicontext);
-
-    const renderData = (
-        <>
-            {searchBar && <SearchBar />}
-            <DashboardLayout
-                businessHeading={<BusinessHeader />}
-                productHeading={<ProductNavbar />}
-                businessData={<ProductList key={new Date().toISOString() + searchTerm} />}
-            ></DashboardLayout>
-        </>
+    useFirstRender(
+        action.checkAuthenticated({ authenticated }),
+        action.getUser({ userdata: user }),
+        action.getUserWorkplaces({ workplaces }),
+        action.getCompanyData({ companydata: company }),
+        action.getProduct(productList),
+        action.getProductCatagory({ productCatagory }),
     );
 
-    return <ComponentLayout authenticated={authenticated}>{renderData}</ComponentLayout>;
+    const renderdata =
+        renderingPage === 'productlist' ? (
+            <Dashboard
+                businessHeading={<BusinessInfo companyNav={<CompanyNav />} staffPosition={<BusinessStaffPosition />} />}
+            >
+                <ProductLayout>
+                    {data.map((item: ProductType) => (
+                        <ProductRow key={item._id} item={item} />
+                    ))}
+                </ProductLayout>
+            </Dashboard>
+        ) : (
+            <Dashboard>
+                <CreatenewLayout />
+            </Dashboard>
+        );
+
+    return <ComponentWrapper>{renderdata}</ComponentWrapper>;
 };
 export const getServerSideProps: GetServerSideProps = ssrPipe(withSession, connectDb, withUser, getProduct);
 
-export default Dashboard;
+export default DashboardPage;

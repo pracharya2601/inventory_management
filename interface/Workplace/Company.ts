@@ -6,11 +6,26 @@ export interface SType {
     joined: boolean;
 }
 
+export interface ProductCatagory {
+    label: string;
+    id: string;
+}
+
+export interface EmployeeType {
+    email: string;
+    fullName: string;
+    joined: boolean;
+    joinedDate: string;
+    userId: string;
+}
+
 export interface CompanyTypes {
     _id: string;
     workplaceName: string;
+    workplaceCode: string;
+    productCatagroy: ProductCatagory[] | [];
     createdAt: string;
     logoUrl: string;
-    admin: SType;
-    staffs: SType;
+    admin: EmployeeType[];
+    staffs: EmployeeType[] | [];
 }

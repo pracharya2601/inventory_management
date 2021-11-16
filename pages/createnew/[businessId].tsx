@@ -5,38 +5,40 @@ import { connectDb } from 'ssr/connectDb';
 import { ssrPipe } from 'ssr/ssrPipe';
 import { withSession } from 'ssr/withSession';
 import { withUser } from 'ssr/withUser';
-import ComponentLayout from '@/components/layout/ComponentLayout';
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { getBusiness } from 'ssr/getBusiness';
 import Dashboard from '@/components/layout/company/Dashboard';
+import ComponentWrapper from '@/components/layout/ComponentWrapper';
+import { useFirstRender } from '@/hooks/useFirstRender';
 import BusinessInfo from '@/components/layout/company/BusinessInfo';
 import { BusinessStaffPosition, CompanyNav } from '@/components/layout/company/CompanyHeading';
-import { managecontext } from '@context/manage';
-import BusinessHeader from '@/components/layout/BusinessHeader';
-import { productcontext } from '@context/data';
+import { action } from '@context/action';
 
 interface Props {
     company: any;
     authenticated: boolean;
     workplaces: any;
     user: any;
+    productCatagory: any[];
 }
 
-const CreateNewItem = (props: Props) => {
-    const { updateData, removeData } = useContext(managecontext);
-    const { company } = useContext(productcontext);
-    useEffect(() => {
-        updateData(props);
-        return () => removeData();
-    }, []);
+const CreateNewItem = ({ authenticated, workplaces, user, company, productCatagory }: Props) => {
+    useFirstRender(
+        action.checkAuthenticated({ authenticated }),
+        action.getUser({ userdata: user }),
+        action.getUserWorkplaces({ workplaces }),
+        action.getCompanyData({ companydata: company }),
+        action.getProductCatagory({ productCatagory }),
+    );
 
-    console.log(company);
     return (
-        <ComponentLayout authenticated={props.authenticated}>
-            <Dashboard businessHeading={<BusinessHeader />}>
+        <ComponentWrapper>
+            <Dashboard
+                businessHeading={<BusinessInfo companyNav={<CompanyNav />} staffPosition={<BusinessStaffPosition />} />}
+            >
                 <span>Hello</span>
             </Dashboard>
-        </ComponentLayout>
+        </ComponentWrapper>
     );
 };
 

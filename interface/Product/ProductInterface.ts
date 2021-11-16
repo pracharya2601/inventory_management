@@ -55,6 +55,4 @@ export interface ProductType {
     sizes: string[];
 }
 
-export interface ProductList {
-    data: ProductType[];
-}
+export type ProductList = ProductType[] | [];

@@ -5,7 +5,6 @@ import Button from '@/components/elements/Button';
 import { HomeButton } from '@/components/layout/NavButtons';
 
 const Signin = (props) => {
-    console.log('is this undefinex', props.callbackUrl);
     return (
         <div className="flex flex-col m-auto mt-5 w-full w-3/4 md:w-96 max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
             <div className=" flex flex-col items-center mb-6 text-md font-light text-gray-600 dark:text-white">
