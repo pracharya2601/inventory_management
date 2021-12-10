@@ -1,18 +1,22 @@
 interface List {
-    key: string;
+    id: number;
+    desckey: string;
     desc: string;
 }
 interface ProductDetail {
-    key: string;
+    id: number;
+    detailkey: string;
     detail: string;
 }
 
 interface Guide {
+    id: number;
     type: string;
     link: string;
 }
 
 export interface Images {
+    id: number;
     url: string;
     color: string;
 }
@@ -29,6 +33,7 @@ interface CreatedBy {
 }
 
 export interface Skus {
+    id: number;
     color: string;
     count: number;
     price: number;
@@ -38,11 +43,9 @@ export interface Skus {
 export interface ProductType {
     _id: string;
     name: string;
-    description: {
-        base: string;
-        list: List[] | [];
-    };
-    guide: Guide | [];
+    description: string;
+    listDescription: List[];
+    guide: Guide[];
     images: Images[];
     postedBy: PostedBy;
     createdBy: CreatedBy;
@@ -51,8 +54,24 @@ export interface ProductType {
     productdetail: ProductDetail[];
     catagory: string[];
     skus: Skus[];
-    colors: string[];
-    sizes: string[];
+    productType: 'stock' | 'inventory';
+}
+
+export interface CreateDataType {
+    name: string;
+    description: string;
+    listDescription: List[];
+    guide: Guide[];
+    images: Images[];
+    productdetail: ProductDetail[];
+    catagory: string[] | [];
+    skus: Skus[];
+    productType: string;
+}
+
+export interface FormDataType {
+    updateData: ProductType;
+    createData: CreateDataType;
 }
 
 export type ProductList = ProductType[] | [];

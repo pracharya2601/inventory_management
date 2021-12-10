@@ -92,7 +92,7 @@ const DropDownMenu = (props: Props) => {
             {(props.forceOpen || isOpen) && (
                 <div
                     className={clsx(
-                        'origin-top-right absolute z-50',
+                        'origin-top-right absolute z-100',
                         {
                             'right-0': props.dropSide === 'left' || !props.dropSide,
                             'left-0': props.dropSide === 'right',
@@ -122,6 +122,7 @@ const DropDownMenu = (props: Props) => {
                             })}
                         {props.children &&
                             React.Children.map(props.children, (child) => {
+                                if (!child) return;
                                 return React.cloneElement(child, { onClose: onClickItenHandle });
                             })}
                     </div>
@@ -146,7 +147,7 @@ export const DropDownItem = ({ label, icon, desc, onClick, onClose }: MeniItemPr
             )}
             role="menuitem"
             onClick={() => {
-                onClick();
+                onClick && onClick();
                 onClose && onClose();
             }}
         >

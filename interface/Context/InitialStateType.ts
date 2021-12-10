@@ -1,12 +1,12 @@
-import { UserSession } from '../AuthSession';
+import { UserData } from '../AuthSession';
 import { WorkplaceTypes } from '../Workplace/WorkplaceListTypes';
-import { ProductType } from '../Product/ProductInterface';
-import { CompanyTypes } from '../Workplace/Company';
+import { FormDataType, Images, ProductType, Skus } from '../Product/ProductInterface';
+import { CompanyTypes, CompanyVariants } from '../Workplace/Company';
 import { ProductCatagoryType } from '../Product/ProductCatagory';
 
 export interface UserDataType {
     authenticated: boolean;
-    userdata: UserSession;
+    userdata: UserData;
     workplaces: WorkplaceTypes[] | [];
 }
 
@@ -16,8 +16,43 @@ export interface ProductDispatchType {
     initialData?: ProductType[] | [];
 }
 
+export interface ActiveColorType {
+    color: string;
+    index: number;
+    stat: boolean;
+}
+export interface ActiveSizeType {
+    size: string;
+    index: number;
+    stat: boolean;
+}
+
+export interface PreviewColors {
+    color: string;
+    stat: boolean;
+}
+export interface PreviewSizes {
+    size: string;
+    stat: boolean;
+}
+
+export interface PreviewDataType {
+    activeImage: string;
+    colors: PreviewColors[] | [];
+    sizes: PreviewSizes[] | [];
+    activeColor: ActiveColorType;
+    activeSize: ActiveSizeType;
+    count: number;
+    skews: Skus[];
+    images: Images[];
+}
+
+export interface PreviewType {
+    [key: string]: PreviewDataType;
+}
 export interface WorkplaceDataType {
     companydata: CompanyTypes | null;
+    variant: CompanyVariants;
     productCatagory: ProductCatagoryType[] | [];
     productList: ProductDispatchType;
     singleData: ProductType | null;
@@ -47,4 +82,5 @@ export interface InitialStateType {
     workplace: WorkplaceDataType;
     ui: UiType;
     route: RouteType;
+    formData: FormDataType;
 }

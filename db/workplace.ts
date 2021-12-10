@@ -1,19 +1,36 @@
 import { StaffType } from '@/interface/Workplace/StaffType';
 import { Db, ObjectId } from 'mongodb';
 
-export const getOneWorkPlace = async (db: Db, id: string, userType: StaffType, userId: string) => {
-    const hex = /[0-9A-Fa-f]{6}/g;
-    const checkedId = hex.test(id) ? ObjectId(id) : id;
-    console.log('dklsjdlksjdlk...........................', id, checkedId);
+export const getOneWorkPlace = async (db: Db, id: string, userId: string) => {
     try {
         const data = await db
             .collection('workplaces')
-            .find({ _id: ObjectId(id) }, { [`${userType}`]: { $elemMatch: { userId: userId } } })
+            .find({
+                $and: [
+                    { _id: ObjectId(id) },
+                    {
+                        staffs: {
+                            $elemMatch: { userId: userId },
+                        },
+                    },
+                ],
+            })
             .toArray();
-        return JSON.stringify(data);
+        return data[0];
     } catch (e) {
         console.log('get one workplace error', e);
         return;
+    }
+};
+
+export const checkWorkplace = async (db: Db, id: string, workplaceId: string) => {
+    try {
+        const data = await db.collection('userworkplaces').findOne({ _id: ObjectId(id) });
+        if (data && data.workplacesIds.indexOf(workplaceId) !== -1) {
+            return true;
+        }
+    } catch (e) {
+        return false;
     }
 };
 
@@ -28,14 +45,14 @@ export const createWorkPlace = async (
         _id: _id,
         ...body,
         createdAt: newDate,
-        admin: [
+        staffs: [
             {
                 ...user,
                 joined: true,
                 joinedDate: newDate,
+                positionLabel: 'admin',
             },
         ],
-        staffs: [],
     };
     try {
         //await db.collection('workplaces').insertOne(data);
@@ -53,110 +70,56 @@ export const addNewStaff = async (db: Db, workspaceId: string, userType: StaffTy
         positionLabel: userType,
         joined: false,
     };
-    if (userType == 'admin') {
-        try {
-            await db.collection('workplaces').updateOne(
-                {
-                    _id: workspaceId,
+    try {
+        await db.collection('workplaces').updateOne(
+            {
+                _id: workspaceId,
+            },
+            {
+                $push: {
+                    staffs: data,
                 },
-                {
-                    $push: {
-                        admin: data,
-                    },
-                },
-            );
-            return data;
-            // send email to user here
-        } catch (e) {
-            return;
-        }
-    } else {
-        try {
-            await db.collection('workplaces').updateOne(
-                {
-                    _id: workspaceId,
-                },
-                {
-                    $push: {
-                        staffs: data,
-                    },
-                },
-            );
-            return data;
-            // send email to user here
-        } catch (e) {
-            return;
-        }
+            },
+        );
+        return data;
+        // send email to user here
+    } catch (e) {
+        return;
     }
 };
 
 export const deleteUnverifiedStaff = async (db: Db, workspaceId: string, userType: StaffType, email: string) => {
-    if (userType == 'admin') {
-        try {
-            await db.collection('workplaces').updateOne(
-                {
-                    _id: workspaceId,
+    try {
+        await db.collection('workplaces').updateOne(
+            {
+                _id: workspaceId,
+            },
+            {
+                $pull: {
+                    staffs: { email: email },
                 },
-                {
-                    $pull: {
-                        admin: { email: email },
-                    },
-                },
-            );
-            return email;
-        } catch (e) {
-            return;
-        }
-    } else {
-        try {
-            await db.collection('workplaces').updateOne(
-                {
-                    _id: workspaceId,
-                },
-                {
-                    $pull: {
-                        staffs: { email: email },
-                    },
-                },
-            );
-            return email;
-        } catch (e) {
-            return;
-        }
+            },
+        );
+        return email;
+    } catch (e) {
+        return;
     }
 };
+
 export const deleteVerifiedStaff = async (db: Db, workspaceId: string, userType: StaffType, userId: string) => {
-    if (userType == 'admin') {
-        try {
-            await db.collection('workplaces').updateOne(
-                {
-                    _id: workspaceId,
+    try {
+        await db.collection('workplaces').updateOne(
+            {
+                _id: workspaceId,
+            },
+            {
+                $pull: {
+                    staffs: { userId: userId },
                 },
-                {
-                    $pull: {
-                        admin: { userId: userId },
-                    },
-                },
-            );
-            return userId;
-        } catch (e) {
-            return;
-        }
-    } else {
-        try {
-            await db.collection('workplaces').updateOne(
-                {
-                    _id: workspaceId,
-                },
-                {
-                    $pull: {
-                        staffs: { userId: userId },
-                    },
-                },
-            );
-            return userId;
-        } catch (e) {
-            return;
-        }
+            },
+        );
+        return userId;
+    } catch (e) {
+        return;
     }
 };

@@ -17,6 +17,7 @@ export interface EmployeeType {
     joined: boolean;
     joinedDate: string;
     userId: string;
+    positionLabel: string;
 }
 
 export interface CompanyTypes {
@@ -26,6 +27,13 @@ export interface CompanyTypes {
     productCatagroy: ProductCatagory[] | [];
     createdAt: string;
     logoUrl: string;
-    admin: EmployeeType[];
-    staffs: EmployeeType[] | [];
+    staffs: EmployeeType[];
+    variantColors: string[];
+    variantSizes: string[];
+}
+
+export interface CompanyVariants {
+    _id: string;
+    colorVariants: string[] | [];
+    sizeVariants: string[] | [];
 }

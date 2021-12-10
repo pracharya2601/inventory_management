@@ -5,9 +5,10 @@ import SideboardOutline from './SideboardOutline';
 interface SideBoardProps {
     label?: string | JSX.Element;
     children?: JSX.Element | JSX.Element[];
+    size?: 'small' | 'normal' | 'full';
 }
 
-const SideBoard = ({ label, children }: SideBoardProps) => {
+const SideBoard = ({ label, children, size }: SideBoardProps) => {
     const sideboardRef = useRef(null);
     const [open, setOpen] = useState(false);
     useOutsideClick(sideboardRef, setOpen);
@@ -19,7 +20,7 @@ const SideBoard = ({ label, children }: SideBoardProps) => {
                     {label}
                 </div>
             )}
-            <SideboardOutline setOpen={setOpen} open={open}>
+            <SideboardOutline setOpen={setOpen} open={open} size={size}>
                 {children}
             </SideboardOutline>
         </>

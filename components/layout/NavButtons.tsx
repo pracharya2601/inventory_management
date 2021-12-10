@@ -1,8 +1,8 @@
+import { action } from '@context/action';
+import { appContext } from '@context/appcontext';
 import { signOut, signIn } from 'next-auth/client';
-import Link from 'next/dist/client/link';
-import React from 'react';
-import { useContext } from 'react';
-import { uicontext } from '@context/ui';
+import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
 
 export const MenuIconButton = ({ setOpen }: { setOpen: (stat: boolean) => void }) => (
     <button
@@ -21,16 +21,20 @@ export const MenuIconButton = ({ setOpen }: { setOpen: (stat: boolean) => void }
     </button>
 );
 
-export const HomeButton = () => (
-    <Link href="/">
-        <a href="" className="text-gray-800 dark:text-white flex items-center space-x-2 px-2">
+export const HomeButton = () => {
+    const router = useRouter();
+    return (
+        <a
+            onClick={() => router.push('/')}
+            className="text-gray-800 dark:text-white flex items-center space-x-2 px-2 cursor-pointer"
+        >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
             </svg>
             <span className="text-lg font-extrabold">Inventory</span>
         </a>
-    </Link>
-);
+    );
+};
 
 export const NotificationButton = ({ setOpen }: { setOpen: (i: boolean) => void }) => {
     return (
@@ -46,9 +50,13 @@ export const NotificationButton = ({ setOpen }: { setOpen: (i: boolean) => void 
     );
 };
 
-export const ProfileButton = ({ setOpen }: { setOpen: (i: boolean) => void }) => {
+export const ProfileButton = () => {
+    const { dispatch } = useContext(appContext);
     return (
-        <div className=" ml-auto cursor-pointer hover:ring-2 ring-blue rounded-full" onClick={() => setOpen(true)}>
+        <div
+            className=" ml-auto cursor-pointer hover:ring-2 ring-blue rounded-full"
+            onClick={() => dispatch(action.toggleAction({ id: 'account', open: true }))}
+        >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path
                     fillRule="evenodd"
@@ -83,25 +91,28 @@ export const SigninButton = () => (
     </button>
 );
 
-export const SignoutButton = () => (
-    <button
-        className="mobile-menu-button font-bold uppercase text-red-500 hover:text-red-700 p-2 px-3 text-xs items-center focus:outline-none focus:bg-gray-700 ml-auto flex "
-        onClick={() => signOut()}
-    >
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mr-px"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+export const SignoutButton = () => {
+    const router = useRouter();
+    return (
+        <button
+            className="mobile-menu-button font-bold uppercase text-red-500 hover:text-red-700 p-2 px-3 text-xs items-center focus:outline-none focus:bg-gray-700 ml-auto flex "
+            onClick={() => signOut({ callbackUrl: router.asPath })}
         >
-            <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
-        </svg>
-        Logout
-    </button>
-);
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 mr-px"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+            >
+                <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+            </svg>
+            Logout
+        </button>
+    );
+};

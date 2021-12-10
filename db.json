@@ -1,71 +1,70 @@
 [
   {
-    "_id": "6117020915ea99408aba110f",
-    "name": "Nolan Catalina Hahn",
-    "description": {
-      "base": "Eiusmod id cillum velit eu magna qui ullamco ut dolor ad tempor elit. Ipsum culpa ullamco nulla labore aliquip nisi deserunt nulla irure tempor duis. Nulla Lorem commodo ex fugiat adipisicing. Est ullamco voluptate aliquip enim amet laborum pariatur dolore laborum quis. Labore elit eu ex sit ex exercitation proident Lorem laboris velit mollit.\r\n",
-      "list": [
-        {
-          "key": "Material",
-          "desc": "irure"
-        },
-        {
-          "key": "Featuree",
-          "desc": "ad"
-        },
-        {
-          "key": "Brand",
-          "desc": "id"
-        }
-      ]
-    },
+    "_id": "61ab0ebedbd498a7ec5bf165",
+    "name": "Nelda Albert",
+    "description": "Nulla laborum sit in minim dolore amet incididunt non non non reprehenderit non irure in. Tempor Lorem reprehenderit do mollit aliquip do consectetur labore mollit magna dolore reprehenderit tempor in. In aliquip excepteur aliquip nostrud excepteur tempor non tempor non. Quis incididunt pariatur proident dolore. Id ullamco commodo sint voluptate do eiusmod dolor consequat aute incididunt ex adipisicing mollit.\r\n",
+    "listDescription": [
+      {
+        "id": 0,
+        "desckey": "eiusmod",
+        "desc": "est magna labore pariatur sunt voluptate laborum amet labore culpa"
+      },
+      {
+        "id": 1,
+        "desckey": "aliqua",
+        "desc": "incididunt reprehenderit Lorem quis elit enim mollit veniam voluptate labore"
+      },
+      {
+        "id": 2,
+        "desckey": "pariatur",
+        "desc": "id est officia reprehenderit ad qui sit nostrud officia excepteur"
+      }
+    ],
     "productdetail": [
       {
-        "key": "Manufactor",
-        "detail": "nulla"
+        "id": 0,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Manufactor",
-        "detail": "in"
+        "id": 1,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Model Number",
-        "detail": "id"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "Lorem"
-      },
-      {
-        "key": "Dimension",
-        "detail": "ullamco"
+        "id": 2,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
+    "guide": {
+      "id": 1,
+      "type": "pdf",
+      "link": "prakashacharya.com"
+    },
     "catagory": [
-      "makeup",
-      "women",
-      "acessories"
+      "id",
+      "aliquip",
+      "aliqua"
     ],
     "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
+      "name": "Vuntu Inventory",
+      "id": "618d600cc71b2ca07b352e8cll"
     },
     "postedAt": "2021-08-07T04:15:31.531Z",
     "updatedAt": [
       {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
+        "date": "2017-11-25T03:02:26 +08:00",
+        "updatedBy": "61a83205e5abcaba11104c00"
+      },
+      {
+        "date": "2016-09-28T02:07:15 +07:00",
+        "updatedBy": "61a83205ca117b1c114359b4"
       }
     ],
     "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
+      "name": "Bernadine",
+      "id": "61a83205cd4b2f5e6b41bf9f",
       "imageUrl": "http://placehold.it/32x32"
     },
     "images": [
@@ -82,167 +81,167 @@
         "color": "default"
       }
     ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
     "skus": [
       {
+        "id": 1,
         "color": "red",
         "size": "small",
         "count": 2,
         "price": 150
       },
       {
+        "id": 2,
         "color": "red",
         "size": "medium",
         "count": 50,
         "price": 150
       },
       {
+        "id": 3,
         "color": "red",
         "size": "large",
         "count": 50,
         "price": 150
       },
       {
+        "id": 4,
         "color": "blue",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 5,
         "color": "blue",
         "size": "large",
         "count": 50,
         "price": 200
       },
       {
+        "id": 6,
         "color": "green",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 7,
         "color": "green",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 8,
         "color": "green",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 9,
         "color": "purple",
         "size": "large",
         "count": 10,
         "price": 160
       },
       {
+        "id": 10,
         "color": "purple",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 11,
         "color": "grey",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 12,
         "color": "grey",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 13,
         "color": "grey",
         "size": "large",
         "count": 10,
         "price": 160
       }
-    ]
+    ],
+    "productType": "stock"
   },
   {
-    "_id": "611702098b9c9338bb0512c8",
-    "name": "Randolph Kane Curry",
-    "description": {
-      "base": "Velit proident mollit fugiat velit esse. Nostrud qui dolore adipisicing magna incididunt proident dolore proident eu culpa non adipisicing. Ea irure amet ex culpa pariatur eiusmod proident ut et excepteur irure amet aliquip. Lorem tempor esse duis ex aute commodo ad.\r\n",
-      "list": [
-        {
-          "key": "Material",
-          "desc": "voluptate"
-        },
-        {
-          "key": "Brand",
-          "desc": "nulla"
-        },
-        {
-          "key": "Featuree",
-          "desc": "fugiat"
-        }
-      ]
-    },
+    "_id": "61ab0ebef6e4cd8cd66c9cbc",
+    "name": "Karina Hernandez",
+    "description": "Culpa amet in sit nulla duis est laboris officia magna laboris Lorem velit cillum. Enim labore ut eiusmod sint qui aliqua. Adipisicing do proident et veniam dolor nisi velit non incididunt id. Anim occaecat ea dolor anim id cillum.\r\n",
+    "listDescription": [
+      {
+        "id": 0,
+        "desckey": "aliquip",
+        "desc": "qui anim mollit est et tempor veniam proident occaecat aliquip"
+      },
+      {
+        "id": 1,
+        "desckey": "amet",
+        "desc": "incididunt enim sint deserunt id excepteur occaecat ea sit amet"
+      },
+      {
+        "id": 2,
+        "desckey": "dolor",
+        "desc": "aliquip aliquip aliqua reprehenderit occaecat veniam elit commodo mollit nostrud"
+      }
+    ],
     "productdetail": [
       {
-        "key": "Country of Origin",
-        "detail": "et"
+        "id": 0,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Model Number",
-        "detail": "in"
+        "id": 1,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Country of Origin",
-        "detail": "eiusmod"
-      },
-      {
-        "key": "Model Number",
-        "detail": "ex"
-      },
-      {
-        "key": "Dimension",
-        "detail": "do"
+        "id": 2,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
+    "guide": {
+      "id": 1,
+      "type": "pdf",
+      "link": "prakashacharya.com"
+    },
     "catagory": [
-      "makeup",
-      "women",
-      "acessories"
+      "consectetur",
+      "officia",
+      "ipsum"
     ],
     "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
+      "name": "Vuntu Inventory",
+      "id": "618d600cc71b2ca07b352e8ccc"
     },
     "postedAt": "2021-08-07T04:15:31.531Z",
     "updatedAt": [
       {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
+        "date": "2017-11-25T03:02:26 +08:00",
+        "updatedBy": "61a83205e5abcaba11104c00"
+      },
+      {
+        "date": "2016-09-28T02:07:15 +07:00",
+        "updatedBy": "61a83205ca117b1c114359b4"
       }
     ],
     "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
+      "name": "Bernadine",
+      "id": "61a83205cd4b2f5e6b41bf9f",
       "imageUrl": "http://placehold.it/32x32"
     },
     "images": [
@@ -259,167 +258,167 @@
         "color": "default"
       }
     ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
     "skus": [
       {
+        "id": 1,
         "color": "red",
         "size": "small",
-        "count": 50,
+        "count": 2,
         "price": 150
       },
       {
+        "id": 2,
         "color": "red",
         "size": "medium",
         "count": 50,
         "price": 150
       },
       {
+        "id": 3,
         "color": "red",
         "size": "large",
         "count": 50,
         "price": 150
       },
       {
+        "id": 4,
         "color": "blue",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 5,
         "color": "blue",
         "size": "large",
         "count": 50,
         "price": 200
       },
       {
+        "id": 6,
         "color": "green",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 7,
         "color": "green",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 8,
         "color": "green",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 9,
         "color": "purple",
         "size": "large",
         "count": 10,
         "price": 160
       },
       {
+        "id": 10,
         "color": "purple",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 11,
         "color": "grey",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 12,
         "color": "grey",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 13,
         "color": "grey",
         "size": "large",
         "count": 10,
         "price": 160
       }
-    ]
+    ],
+    "productType": "inventory"
   },
   {
-    "_id": "61170209cc40f1a3b19d8e22",
-    "name": "Fern Ray Reynolds",
-    "description": {
-      "base": "Eu veniam magna ad aute laborum pariatur proident laboris incididunt sit minim laborum. Ut irure reprehenderit elit nulla deserunt proident laboris incididunt cillum. Amet nulla proident sit Lorem id sunt. Sunt non voluptate ea ea ea minim duis et ex enim minim. Ut non reprehenderit et dolor ex aute sit aute excepteur cillum veniam cupidatat duis.\r\n",
-      "list": [
-        {
-          "key": "Brand",
-          "desc": "aliqua"
-        },
-        {
-          "key": "Brand",
-          "desc": "sunt"
-        },
-        {
-          "key": "Featuree",
-          "desc": "ex"
-        }
-      ]
-    },
+    "_id": "61ab0ebe82e4ec02fa1bd98f",
+    "name": "Mendez Carver",
+    "description": "Ex laboris eu laborum id eu. Irure tempor occaecat voluptate consectetur anim aliqua commodo velit. Veniam amet non ipsum nisi commodo adipisicing amet aute magna sit ea nostrud quis minim.\r\n",
+    "listDescription": [
+      {
+        "id": 0,
+        "desckey": "amet",
+        "desc": "eu duis incididunt et sunt laboris do laborum adipisicing laboris"
+      },
+      {
+        "id": 1,
+        "desckey": "sit",
+        "desc": "cillum anim cillum in esse voluptate officia esse eiusmod ullamco"
+      },
+      {
+        "id": 2,
+        "desckey": "nostrud",
+        "desc": "consectetur eiusmod enim reprehenderit non incididunt incididunt proident amet sit"
+      }
+    ],
     "productdetail": [
       {
-        "key": "Model Number",
-        "detail": "cillum"
+        "id": 0,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Country of Origin",
-        "detail": "Lorem"
+        "id": 1,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Model Number",
-        "detail": "proident"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "laboris"
-      },
-      {
-        "key": "Dimension",
-        "detail": "in"
+        "id": 2,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
+    "guide": {
+      "id": 1,
+      "type": "pdf",
+      "link": "prakashacharya.com"
+    },
     "catagory": [
-      "makeup",
-      "women",
-      "acessories"
+      "adipisicing",
+      "quis",
+      "velit"
     ],
     "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
+      "name": "Vuntu Inventory",
+      "id": "618d600cc71b2ca07b352e8c"
     },
     "postedAt": "2021-08-07T04:15:31.531Z",
     "updatedAt": [
       {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
+        "date": "2017-11-25T03:02:26 +08:00",
+        "updatedBy": "61a83205e5abcaba11104c00"
+      },
+      {
+        "date": "2016-09-28T02:07:15 +07:00",
+        "updatedBy": "61a83205ca117b1c114359b4"
       }
     ],
     "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
+      "name": "Bernadine",
+      "id": "61a83205cd4b2f5e6b41bf9f",
       "imageUrl": "http://placehold.it/32x32"
     },
     "images": [
@@ -436,167 +435,167 @@
         "color": "default"
       }
     ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
     "skus": [
       {
+        "id": 1,
         "color": "red",
         "size": "small",
-        "count": 50,
+        "count": 2,
         "price": 150
       },
       {
+        "id": 2,
         "color": "red",
         "size": "medium",
         "count": 50,
         "price": 150
       },
       {
+        "id": 3,
         "color": "red",
         "size": "large",
         "count": 50,
         "price": 150
       },
       {
+        "id": 4,
         "color": "blue",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 5,
         "color": "blue",
         "size": "large",
         "count": 50,
         "price": 200
       },
       {
+        "id": 6,
         "color": "green",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 7,
         "color": "green",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 8,
         "color": "green",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 9,
         "color": "purple",
         "size": "large",
         "count": 10,
         "price": 160
       },
       {
+        "id": 10,
         "color": "purple",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 11,
         "color": "grey",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 12,
         "color": "grey",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 13,
         "color": "grey",
         "size": "large",
         "count": 10,
         "price": 160
       }
-    ]
+    ],
+    "productType": "stock"
   },
   {
-    "_id": "611702095dac04a61c633a16",
-    "name": "Maynard Webster Parsons",
-    "description": {
-      "base": "Laborum esse enim magna nulla est ut laboris. Veniam deserunt ut ullamco exercitation commodo duis officia exercitation dolore id sit tempor mollit fugiat. Nostrud sunt ipsum aliqua pariatur amet sint. Esse commodo ipsum fugiat est nostrud irure duis tempor ut fugiat ex qui ullamco ipsum. Dolore amet ipsum excepteur do aliqua est anim fugiat aute minim ad dolore amet enim.\r\n",
-      "list": [
-        {
-          "key": "Brand",
-          "desc": "dolore"
-        },
-        {
-          "key": "Brand",
-          "desc": "et"
-        },
-        {
-          "key": "Featuree",
-          "desc": "eu"
-        }
-      ]
-    },
+    "_id": "61ab0ebea27d0bd8e8fd54ba",
+    "name": "Stein Jacobs",
+    "description": "Minim tempor qui non aliqua ex sint tempor velit irure eiusmod quis consequat magna occaecat. Cillum mollit ut anim reprehenderit nulla. Esse proident velit fugiat aliquip eu labore reprehenderit adipisicing nulla commodo labore ipsum elit aliquip. Laboris eiusmod dolor ipsum dolore Lorem aliquip adipisicing. Est velit id ex non aute proident adipisicing dolore officia ex dolore.\r\n",
+    "listDescription": [
+      {
+        "id": 0,
+        "desckey": "consequat",
+        "desc": "adipisicing id elit ex duis aute eiusmod Lorem culpa ullamco"
+      },
+      {
+        "id": 1,
+        "desckey": "sit",
+        "desc": "laboris excepteur enim eu irure commodo non irure id ullamco"
+      },
+      {
+        "id": 2,
+        "desckey": "commodo",
+        "desc": "occaecat ullamco Lorem irure quis esse occaecat quis incididunt culpa"
+      }
+    ],
     "productdetail": [
       {
-        "key": "Model Number",
-        "detail": "officia"
+        "id": 0,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Model Number",
-        "detail": "qui"
+        "id": 1,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Manufactor",
-        "detail": "quis"
-      },
-      {
-        "key": "Manufactor",
-        "detail": "do"
-      },
-      {
-        "key": "Model Number",
-        "detail": "consequat"
+        "id": 2,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
+    "guide": {
+      "id": 1,
+      "type": "pdf",
+      "link": "prakashacharya.com"
+    },
     "catagory": [
-      "makeup",
-      "women",
-      "acessories"
+      "qui",
+      "elit",
+      "deserunt"
     ],
     "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
+      "name": "Vuntu Inventory",
+      "id": "618d600cc71b2ca07b352e8c"
     },
     "postedAt": "2021-08-07T04:15:31.531Z",
     "updatedAt": [
       {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
+        "date": "2017-11-25T03:02:26 +08:00",
+        "updatedBy": "61a83205e5abcaba11104c00"
+      },
+      {
+        "date": "2016-09-28T02:07:15 +07:00",
+        "updatedBy": "61a83205ca117b1c114359b4"
       }
     ],
     "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
+      "name": "Bernadine",
+      "id": "61a83205cd4b2f5e6b41bf9f",
       "imageUrl": "http://placehold.it/32x32"
     },
     "images": [
@@ -613,167 +612,167 @@
         "color": "default"
       }
     ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
     "skus": [
       {
+        "id": 1,
         "color": "red",
         "size": "small",
-        "count": 50,
+        "count": 2,
         "price": 150
       },
       {
+        "id": 2,
         "color": "red",
         "size": "medium",
         "count": 50,
         "price": 150
       },
       {
+        "id": 3,
         "color": "red",
         "size": "large",
         "count": 50,
         "price": 150
       },
       {
+        "id": 4,
         "color": "blue",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 5,
         "color": "blue",
         "size": "large",
         "count": 50,
         "price": 200
       },
       {
+        "id": 6,
         "color": "green",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 7,
         "color": "green",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 8,
         "color": "green",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 9,
         "color": "purple",
         "size": "large",
         "count": 10,
         "price": 160
       },
       {
+        "id": 10,
         "color": "purple",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 11,
         "color": "grey",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 12,
         "color": "grey",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 13,
         "color": "grey",
         "size": "large",
         "count": 10,
         "price": 160
       }
-    ]
+    ],
+    "productType": "inventory"
   },
   {
-    "_id": "61170209fd1cdbdbb54579cd",
-    "name": "Dora Luella Doyle",
-    "description": {
-      "base": "Ullamco est sint esse pariatur excepteur ipsum deserunt consectetur deserunt. Nisi Lorem laboris cupidatat quis. Eu sint aliqua labore ipsum cupidatat.\r\n",
-      "list": [
-        {
-          "key": "Brand",
-          "desc": "id"
-        },
-        {
-          "key": "Material",
-          "desc": "incididunt"
-        },
-        {
-          "key": "Featuree",
-          "desc": "cillum"
-        }
-      ]
-    },
+    "_id": "61ab0ebe657c9608a44893db",
+    "name": "Fern Warner",
+    "description": "Elit sit duis voluptate sit duis quis amet aliqua. Tempor cillum id incididunt in ex. Ex laborum consequat amet minim ex pariatur occaecat fugiat exercitation. Velit id in nisi veniam excepteur nulla laboris dolore voluptate ex.\r\n",
+    "listDescription": [
+      {
+        "id": 0,
+        "desckey": "ex",
+        "desc": "ipsum nisi commodo magna qui minim esse in pariatur culpa"
+      },
+      {
+        "id": 1,
+        "desckey": "veniam",
+        "desc": "tempor ipsum veniam sint laboris Lorem cupidatat cillum quis nulla"
+      },
+      {
+        "id": 2,
+        "desckey": "non",
+        "desc": "officia culpa voluptate nisi sit laboris ullamco eiusmod do aute"
+      }
+    ],
     "productdetail": [
       {
-        "key": "Dimension",
-        "detail": "velit"
+        "id": 0,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Manufactor",
-        "detail": "velit"
+        "id": 1,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Manufactor",
-        "detail": "consequat"
-      },
-      {
-        "key": "Manufactor",
-        "detail": "commodo"
-      },
-      {
-        "key": "Model Number",
-        "detail": "laborum"
+        "id": 2,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
+    "guide": {
+      "id": 1,
+      "type": "pdf",
+      "link": "prakashacharya.com"
+    },
     "catagory": [
-      "makeup",
-      "women",
-      "acessories"
+      "ullamco",
+      "occaecat",
+      "irure"
     ],
     "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
+      "name": "Vuntu Inventory",
+      "id": "618d600cc71b2ca07b352e8c"
     },
     "postedAt": "2021-08-07T04:15:31.531Z",
     "updatedAt": [
       {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
+        "date": "2017-11-25T03:02:26 +08:00",
+        "updatedBy": "61a83205e5abcaba11104c00"
+      },
+      {
+        "date": "2016-09-28T02:07:15 +07:00",
+        "updatedBy": "61a83205ca117b1c114359b4"
       }
     ],
     "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
+      "name": "Bernadine",
+      "id": "61a83205cd4b2f5e6b41bf9f",
       "imageUrl": "http://placehold.it/32x32"
     },
     "images": [
@@ -790,167 +789,167 @@
         "color": "default"
       }
     ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
     "skus": [
       {
+        "id": 1,
         "color": "red",
         "size": "small",
-        "count": 50,
+        "count": 2,
         "price": 150
       },
       {
+        "id": 2,
         "color": "red",
         "size": "medium",
         "count": 50,
         "price": 150
       },
       {
+        "id": 3,
         "color": "red",
         "size": "large",
         "count": 50,
         "price": 150
       },
       {
+        "id": 4,
         "color": "blue",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 5,
         "color": "blue",
         "size": "large",
         "count": 50,
         "price": 200
       },
       {
+        "id": 6,
         "color": "green",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 7,
         "color": "green",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 8,
         "color": "green",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 9,
         "color": "purple",
         "size": "large",
         "count": 10,
         "price": 160
       },
       {
+        "id": 10,
         "color": "purple",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 11,
         "color": "grey",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 12,
         "color": "grey",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 13,
         "color": "grey",
         "size": "large",
         "count": 10,
         "price": 160
       }
-    ]
+    ],
+    "productType": "inventory"
   },
   {
-    "_id": "61170209f0a47aed1101e0c0",
-    "name": "Kirby Brittney Drake",
-    "description": {
-      "base": "Ea laborum occaecat duis occaecat Lorem sunt ex proident dolor nisi magna. Voluptate tempor excepteur quis sit laboris pariatur pariatur incididunt aliqua sunt magna. Non incididunt irure enim qui cillum aliqua est consequat nulla id reprehenderit. Magna sint aliqua ipsum ipsum proident ipsum labore exercitation quis ullamco. Proident veniam mollit fugiat proident ut Lorem aliquip aliqua velit ullamco non culpa tempor adipisicing. Excepteur esse ad id in.\r\n",
-      "list": [
-        {
-          "key": "Material",
-          "desc": "culpa"
-        },
-        {
-          "key": "Featuree",
-          "desc": "adipisicing"
-        },
-        {
-          "key": "Material",
-          "desc": "anim"
-        }
-      ]
-    },
+    "_id": "61ab0ebee1805a8c657bbc98",
+    "name": "Teri Harmon",
+    "description": "Minim proident eiusmod cillum aute eu minim eiusmod consectetur adipisicing voluptate. Ipsum aliquip ut ad sunt. Ullamco velit laboris dolor quis consectetur adipisicing in irure sit commodo sint sint. Duis aliquip duis deserunt cupidatat anim.\r\n",
+    "listDescription": [
+      {
+        "id": 0,
+        "desckey": "eiusmod",
+        "desc": "aute ullamco commodo irure nulla consectetur et nisi labore sunt"
+      },
+      {
+        "id": 1,
+        "desckey": "nisi",
+        "desc": "Lorem ea qui culpa velit adipisicing duis minim officia elit"
+      },
+      {
+        "id": 2,
+        "desckey": "aliquip",
+        "desc": "tempor occaecat pariatur fugiat sint magna aute exercitation cillum fugiat"
+      }
+    ],
     "productdetail": [
       {
-        "key": "Country of Origin",
-        "detail": "velit"
+        "id": 0,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Model Number",
-        "detail": "voluptate"
+        "id": 1,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Dimension",
-        "detail": "sunt"
-      },
-      {
-        "key": "Dimension",
-        "detail": "dolore"
-      },
-      {
-        "key": "Dimension",
-        "detail": "occaecat"
+        "id": 2,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
+    "guide": {
+      "id": 1,
+      "type": "pdf",
+      "link": "prakashacharya.com"
+    },
     "catagory": [
-      "makeup",
-      "women",
-      "acessories"
+      "veniam",
+      "incididunt",
+      "qui"
     ],
     "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
+      "name": "Vuntu Inventory",
+      "id": "618d600cc71b2ca07b352e8c"
     },
     "postedAt": "2021-08-07T04:15:31.531Z",
     "updatedAt": [
       {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
+        "date": "2017-11-25T03:02:26 +08:00",
+        "updatedBy": "61a83205e5abcaba11104c00"
+      },
+      {
+        "date": "2016-09-28T02:07:15 +07:00",
+        "updatedBy": "61a83205ca117b1c114359b4"
       }
     ],
     "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
+      "name": "Bernadine",
+      "id": "61a83205cd4b2f5e6b41bf9f",
       "imageUrl": "http://placehold.it/32x32"
     },
     "images": [
@@ -967,167 +966,167 @@
         "color": "default"
       }
     ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
     "skus": [
       {
+        "id": 1,
         "color": "red",
         "size": "small",
-        "count": 50,
+        "count": 2,
         "price": 150
       },
       {
+        "id": 2,
         "color": "red",
         "size": "medium",
         "count": 50,
         "price": 150
       },
       {
+        "id": 3,
         "color": "red",
         "size": "large",
         "count": 50,
         "price": 150
       },
       {
+        "id": 4,
         "color": "blue",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 5,
         "color": "blue",
         "size": "large",
         "count": 50,
         "price": 200
       },
       {
+        "id": 6,
         "color": "green",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 7,
         "color": "green",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 8,
         "color": "green",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 9,
         "color": "purple",
         "size": "large",
         "count": 10,
         "price": 160
       },
       {
+        "id": 10,
         "color": "purple",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 11,
         "color": "grey",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 12,
         "color": "grey",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 13,
         "color": "grey",
         "size": "large",
         "count": 10,
         "price": 160
       }
-    ]
+    ],
+    "productType": "stock"
   },
   {
-    "_id": "611702093312c6b1b5e50b69",
-    "name": "Melva Christi Lawrence",
-    "description": {
-      "base": "Quis aute elit ad proident anim elit laboris qui officia. Fugiat cupidatat cupidatat adipisicing non non. Sit veniam dolore duis dolore est magna amet dolore magna. Labore eiusmod esse ipsum voluptate pariatur amet commodo sit sint sit cillum. Nisi commodo qui ea cupidatat eiusmod nulla est anim commodo dolore.\r\n",
-      "list": [
-        {
-          "key": "Featuree",
-          "desc": "proident"
-        },
-        {
-          "key": "Material",
-          "desc": "consectetur"
-        },
-        {
-          "key": "Material",
-          "desc": "aute"
-        }
-      ]
-    },
+    "_id": "61ab0ebe792679dbc741fa7e",
+    "name": "Angeline Lawson",
+    "description": "Labore deserunt mollit culpa pariatur eiusmod elit anim commodo duis sit mollit occaecat. Veniam ut duis sint nulla nostrud laboris adipisicing ipsum amet labore est adipisicing dolore in. Ullamco dolor sint eiusmod est incididunt aliquip magna commodo Lorem voluptate sunt pariatur. Consectetur qui Lorem nostrud incididunt ex nisi culpa labore eu consectetur do do incididunt.\r\n",
+    "listDescription": [
+      {
+        "id": 0,
+        "desckey": "aliqua",
+        "desc": "ex labore ipsum incididunt esse incididunt aute mollit occaecat minim"
+      },
+      {
+        "id": 1,
+        "desckey": "est",
+        "desc": "minim mollit duis esse do ex adipisicing et velit proident"
+      },
+      {
+        "id": 2,
+        "desckey": "adipisicing",
+        "desc": "labore officia laboris aliquip sit do laboris velit officia cillum"
+      }
+    ],
     "productdetail": [
       {
-        "key": "Dimension",
-        "detail": "aute"
+        "id": 0,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Dimension",
-        "detail": "deserunt"
+        "id": 1,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       },
       {
-        "key": "Country of Origin",
-        "detail": "ipsum"
-      },
-      {
-        "key": "Dimension",
-        "detail": "nulla"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "incididunt"
+        "id": 2,
+        "detailkey": "proident",
+        "detail": "aliquip esse nisi voluptate laboris"
       }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
+    "guide": {
+      "id": 1,
+      "type": "pdf",
+      "link": "prakashacharya.com"
+    },
     "catagory": [
-      "makeup",
-      "women",
-      "acessories"
+      "labore",
+      "excepteur",
+      "consequat"
     ],
     "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
+      "name": "Vuntu Inventory",
+      "id": "618d600cc71b2ca07b352e8c"
     },
     "postedAt": "2021-08-07T04:15:31.531Z",
     "updatedAt": [
       {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
+        "date": "2017-11-25T03:02:26 +08:00",
+        "updatedBy": "61a83205e5abcaba11104c00"
+      },
+      {
+        "date": "2016-09-28T02:07:15 +07:00",
+        "updatedBy": "61a83205ca117b1c114359b4"
       }
     ],
     "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
+      "name": "Bernadine",
+      "id": "61a83205cd4b2f5e6b41bf9f",
       "imageUrl": "http://placehold.it/32x32"
     },
     "images": [
@@ -1144,983 +1143,99 @@
         "color": "default"
       }
     ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
     "skus": [
       {
+        "id": 1,
         "color": "red",
         "size": "small",
-        "count": 50,
+        "count": 2,
         "price": 150
       },
       {
+        "id": 2,
         "color": "red",
         "size": "medium",
         "count": 50,
         "price": 150
       },
       {
+        "id": 3,
         "color": "red",
         "size": "large",
         "count": 50,
         "price": 150
       },
       {
+        "id": 4,
         "color": "blue",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 5,
         "color": "blue",
         "size": "large",
         "count": 50,
         "price": 200
       },
       {
+        "id": 6,
         "color": "green",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
+        "id": 7,
         "color": "green",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 8,
         "color": "green",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 9,
         "color": "purple",
         "size": "large",
         "count": 10,
         "price": 160
       },
       {
-        "color": "purple",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      }
-    ]
-  },
-  {
-    "_id": "611702090a48709182529970",
-    "name": "Isabella Booth Goodwin",
-    "description": {
-      "base": "Reprehenderit consequat pariatur elit voluptate. Et proident fugiat aute deserunt anim. Ipsum mollit laboris fugiat sit do irure non. Sit est proident enim deserunt.\r\n",
-      "list": [
-        {
-          "key": "Featuree",
-          "desc": "magna"
-        },
-        {
-          "key": "Brand",
-          "desc": "irure"
-        },
-        {
-          "key": "Brand",
-          "desc": "in"
-        }
-      ]
-    },
-    "productdetail": [
-      {
-        "key": "Country of Origin",
-        "detail": "consequat"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "do"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "culpa"
-      },
-      {
-        "key": "Dimension",
-        "detail": "amet"
-      },
-      {
-        "key": "Manufactor",
-        "detail": "sunt"
-      }
-    ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
-    "catagory": [
-      "makeup",
-      "women",
-      "acessories"
-    ],
-    "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
-    },
-    "postedAt": "2021-08-07T04:15:31.531Z",
-    "updatedAt": [
-      {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
-      }
-    ],
-    "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
-      "imageUrl": "http://placehold.it/32x32"
-    },
-    "images": [
-      {
-        "url": "https://imgs.michaels.com/MAM/assets/1/726D45CA1C364650A39CD1B336F03305/img/91F89859AE004153A24E7852F8666F0F/10093625_r.jpg?fit=inside|540:540",
-        "color": "purple"
-      },
-      {
-        "url": "https://cdn.shopify.com/s/files/1/0161/0482/products/AyeGear_T5_tshirt_with_pockets_clothing_fashion_style_hiking_fishing_cycling_scottevest_pickpocket_proof_concealed5.jpg?v=1502127434",
-        "color": "blue"
-      },
-      {
-        "url": "https://www.openbsd.org/images/tshirt-54-allover.jpg",
-        "color": "default"
-      }
-    ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
-    "skus": [
-      {
-        "color": "red",
-        "size": "small",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "medium",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "large",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "blue",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "blue",
-        "size": "large",
-        "count": 50,
-        "price": 200
-      },
-      {
-        "color": "green",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      },
-      {
+        "id": 10,
         "color": "purple",
         "size": "xlarge",
         "count": 10,
         "price": 160
       },
       {
+        "id": 11,
         "color": "grey",
         "size": "small",
         "count": 10,
         "price": 160
       },
       {
-        "color": "grey",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      }
-    ]
-  },
-  {
-    "_id": "61170209414e73a84571d28f",
-    "name": "Chapman Graves Weaver",
-    "description": {
-      "base": "Fugiat eu fugiat aute nisi laborum aliquip. Officia exercitation laboris magna fugiat aliquip minim proident esse. Proident aliqua cillum ea sit non sint proident anim nulla adipisicing proident aliqua. Qui non nulla aute sint non id dolore eiusmod commodo. Aliqua duis do Lorem esse consequat ullamco adipisicing.\r\n",
-      "list": [
-        {
-          "key": "Brand",
-          "desc": "nisi"
-        },
-        {
-          "key": "Featuree",
-          "desc": "sunt"
-        },
-        {
-          "key": "Featuree",
-          "desc": "velit"
-        }
-      ]
-    },
-    "productdetail": [
-      {
-        "key": "Dimension",
-        "detail": "laboris"
-      },
-      {
-        "key": "Dimension",
-        "detail": "do"
-      },
-      {
-        "key": "Model Number",
-        "detail": "ullamco"
-      },
-      {
-        "key": "Model Number",
-        "detail": "aliqua"
-      },
-      {
-        "key": "Model Number",
-        "detail": "ut"
-      }
-    ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
-    "catagory": [
-      "makeup",
-      "women",
-      "acessories"
-    ],
-    "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
-    },
-    "postedAt": "2021-08-07T04:15:31.531Z",
-    "updatedAt": [
-      {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
-      }
-    ],
-    "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
-      "imageUrl": "http://placehold.it/32x32"
-    },
-    "images": [
-      {
-        "url": "https://imgs.michaels.com/MAM/assets/1/726D45CA1C364650A39CD1B336F03305/img/91F89859AE004153A24E7852F8666F0F/10093625_r.jpg?fit=inside|540:540",
-        "color": "purple"
-      },
-      {
-        "url": "https://cdn.shopify.com/s/files/1/0161/0482/products/AyeGear_T5_tshirt_with_pockets_clothing_fashion_style_hiking_fishing_cycling_scottevest_pickpocket_proof_concealed5.jpg?v=1502127434",
-        "color": "blue"
-      },
-      {
-        "url": "https://www.openbsd.org/images/tshirt-54-allover.jpg",
-        "color": "default"
-      }
-    ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
-    "skus": [
-      {
-        "color": "red",
-        "size": "small",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "medium",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "large",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "blue",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "blue",
-        "size": "large",
-        "count": 50,
-        "price": 200
-      },
-      {
-        "color": "green",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
+        "id": 12,
         "color": "grey",
         "size": "medium",
         "count": 10,
         "price": 160
       },
       {
+        "id": 13,
         "color": "grey",
         "size": "large",
         "count": 10,
         "price": 160
       }
-    ]
-  },
-  {
-    "_id": "6117020970b64b8e594a51fe",
-    "name": "Hughes Reyna Morin",
-    "description": {
-      "base": "Ut enim enim laboris tempor pariatur voluptate minim tempor nisi et. Quis fugiat non in occaecat. Cillum ut duis consequat anim irure aliquip eiusmod.\r\n",
-      "list": [
-        {
-          "key": "Featuree",
-          "desc": "officia"
-        },
-        {
-          "key": "Material",
-          "desc": "minim"
-        },
-        {
-          "key": "Featuree",
-          "desc": "voluptate"
-        }
-      ]
-    },
-    "productdetail": [
-      {
-        "key": "Manufactor",
-        "detail": "duis"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "ipsum"
-      },
-      {
-        "key": "Manufactor",
-        "detail": "non"
-      },
-      {
-        "key": "Manufactor",
-        "detail": "magna"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "magna"
-      }
     ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
-    "catagory": [
-      "makeup",
-      "women",
-      "acessories"
-    ],
-    "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
-    },
-    "postedAt": "2021-08-07T04:15:31.531Z",
-    "updatedAt": [
-      {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
-      }
-    ],
-    "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
-      "imageUrl": "http://placehold.it/32x32"
-    },
-    "images": [
-      {
-        "url": "https://imgs.michaels.com/MAM/assets/1/726D45CA1C364650A39CD1B336F03305/img/91F89859AE004153A24E7852F8666F0F/10093625_r.jpg?fit=inside|540:540",
-        "color": "purple"
-      },
-      {
-        "url": "https://cdn.shopify.com/s/files/1/0161/0482/products/AyeGear_T5_tshirt_with_pockets_clothing_fashion_style_hiking_fishing_cycling_scottevest_pickpocket_proof_concealed5.jpg?v=1502127434",
-        "color": "blue"
-      },
-      {
-        "url": "https://www.openbsd.org/images/tshirt-54-allover.jpg",
-        "color": "default"
-      }
-    ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
-    "skus": [
-      {
-        "color": "red",
-        "size": "small",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "medium",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "large",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "blue",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "blue",
-        "size": "large",
-        "count": 50,
-        "price": 200
-      },
-      {
-        "color": "green",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      }
-    ]
-  },
-  {
-    "_id": "61170209c56e0024216ad2f2",
-    "name": "Cleo Graham Spence",
-    "description": {
-      "base": "Amet minim dolore occaecat aute sint ut laborum voluptate reprehenderit reprehenderit Lorem deserunt. Ut sunt nulla in magna nisi amet exercitation eiusmod officia nisi consequat esse qui duis. Non cupidatat veniam nostrud proident officia deserunt sit in veniam. Laborum laboris exercitation mollit occaecat. Id aliqua non cillum reprehenderit exercitation duis sunt. Ut minim quis proident Lorem elit in et duis magna.\r\n",
-      "list": [
-        {
-          "key": "Featuree",
-          "desc": "esse"
-        },
-        {
-          "key": "Material",
-          "desc": "ipsum"
-        },
-        {
-          "key": "Featuree",
-          "desc": "eu"
-        }
-      ]
-    },
-    "productdetail": [
-      {
-        "key": "Model Number",
-        "detail": "laboris"
-      },
-      {
-        "key": "Country of Origin",
-        "detail": "elit"
-      },
-      {
-        "key": "Dimension",
-        "detail": "aliqua"
-      },
-      {
-        "key": "Model Number",
-        "detail": "deserunt"
-      },
-      {
-        "key": "Dimension",
-        "detail": "adipisicing"
-      }
-    ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
-    "catagory": [
-      "makeup",
-      "women",
-      "acessories"
-    ],
-    "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
-    },
-    "postedAt": "2021-08-07T04:15:31.531Z",
-    "updatedAt": [
-      {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
-      }
-    ],
-    "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
-      "imageUrl": "http://placehold.it/32x32"
-    },
-    "images": [
-      {
-        "url": "https://imgs.michaels.com/MAM/assets/1/726D45CA1C364650A39CD1B336F03305/img/91F89859AE004153A24E7852F8666F0F/10093625_r.jpg?fit=inside|540:540",
-        "color": "purple"
-      },
-      {
-        "url": "https://cdn.shopify.com/s/files/1/0161/0482/products/AyeGear_T5_tshirt_with_pockets_clothing_fashion_style_hiking_fishing_cycling_scottevest_pickpocket_proof_concealed5.jpg?v=1502127434",
-        "color": "blue"
-      },
-      {
-        "url": "https://www.openbsd.org/images/tshirt-54-allover.jpg",
-        "color": "default"
-      }
-    ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
-    "skus": [
-      {
-        "color": "red",
-        "size": "small",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "medium",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "large",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "blue",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "blue",
-        "size": "large",
-        "count": 50,
-        "price": 200
-      },
-      {
-        "color": "green",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      }
-    ]
-  },
-  {
-    "_id": "6117020912f84d840b633199",
-    "name": "Hunt Ramirez Park",
-    "description": {
-      "base": "Irure exercitation occaecat reprehenderit amet dolore. Incididunt sunt eiusmod duis pariatur. Nostrud elit ad officia ut fugiat. Tempor minim aute aliquip deserunt ad Lorem excepteur consectetur proident dolore. Minim incididunt voluptate esse fugiat ea cupidatat exercitation culpa nisi proident ipsum ipsum consectetur irure. Amet nostrud excepteur tempor minim id non fugiat exercitation.\r\n",
-      "list": [
-        {
-          "key": "Brand",
-          "desc": "cupidatat"
-        },
-        {
-          "key": "Featuree",
-          "desc": "amet"
-        },
-        {
-          "key": "Featuree",
-          "desc": "do"
-        }
-      ]
-    },
-    "productdetail": [
-      {
-        "key": "Model Number",
-        "detail": "ut"
-      },
-      {
-        "key": "Manufactor",
-        "detail": "cillum"
-      },
-      {
-        "key": "Model Number",
-        "detail": "adipisicing"
-      },
-      {
-        "key": "Dimension",
-        "detail": "ad"
-      },
-      {
-        "key": "Dimension",
-        "detail": "amet"
-      }
-    ],
-    "guide": [
-      {
-        "type": "pdf",
-        "link": "https://prakashacharya.com"
-      }
-    ],
-    "catagory": [
-      "makeup",
-      "women",
-      "acessories"
-    ],
-    "createdBy": {
-      "name": "Random Luga pasal",
-      "id": "sljfslkdjfklsjdfklsdj"
-    },
-    "postedAt": "2021-08-07T04:15:31.531Z",
-    "updatedAt": [
-      {
-        "date": "2021-08-07T04:15:31.531Z",
-        "updatedBy": "saldkfjskldjslkd"
-      }
-    ],
-    "postedBy": {
-      "name": "prakash acharya",
-      "id": "saldkfjskldjslkd",
-      "imageUrl": "http://placehold.it/32x32"
-    },
-    "images": [
-      {
-        "url": "https://imgs.michaels.com/MAM/assets/1/726D45CA1C364650A39CD1B336F03305/img/91F89859AE004153A24E7852F8666F0F/10093625_r.jpg?fit=inside|540:540",
-        "color": "purple"
-      },
-      {
-        "url": "https://cdn.shopify.com/s/files/1/0161/0482/products/AyeGear_T5_tshirt_with_pockets_clothing_fashion_style_hiking_fishing_cycling_scottevest_pickpocket_proof_concealed5.jpg?v=1502127434",
-        "color": "blue"
-      },
-      {
-        "url": "https://www.openbsd.org/images/tshirt-54-allover.jpg",
-        "color": "default"
-      }
-    ],
-    "colors": [
-      "red",
-      "blue",
-      "green",
-      "purple",
-      "grey"
-    ],
-    "sizes": [
-      "small",
-      "medium",
-      "large",
-      "xlarge"
-    ],
-    "skus": [
-      {
-        "color": "red",
-        "size": "small",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "medium",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "red",
-        "size": "large",
-        "count": 50,
-        "price": 150
-      },
-      {
-        "color": "blue",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "blue",
-        "size": "large",
-        "count": 50,
-        "price": 200
-      },
-      {
-        "color": "green",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "green",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "purple",
-        "size": "xlarge",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "small",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "medium",
-        "count": 10,
-        "price": 160
-      },
-      {
-        "color": "grey",
-        "size": "large",
-        "count": 10,
-        "price": 160
-      }
-    ]
+    "productType": "inventory"
   }
 ]

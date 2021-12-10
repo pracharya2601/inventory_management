@@ -1,5 +1,5 @@
 import { Types } from '.';
-import { UserSession } from '../AuthSession';
+import { UserData } from '../AuthSession';
 import { WorkplaceTypes } from '../Workplace/WorkplaceListTypes';
 
 export type UserPayloadType = {
@@ -7,7 +7,7 @@ export type UserPayloadType = {
         authenticated: boolean;
     };
     [Types.GetUser]: {
-        userdata: UserSession;
+        userdata: UserData;
     };
     [Types.GetUserWorkplaces]: {
         workplaces: WorkplaceTypes[] | [];

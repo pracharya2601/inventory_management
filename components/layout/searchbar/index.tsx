@@ -6,11 +6,15 @@ import { appContext } from '@context/appcontext';
 import { action } from '@context/action';
 import { ProductList, ProductType } from '@/interface/Product/ProductInterface';
 
-const SearchBar = () => {
+type SearchBarProps = {
+    searchTerm?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleClear?: () => void;
+};
+
+const SearchBar = ({ searchTerm, onChange, handleClear }: SearchBarProps) => {
     const router = useRouter();
     const id = router.query.id as string[];
-
-    const [searchTerm, setSearchTerm] = useState('');
 
     const {
         state: {
@@ -22,46 +26,15 @@ const SearchBar = () => {
         dispatch,
     } = useContext(appContext);
 
-    useEffect(() => {
-        const s = pathName?.search as string;
-        if (s) {
-            setSearchTerm(s);
-        }
-    }, []);
-
     const onSubmitHandle = (e) => {
         e.preventDefault();
-        console.log('Submitted');
-        router.push(`/dashboard/${pathName?.id[0]}/${pathName?.id[1]}/${pathName?.id[2]}/1?search=${searchTerm}`);
-    };
-
-    const onHandleChange = (e) => {
-        const { value } = e.target;
-        const searchValue = value.toLowerCase();
-        setSearchTerm(value);
-        const filteredData: ProductList = initialData.filter((data: ProductType) => {
-            return data.name.toLowerCase().search(searchValue) != -1;
-        });
-        dispatch(
-            action.getSearchFilter({
-                filteredData,
-                dataType: 'search',
-            }),
-        );
-    };
-
-    const handleClear = () => {
-        setSearchTerm('');
         dispatch(
             action.toggleAction({
                 id: 'viewSearchBar',
                 open: false,
             }),
         );
-        dispatch(action.getSearchFilter({ filteredData: initialData, dataType: dataType }));
-        if (pathName?.search) {
-            router.push(`/dashboard/${pathName?.id[0]}/${pathName?.id[1]}/${pathName?.id[2]}/1`);
-        }
+        router.push(`/${router.query?.businessId}/${router.query?.productType}/1?search=${searchTerm}`);
     };
 
     return (
@@ -69,8 +42,8 @@ const SearchBar = () => {
             <form onSubmit={onSubmitHandle}>
                 <Input
                     value={searchTerm}
-                    placeholder={`Searching on catagory ${dataType} and press Enter or return`}
-                    onChange={onHandleChange}
+                    placeholder={`Searching on catagory ${router.query?.productType} and press Enter or return`}
+                    onChange={onChange}
                     onClear={() => handleClear()}
                     autofocus
                     square

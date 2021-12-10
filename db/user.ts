@@ -3,7 +3,7 @@ import { Db, ObjectId } from 'mongodb'
 export const getUserById = async (db: Db, id: string) => {
   try {
     const data = await db.collection('users').findOne({ _id: ObjectId(id) });
-    return JSON.stringify(data)
+    return data;
   } catch (e) {
     console.log("this is the error", e)
     return;

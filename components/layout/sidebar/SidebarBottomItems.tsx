@@ -1,5 +1,7 @@
-import router, { useRouter } from 'next/router';
-import React from 'react';
+import { action } from '@context/action';
+import { appContext } from '@context/appcontext';
+import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
 import { SidebarItem } from './SidebarItem';
 
 export interface SidebaeBottomProps {
@@ -7,13 +9,21 @@ export interface SidebaeBottomProps {
 }
 
 const SidebarBottomItems = ({ children }: SidebaeBottomProps) => {
+    const { dispatch } = useContext(appContext);
     const router = useRouter();
+    const accountHandleler = () => {
+        dispatch(
+            action.toggleAction({
+                id: 'account',
+                open: true,
+            }),
+        );
+    };
     return (
         <>
             <SidebarItem
-                onClick={() => router.push('/account')}
+                onClick={() => accountHandleler()}
                 label="Account"
-                markIcon={router.asPath === '/account' ? true : false}
                 icon={
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

@@ -33,8 +33,6 @@ export default (req, res) =>
         },
         callbacks: {
             async session(session: any, user) {
-                const newId = cryptoJs.AES.encrypt(user.id, 'user-id-encrypted').toString()[0];
-
                 session.user.id = user.id;
                 return session;
             },

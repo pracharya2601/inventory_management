@@ -9,6 +9,11 @@ export const workplaceReducer = (state: WorkplaceDataType, action: ActionsTypes)
                 ...state,
                 companydata: action.payload.companydata,
             };
+        case Types.SetVariant:
+            return {
+                ...state,
+                variant: action.payload.variant,
+            };
         case Types.GetProductCatagory:
             return {
                 ...state,
@@ -35,6 +40,7 @@ export const workplaceReducer = (state: WorkplaceDataType, action: ActionsTypes)
             };
 
         case Types.GetSingleProduct:
+            console.log('This is running', action.payload);
             return {
                 ...state,
                 singleData: action.payload.singleData,

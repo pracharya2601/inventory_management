@@ -6,6 +6,7 @@ export const workplaceAction = {
     getCompanyData: createActionPayload<typeof Types.GetCompanyData, WorkplacePayloadType[Types.GetCompanyData]>(
         Types.GetCompanyData,
     ),
+    setVariant: createActionPayload<typeof Types.SetVariant, WorkplacePayloadType[Types.SetVariant]>(Types.SetVariant),
     getProductCatagory: createActionPayload<
         typeof Types.GetProductCatagory,
         WorkplacePayloadType[Types.GetProductCatagory]

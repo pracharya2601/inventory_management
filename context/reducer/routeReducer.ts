@@ -5,7 +5,13 @@ import { Types } from '@/interface/Dispatch';
 
 const renderingPage = (item: string[]): string => {
     if (item.length === 0) return '';
-    return item.length === 1 ? 'companydashboard' : item.length >= 2 ? 'productlist' : '';
+    return item.length === 1
+        ? 'companydashboard'
+        : item.length === 2
+        ? 'product'
+        : item.length === 3
+        ? 'productlist'
+        : '';
 };
 export const routeReducer = (state: RouteType, action: ActionsTypes) => {
     switch (action.type) {

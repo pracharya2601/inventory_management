@@ -1,25 +1,25 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { appContext } from '@context/appcontext';
+import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import ProductCatagoryButton from './ProductCatagoryNav';
 
 const ProductNavbar = () => {
+    const router = useRouter();
     const {
         state: {
-            workplace: {
-                productCatagory,
-                productList: { dataType },
-            },
-            route: { pathName },
+            workplace: { productCatagory },
         },
     } = useContext(appContext);
 
     const productCatagoryURL = (catagoryName: string): string => {
-        return `http://localhost:3000/dashboard/${pathName?.id[0]}/${pathName?.id[1]}/${catagoryName}/1`;
+        //return `http://localhost:3000/dashboard/${pathName?.id[0]}/${catagoryName}/1`;
+        return `http://localhost:3000/${router.query?.businessId}/${catagoryName}/1`;
     };
 
     const isActiveCatagory = (ctName: string): boolean => {
-        return dataType === ctName && true;
+        //return dataType === ctName && true;
+        return router.query?.productType === ctName && true;
     };
 
     return (

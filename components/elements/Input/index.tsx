@@ -11,7 +11,7 @@ const Input = (props: InputProps) => {
                 </label>
             )}
             <div
-                className={`${props.helper || props.icon ? 'flex' : ''} relative ${
+                className={`${props.helper || props.icon ? 'flex' : 'flex'} relative ${
                     props.disabled ? 'opacity-50 pointer-events-none' : ''
                 }`}
             >

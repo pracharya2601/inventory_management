@@ -15,29 +15,33 @@ import SideboardOutline from './sideboard/SideboardOutline';
 import Workplaces from './user/Workplaces';
 import { action } from '@context/action';
 import SearchBar from './searchbar';
+import { useRouter } from 'next/router';
+import ProductPreview from './product/ProductPreview';
+import AccountInfo from './user/AccountInfo';
 
 interface ComponentWrapperProps {
     children?: JSX.Element | JSX.Element[];
+    searchBarComponent?: JSX.Element;
+    productPreview?: JSX.Element;
 }
 
-const ComponentWrapper = ({ children }: ComponentWrapperProps) => {
+const ComponentWrapper = ({ children, searchBarComponent, productPreview }: ComponentWrapperProps) => {
     const sidebarRef = useRef(null);
     const accountBarRef = useRef(null);
     const notificationBarRef = useRef(null);
+    const router = useRouter();
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [accountOpen, setAccountOpen] = useState(false);
     const [notiOpen, setNotiOpen] = useState(false);
     useOutsideClick(sidebarRef, setSidebarOpen);
-    useOutsideClick(accountBarRef, setAccountOpen);
     useOutsideClick(notificationBarRef, setNotiOpen);
 
     const {
         state: {
-            user: { authenticated, workplaces },
+            user: { authenticated, workplaces, userdata },
             ui: { toggleOpen },
-            workplace: { productCatagory },
-            route,
+            workplace: { productCatagory, singleData },
+            route: { pathName },
         },
         dispatch,
     } = useContext(appContext);
@@ -49,10 +53,13 @@ const ComponentWrapper = ({ children }: ComponentWrapperProps) => {
                 open: false,
             }),
         );
+        const routeId = pathName?.id && (pathName?.id as string[]);
+        router.push(`/dashboard/${routeId?.join('/')}`, undefined, { shallow: true });
     };
+
     return (
         <div className="dark relative min-h-screen w-screen overflow-x-hidden">
-            {toggleOpen?.viewSearchBar && <SearchBar />}
+            {toggleOpen?.viewSearchBar && searchBarComponent && searchBarComponent}
             <div
                 className="bg-gray-300 z-20 pr-2 dark:bg-gray-800 text-black border-b dark:text-gray-100 flex justify-between w-screen absolute"
                 onClick={(e) => e.stopPropagation()}
@@ -63,7 +70,7 @@ const ComponentWrapper = ({ children }: ComponentWrapperProps) => {
                 </span>
                 <span className="flex items-center">
                     {authenticated && <NotificationButton setOpen={setNotiOpen} />}
-                    {authenticated && <ProfileButton setOpen={setAccountOpen} />}
+                    {authenticated && <ProfileButton />}
                     {!authenticated && <SigninButton />}
                     {authenticated && <SignoutButton />}
                 </span>
@@ -73,24 +80,70 @@ const ComponentWrapper = ({ children }: ComponentWrapperProps) => {
                 open={sidebarOpen}
                 setOpen={setSidebarOpen}
                 sidebarItems={
-                    workplaces && (
+                    userdata?.workplaces && (
                         <Workplaces
-                            workplaces={workplaces}
+                            workplaces={userdata.workplaces}
                             productCatagory={productCatagory}
                             setOpen={setSidebarOpen}
                         />
                     )
                 }
             />
-            <SideboardOutline open={accountOpen} setOpen={setAccountOpen}>
-                <h1>Account</h1>
+            <SideboardOutline
+                setOpen={() => {
+                    dispatch(
+                        action.toggleAction({
+                            id: 'account',
+                            open: false,
+                        }),
+                    );
+                }}
+                open={toggleOpen?.['account']}
+                noOutsideClick={true}
+                size="full"
+                label="Account"
+            >
+                <AccountInfo />
             </SideboardOutline>
-            <SideboardOutline open={notiOpen} setOpen={setNotiOpen} size="small">
-                <h1>Notification</h1>
+            <SideboardOutline
+                open={notiOpen}
+                setOpen={setNotiOpen}
+                size="small"
+                label="notification"
+            ></SideboardOutline>
+            <SideboardOutline
+                open={toggleOpen?.['joinworkplace']}
+                label="Join Workplace"
+                setOpen={() => {
+                    dispatch(
+                        action.toggleAction({
+                            id: 'joinworkplace',
+                            open: false,
+                        }),
+                    );
+                }}
+                noOutsideClick={true}
+                size="small"
+            >
+                <h1>Join Workplace</h1>
             </SideboardOutline>
-            <SideboardOutline open={toggleOpen?.['previewProduct']} setOpen={setsideBarClosePreview}>
-                <h1>Previewing Item</h1>
+            <SideboardOutline
+                open={toggleOpen?.['createworkplace']}
+                label="Create Workplace"
+                setOpen={() => {
+                    dispatch(
+                        action.toggleAction({
+                            id: 'createworkplace',
+                            open: false,
+                        }),
+                    );
+                }}
+                noOutsideClick={true}
+                size="full"
+            >
+                <h1>Create Workplace</h1>
             </SideboardOutline>
+            {productPreview && productPreview}
             <div className="flex-1 dark:bg-gray-900 dark:text-white h-screen overflow-auto">{children}</div>
         </div>
     );

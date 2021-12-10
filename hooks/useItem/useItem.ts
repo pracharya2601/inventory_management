@@ -1,85 +1,74 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ProductType, Skus } from '@/interface/Product/ProductInterface';
 import { useState } from 'react';
-import { calculateCount, calculateSpecificCount, returnArr } from './helper';
+import { colorSizeSeparation, newVariantCalculate, returnArr } from './helper';
 
 import { SType, CType } from './types';
 
 export const useItem = (items: ProductType) => {
+    const colAndSize = colorSizeSeparation(items.skus);
+    const [colors, setColors] = useState<Array<{ color: string; stat: boolean }>>(colAndSize.colors);
+    const [sizes, setSizes] = useState<Array<{ size: string; stat: boolean }>>(colAndSize.sizes);
+    const [count, setCount] = useState<number>(colAndSize.count);
+    const [price, setPrice] = useState<number>(colAndSize.price);
+    const [lowPrice, setLowPrice] = useState<number>(colAndSize.minPrice);
+    const [highPrice, setHignPrice] = useState<number>(colAndSize.maxPrice);
+
     const [activeImage, setActiveImage] = useState(items.images[0].url);
-    const [colors, setColors] = useState(items.colors.map((item) => ({ color: item, stat: true })));
-    const [sizes, setSizes] = useState(items.sizes.map((item) => ({ size: item, stat: true })));
-    const [c, setC] = useState<CType>({ color: '', index: NaN, stat: false });
-    const [s, setS] = useState<SType>({ size: '', index: NaN, stat: false });
+    const [activeColor, setCC] = useState<string>('');
+    const [activeSize, setSS] = useState<string>('');
+    // const [count, setCount] = useState(items.skus.map((itm) => itm.count).reduce((prev, next) => prev + next));
 
-    const [errorMessage, setErrorMessage] = useState<string>('This is error');
-    const [count, setCount] = useState(items.skus.map((itm) => itm.count).reduce((prev, next) => prev + next));
-    const [cartIdenty, setCartIdenty] = useState<Skus>({ color: '', size: '', count: NaN, price: NaN });
+    const [cartIdenty, setCartIdenty] = useState<Skus>({ id: NaN, color: '', size: '', count: NaN, price: NaN });
 
-    const colorFunc = (c: CType) => {
+    const setColorrr = (c: CType) => {
+        //update color if it is false so that tick mark is over there;
+        setCC(c.color);
+        const imgPrv = items?.images.find(({ color }) => color === c.color)?.url;
+        if (imgPrv) {
+            setActiveImage(imgPrv);
+        }
+        if (!c.stat) {
+            const newArr = [...colors];
+            const rowIndex = newArr.findIndex(({ color }) => color === c.color);
+            newArr[rowIndex] = { color: c.color, stat: true };
+            // if stat is false that means size is selected so remove the size
+            setSS('');
+            setColors(newArr);
+        }
+        const newSS = c.stat ? activeSize : '';
+        const { count, price, minPrice, maxPrice } = newVariantCalculate(items.skus, newSS, c.color, 'color');
+        setCount(count);
+        setPrice(price);
+        setLowPrice(minPrice);
+        setHignPrice(maxPrice);
         const checkingArr = returnArr(items.skus, 'color', 'size', c.color);
-        if (checkingArr.length === 0) {
-            setSizes(sizes.map(({ size }) => ({ size, stat: false })));
-            setCount(0);
-        } else {
-            setSizes(sizes.map(({ size }) => ({ size, stat: checkingArr.includes(size) ? true : false })));
-            setCount(calculateCount(items.skus, checkingArr, 'size', 'color', c.color));
-        }
+        setSizes(sizes.map(({ size }) => ({ size: size, stat: checkingArr.includes(size) ? true : false })));
     };
 
-    const sizeFunc = (s: SType) => {
+    const setSizess = (s: SType) => {
+        setSS(s.size);
+        if (!s.stat) {
+            const newArr = [...sizes];
+            const rowIndex = newArr.findIndex(({ size }) => size === s.size);
+            newArr[rowIndex] = { size: s.size, stat: true };
+            setCC('');
+            setSizes(newArr);
+        }
+        const newCC = s.stat ? activeColor : '';
+        const { count, price, minPrice, maxPrice } = newVariantCalculate(items.skus, s.size, newCC, 'size');
+        setCount(count);
+        setPrice(price);
+        setLowPrice(minPrice);
+        setHignPrice(maxPrice);
         const checkingArr = returnArr(items.skus, 'size', 'color', s.size);
-        if (checkingArr.length === 0) {
-            setColors(colors.map(({ color }) => ({ color, stat: false })));
-            setCount(0);
-        } else {
-            setColors(colors.map(({ color }) => ({ color, stat: checkingArr.includes(color) ? true : false })));
-            setCount(calculateCount(items.skus, checkingArr, 'color', 'size', s.size));
-        }
-    };
-
-    const setColor = (c: CType) => {
-        setC(c);
-        items.images.map(({ color, url }) => {
-            if (color == c.color) setActiveImage(url);
-        });
-        if (s.size) {
-            if (!c.stat) {
-                setS({ size: '', index: NaN, stat: false });
-                setColors(colors.map(({ color }) => ({ color, stat: true })));
-                colorFunc(c);
-                return;
-            } else {
-                setCount(calculateSpecificCount(items.skus, c.color, s.size));
-                return;
-            }
-        } else {
-            colorFunc(c);
-        }
-    };
-
-    const setSize = (s: SType) => {
-        console.log('asdksdjklj');
-        setS(s);
-        if (c.color) {
-            console.log('up');
-            if (!s.stat) {
-                setC({ color: '', index: NaN, stat: false });
-                setSizes(sizes.map(({ size }) => ({ size, stat: true })));
-                sizeFunc(s);
-                return;
-            } else {
-                setCount(calculateSpecificCount(items.skus, c.color, s.size));
-                return;
-            }
-        } else {
-            console.log('lksjdkljds');
-            sizeFunc(s);
-        }
+        setColors(colors.map(({ color }) => ({ color, stat: checkingArr.includes(color) ? true : false })));
+        // setSizes(filteredSizes);
     };
 
     const addToCart = () => {
         items.skus.forEach(({ color, size, count, price }) => {
-            if (color == c.color && size == s.size && count !== 0) {
+            if (color == activeColor && size == activeSize && count !== 0) {
                 console.log({
                     name: items.name,
                     id: items._id,
@@ -95,12 +84,13 @@ export const useItem = (items: ProductType) => {
         count,
         cartIdenty,
         addToCart,
-        errorMessage,
-        setErrorMessage,
-        c: c.color,
-        s: s.size,
-        setC: setColor,
-        setS: setSize,
+        activeColor,
+        activeSize,
+        setC: setColorrr,
+        setS: setSizess,
+        price,
+        lowPrice,
+        highPrice,
         colors,
         sizes,
         activeImage,
