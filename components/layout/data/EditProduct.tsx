@@ -1,10 +1,13 @@
 import Button from '@/components/elements/Button';
+import { apiPOST } from '@/hooks/middleware/api';
 import { ProductType } from '@/interface/Product/ProductInterface';
 import { appContext } from '@context/appcontext';
+import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { FormComponent } from '../product/kit/FormComponent';
 
 const EditProduct = () => {
+    const router = useRouter();
     const {
         state: {
             user: { userdata },
@@ -19,7 +22,8 @@ const EditProduct = () => {
         userdata?.workplaces.find(({ workplaceId }) => workplaceId === companydata?._id)?.positionLabel;
 
     const updateSubmit = (item: ProductType) => {
-        console.log(item);
+        console.log('is this the one', item);
+        //apiPOST<string, ProductType>(`/products/${item._id}?businessId=${router.query?.businessId}`, item);
     };
 
     if (staffPos === 'staff') {

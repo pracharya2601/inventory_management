@@ -15,12 +15,17 @@ import { action } from '@context/action';
 import SearchBar from '@/components/layout/searchbar';
 import SideboardOutline from '@/components/layout/sideboard/SideboardOutline';
 import ProductPreview from '@/components/layout/product/ProductPreview';
+import { socket } from 'socket/client';
 
 const ProductList = ({ data }: { data: ProductType[] | [] }) => {
     const [dataList, setDataList] = useState<ProductType[] | []>(data);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [singleData, setSingleData] = useState<ProductType>(null);
     const router = useRouter();
+    const businessId = router.query?.businessId;
+    const productType = router.query?.productType;
+    const eventListern = `update.${businessId}-${productType}`;
+    const addEventListener = `add.${businessId}-${productType}`;
     const {
         state: {
             user: { userdata },
@@ -30,10 +35,21 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
     } = useContext(appContext);
 
     useEffect(() => {
-        setDataList(data);
         /**
          * @info useeffect to update realtime data
          */
+        socket.on(eventListern, (data: ProductType) => {
+            const dataArr = [...dataList];
+            const index = dataArr.findIndex(({ _id }) => _id === data._id);
+            dataArr[index] = data;
+            setDataList(dataArr);
+            if (singleData?._id === data._id) {
+                setSingleData(data);
+            }
+        });
+        socket.on(addEventListener, (data: ProductType) => {
+            setDataList((prevState) => [data, ...prevState]);
+        });
         if (router.query?.search) {
             dispatch(
                 action.toggleAction({
@@ -44,13 +60,11 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
             setSearchTerm(searchTerm);
         }
         return () => {
-            setDataList([]);
             setSearchTerm('');
         };
     }, [router.asPath]);
 
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
-
     const onHandleSearchTerm = (e) => {
         const { value } = e.target;
         const searchValue = value.toLowerCase();
@@ -73,7 +87,6 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
             router.push(`/${router.query?.businessId}/${router.query?.productType}/1`);
         }
     };
-
     return (
         <ComponentWrapper
             searchBarComponent={
@@ -95,7 +108,13 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
                     size="full"
                     label={<div className="pt-1">{singleData?.name || 'Previewing Item'}</div>}
                 >
-                    {singleData && <ProductPreview data={singleData} staffPosition={business.positionLabel} />}
+                    {singleData && (
+                        <ProductPreview
+                            key={`${new Date().toDateString}`}
+                            data={singleData}
+                            staffPosition={business.positionLabel}
+                        />
+                    )}
                 </SideboardOutline>
             }
         >
@@ -109,10 +128,10 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
                 }
             >
                 {router.query?.productType === 'inventory' || router.query?.productType === 'stock' ? (
-                    <ProductLayout>
-                        {dataList.map((item: ProductType) => (
+                    <ProductLayout key={router.asPath}>
+                        {dataList.map((item: ProductType, index) => (
                             <ProductRow
-                                key={item._id}
+                                key={`${item._id}-${index}`}
                                 item={item}
                                 onView={() => {
                                     setSingleData(item);
@@ -150,6 +169,7 @@ export async function getServerSideProps(context: any) {
     const pageNumber = context.query.page;
     const userId = session.user.id;
     const isUserRelatedtoCompany = await checkWorkplace(db, session.user.id, businessId);
+
     if (!isUserRelatedtoCompany) {
         return {
             redirect: {
@@ -160,7 +180,7 @@ export async function getServerSideProps(context: any) {
     }
     return {
         props: {
-            data: datas,
+            data: [datas[3], datas[5], datas[5]],
         },
     };
 }

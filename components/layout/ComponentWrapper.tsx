@@ -18,6 +18,7 @@ import SearchBar from './searchbar';
 import { useRouter } from 'next/router';
 import ProductPreview from './product/ProductPreview';
 import AccountInfo from './user/AccountInfo';
+import CreateWorkplace from './company/CreateWorkplace';
 
 interface ComponentWrapperProps {
     children?: JSX.Element | JSX.Element[];
@@ -141,7 +142,7 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
                 noOutsideClick={true}
                 size="full"
             >
-                <h1>Create Workplace</h1>
+                <CreateWorkplace />
             </SideboardOutline>
             {productPreview && productPreview}
             <div className="flex-1 dark:bg-gray-900 dark:text-white h-screen overflow-auto">{children}</div>

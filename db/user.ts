@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+import { WorkplaceTypes } from '@/interface/Workplace/WorkplaceListTypes';
 import { Db, ObjectId } from 'mongodb'
 export const getUserById = async (db: Db, id: string) => {
   try {
@@ -8,7 +9,23 @@ export const getUserById = async (db: Db, id: string) => {
     console.log("this is the error", e)
     return;
   }
+}
 
+export const updateWorkplaces = async(db:Db, userId: string, data: WorkplaceTypes) => {
+  try {
+    await db.collection('users').updateOne(
+      {
+          _id: ObjectId(userId),
+      },
+      {
+          $push: {
+              workplaces: data,
+          },
+      },
+  );
+  }catch (error) {
+    return;
+  }
 }
 
 export const addWorkPlace = async (db: Db, id: string, workplace: { id: string, name: string }) => {

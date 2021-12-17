@@ -10,18 +10,6 @@ import { useContext, useEffect, useState } from 'react';
 import { Colors, Sizes } from './kit';
 
 const ProductRow = ({ item, onView }: { item: ProductType; onView: () => void }) => {
-    const router = useRouter();
-    const id = router.query.id as string[];
-    const dataType = id && id[2];
-
-    const {
-        state: {
-            ui: { toggleOpen },
-            route: { pathName },
-        },
-        dispatch,
-    } = useContext(appContext);
-
     const {
         count,
         cartIdenty,
@@ -35,14 +23,7 @@ const ProductRow = ({ item, onView }: { item: ProductType; onView: () => void })
         setS,
         colors,
         sizes,
-        activeImage,
-        setActiveImage,
     } = useItem(item);
-    const handelClick = (id: string) => {
-        const routeId = pathName?.id && (pathName?.id as string[]);
-        router.push(`/dashboard/${routeId?.join('/')}?pV=${id}`, undefined, { shallow: true });
-    };
-
     return (
         <tr>
             <td className="px-5 py-3 border-b border-gray-700 dark:border-gray-200 text-sm">

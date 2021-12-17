@@ -20,7 +20,7 @@ const SideBoard = ({ label, children, size }: SideBoardProps) => {
                     {label}
                 </div>
             )}
-            <SideboardOutline setOpen={setOpen} open={open} size={size}>
+            <SideboardOutline setOpen={setOpen} open={open} size={size} label={label}>
                 {children}
             </SideboardOutline>
         </>

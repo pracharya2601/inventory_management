@@ -23,8 +23,19 @@ export default async (req: NextApiRequest, res: NextApiResponseServerIO) => {
         const io = new ServerIO(httpServer, {
             path: '/api/socketio',
         });
-        // append SocketIO server to Next.js socket server response
         res.socket.server.io = io;
     }
+    res?.socket?.server?.io
+        ?.use(async (socket, next) => {
+            const token = await jwt.getToken({ req, secret: process.env.JWT_SECRET });
+            if (token) {
+                next();
+            } else {
+                next(new Error('Authentication error'));
+            }
+        })
+        .on('connect', () => {
+            console.log('is there a token');
+        });
     res.end();
 };

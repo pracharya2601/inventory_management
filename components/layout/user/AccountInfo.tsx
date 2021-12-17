@@ -25,7 +25,7 @@ const AccountInfo = () => {
                 <div className="text-xl mt-2 mb-2">{userdata?.email}</div>
                 <Button label="Logout" size="sm" color="red" onClick={() => signOut()} />
             </div>
-            <div className="flex-1 max-w-2xl mx-auto mt-3 shadow-lg p-3 bg-gray-900 rounded">
+            <div className="flex-1 max-w-2xl mx-auto mt-3 shadow-lg p-3 bg-gray-900 rounded mb-5">
                 <div className="text-2xl">Workplaces:</div>
                 {userdata.workplaces?.length > 0 ? (
                     <>
@@ -88,12 +88,7 @@ const AccountInfo = () => {
                                     open: false,
                                 }),
                             );
-                            dispatch(
-                                action.toggleAction({
-                                    id: 'joinworkplace',
-                                    open: true,
-                                }),
-                            );
+                            router.push('/verify');
                         }}
                     />
                 </div>

@@ -9,7 +9,13 @@ module.exports = withBundleAnalyzer({
         // add your public runtime environment variables here with NEXT_PUBLIC_*** prefix
     },
     images: {
-        domains: ['imgs.michaels.com', 'cdn.shopify.com', 'www.google.com', 'www.openbsd.org'],
+        domains: [
+            'imgs.michaels.com',
+            'cdn.shopify.com',
+            'www.google.com',
+            'www.openbsd.org',
+            'storage.googleapis.com',
+        ],
     },
     webpack: (config) => {
         // extend your webpack configuration here

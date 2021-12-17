@@ -14,7 +14,7 @@ const ColorVariant = () => {
     } = useContext(appContext);
     const [state, setState] = useState<string[]>(variant?.colorVariants || []);
     const [colVal, setColVal] = useState<string>('');
-    const [listColors, setListColors] = useState<string[]>(statColor.slice(0, 5));
+    const [listColors, setListColors] = useState<string[]>(statColor);
     const [showDropDown, setShowDropDown] = useState(false);
     const [timer, setTimer] = useState(null);
 

@@ -12,17 +12,18 @@ import { FormComponent } from '@/components/layout/product/kit/FormComponent';
 import { CreateDataType } from '@/interface/Product/ProductInterface';
 import Button from '@/components/elements/Button';
 import { action } from '@context/action';
+import { apiPOST } from '@/hooks/middleware/api';
 
-const initialData = {
+const initialData: CreateDataType = {
     name: '',
     description: '',
     listDescription: [{ id: 0, desckey: '', desc: '' }],
     guide: [{ id: 0, type: '', link: '' }],
-    images: [{ id: 0, url: '', color: '' }],
+    images: [],
     productdetail: [{ id: 0, detailkey: '', detail: '' }],
     catagory: [],
     skus: [{ id: 0, color: '', size: '', price: 0, count: 0 }],
-    productType: '',
+    productType: 'inventory',
 };
 
 const CreateData = ({ variant }: { variant: CompanyVariants }) => {
@@ -56,8 +57,12 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
         };
     }, []);
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
-    const createProductSubmit = (item: CreateDataType) => {
-        console.log(item);
+    const createProductSubmit = async (item: CreateDataType) => {
+        const { data, errors } = await apiPOST<{ data: string; errors: string }, CreateDataType>(
+            `/products?businessId=${router.query?.businessId}`,
+            item,
+        );
+        console.log(data, errors);
     };
 
     return (

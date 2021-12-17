@@ -17,15 +17,19 @@ export async function apiGET<T>(path: string): Promise<T> {
     }
 }
 
-export const apiPOST = async (path: string, body: any) => {
-    const resp = await fetch(`api/${path}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-    });
-    if (resp.ok) {
-        return 'success';
+export async function apiPOST<T, BodyType>(path: string, body: BodyType): Promise<T> {
+    try {
+        const resp = await fetch(`/api${path}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(body),
+        });
+        const data: T = await resp.json();
+        return data;
+    } catch (e) {
+        const errors: T = e;
+        return errors;
     }
-};
+}

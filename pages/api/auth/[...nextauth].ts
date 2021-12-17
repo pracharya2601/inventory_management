@@ -3,6 +3,7 @@ import { connectToDB } from 'db/connect';
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import cryptoJs from 'crypto-js';
+import { ObjectId } from 'mongodb';
 
 export default (req, res) =>
     NextAuth(req, res, {
@@ -38,7 +39,15 @@ export default (req, res) =>
             },
             async jwt(tokenPayload, user, account, profile, isNewUser) {
                 const { db } = await connectToDB();
-
+                //new user
+                // create container on userworkplaces
+                if (isNewUser) {
+                    console.log('Hello, this is new user creating userworkplaces');
+                    await db.collection('userworkplaces').insertOne({
+                        _id: ObjectId(user.id),
+                        workplacesIds: [],
+                    });
+                }
                 // if (isNewUser) {
                 //   // const personalFolder = await folder.createFolder(db, { createdBy: `${user.id}`, name: 'Getting Started' })
                 //   // await doc.createDoc(db, {
@@ -61,7 +70,6 @@ export default (req, res) =>
                 //   // })
                 //   console.log("hello")
                 // }
-
                 if (tokenPayload && user) {
                     return { ...tokenPayload, id: `${user.id}` };
                 }

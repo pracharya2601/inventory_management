@@ -5,13 +5,7 @@ import middleware from 'middlware/all';
 import { Db, MongoClient } from 'mongodb';
 import { NextApiRequest } from 'next';
 import { getUserById } from 'db/user';
-
-export interface Request extends NextApiRequest {
-    db: Db;
-    dbClient: MongoClient;
-    user: { email: string; id: string };
-}
-
+import { Request } from '@/interface/Request';
 const handeler = nc({ onError });
 handeler.use(middleware);
 

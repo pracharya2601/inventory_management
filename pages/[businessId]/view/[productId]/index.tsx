@@ -10,10 +10,14 @@ import { useRouter } from 'next/router';
 import Dashboard from '@/components/layout/company/Dashboard';
 import BusinessNavbar from '@/components/layout/company/BusinessNavbar';
 import ProductPreviewDetail from '@/components/layout/product/ProductPreview/ProductPreviewDetail';
+import { socket } from 'socket/client';
 
 const ProductView = ({ data, error }: { data: ProductType; error: { type: string; message: string } | null }) => {
     const [singleProduct, setSingleProduct] = useState<ProductType>(data);
     const router = useRouter();
+    const businessId = router.query?.businessId;
+    const productId = router.query?.productId;
+    const eventListern = `${businessId}-${productId}`;
     const {
         state: {
             user: { userdata },
@@ -25,6 +29,12 @@ const ProductView = ({ data, error }: { data: ProductType; error: { type: string
          * @info useeffect is for socket and to update on realtime
          */
 
+        socket.on(eventListern, (data: ProductType) => {
+            console.log('sdsssd');
+            if (singleProduct?._id === data._id) {
+                setSingleProduct(data);
+            }
+        });
         return () => {
             setSingleProduct(null);
         };

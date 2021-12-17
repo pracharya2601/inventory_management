@@ -1,4 +1,5 @@
 import { Db, MongoClient } from 'mongodb';
+// import { Storage } from '@google-cloud/storage';
 
 /**
  * We have to cache the DB connection
@@ -11,6 +12,7 @@ import { Db, MongoClient } from 'mongodb';
  * better.
  */
 global.mongo = global.mongo || {};
+// global.gcloud = global.gcloud || {};
 
 export const connectToDB = async () => {
     if (!global.mongo.client) {
@@ -25,8 +27,18 @@ export const connectToDB = async () => {
         await global.mongo.client.connect();
         console.log('connected to DB');
     }
+    // if (!global.gcloud.storage) {
+    //     global.gcloud.storage = new Storage({
+    //         projectId: process.env.PROJECT_ID,
+    //         credentials: {
+    //             client_email: process.env.CLIENT_EMAIL,
+    //             private_key: process.env.PRIVATE_KEY,
+    //         },
+    //     });
+    // }
 
     const db: Db = global.mongo.client.db('inventory');
+    // const storage: Storage = global.gcloud;
 
     return { db, dbClient: global.mongo.client };
 };

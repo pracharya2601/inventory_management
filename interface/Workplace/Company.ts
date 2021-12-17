@@ -13,12 +13,15 @@ export interface ProductCatagory {
 
 export interface EmployeeType {
     email: string;
+    positionLabel: string;
     fullName: string;
     joined: boolean;
     joinedDate: string;
     userId: string;
-    positionLabel: string;
+    addBy: string;
 }
+
+export type VerifiedDataPayloadType = Omit<EmployeeType, 'positionLabel' | 'addBy'>;
 
 export interface CompanyTypes {
     _id: string;
@@ -31,9 +34,19 @@ export interface CompanyTypes {
     variantColors: string[];
     variantSizes: string[];
 }
-
 export interface CompanyVariants {
     _id: string;
     colorVariants: string[] | [];
     sizeVariants: string[] | [];
+}
+
+export type CreateStaffFormType = Omit<EmployeeType, 'joined' | 'joinedDate' | 'userId' | 'addBy'>;
+
+export interface WorkplaceDataType extends Omit<CompanyTypes, 'staffs'> {
+    staffs: CreateStaffFormType[];
+}
+
+export interface CreateCompanyType {
+    workplaceData: Omit<WorkplaceDataType, '_id' | 'createdAt'>;
+    workplaceVariant: Omit<CompanyVariants, '_id'>;
 }

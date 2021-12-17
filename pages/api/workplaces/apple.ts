@@ -8,12 +8,7 @@ import { Db, MongoClient } from 'mongodb';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getOneWorkPlace } from 'db/workplace';
 import { getUserById } from 'db/user';
-
-export interface Request extends NextApiRequest {
-    db: Db;
-    dbClient: MongoClient;
-    user: { email: string; id: string };
-}
+import { Request } from '@/interface/Request';
 
 const handeler = nc({ onError });
 handeler.use(middleware);

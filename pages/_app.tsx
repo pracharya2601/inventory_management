@@ -10,6 +10,8 @@ import { apiGET } from '@/hooks/middleware/api';
 import { appContext } from '@context/appcontext';
 import { action } from '@context/action';
 import { UserData, UserSession } from '@/interface/AuthSession';
+import { socket } from 'socket/client';
+import { WorkplaceTypes } from '@/interface/Workplace/WorkplaceListTypes';
 
 function MyApp({ Component, pageProps }: AppProps) {
     return (
@@ -29,13 +31,9 @@ const Wrapper = ({ children }) => {
         },
         dispatch,
     } = useContext(appContext);
-
     useEffect(() => {
         (async function myFunction() {
             const session: Session = await getSession();
-            if (!session) {
-                router.push('/signin');
-            }
             if (authenticated && userdata) {
                 return;
             }

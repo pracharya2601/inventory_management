@@ -1,8 +1,9 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { useRef } from 'react';
 import { InputProps } from '@/interface/elements/Input';
 
 const Input = (props: InputProps) => {
+    const inpRef = useRef(null);
     return (
         <>
             {(props.helper || props.icon) && props.label && (
@@ -31,10 +32,12 @@ const Input = (props: InputProps) => {
                 )}
 
                 <input
+                    ref={inpRef}
                     id={props.id}
                     disabled={props.disabled}
                     value={props.value}
                     onChange={props.onChange}
+                    // onFocus={() => inpRef.current.scrollIntoView()}
                     autoFocus={props.autofocus}
                     className={clsx(
                         {

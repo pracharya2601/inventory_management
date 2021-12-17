@@ -16,6 +16,43 @@ export const FormComponent = ({
     const { handleOnChange, handleOnChangeArray, onDropdownChange, da, deleteItem, addItem, colors, sizes } =
         useProductForm(data);
 
+    const uploadPhoto = async (e) => {
+        const file = e.target.files[0];
+        const filename = encodeURIComponent(file.name);
+        const res = await fetch(`http://localhost:3000/api/file?file=${filename}`);
+        const { url, fields } = await res.json();
+        const formData = new FormData();
+        Object.entries({ ...fields, file }).forEach(([key, value]) => {
+            formData.append(key, value as string);
+        });
+        const upload = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+        if (upload.ok) {
+            console.log('url', `${upload.url}${filename}`);
+            addItem('images', {
+                id: filename,
+                url: `${upload.url}${filename}`,
+                color: 'default',
+            });
+            console.log('Uploaded successfully!');
+        } else {
+            console.error('Upload failed.');
+        }
+    };
+    const deleteImage = async (name: string, filename: string) => {
+        deleteItem(name);
+        await fetch(`http://localhost:3000/api/file?file=${filename}`, {
+            method: 'DELETE',
+        });
+    };
+
+    const uploadImg = () => {
+        const fileInp = document.getElementById('imageInput');
+        fileInp.click();
+    };
+
     if (!data) return null;
     return (
         <>
@@ -131,17 +168,13 @@ export const FormComponent = ({
                             size="sm"
                             customClass="w-28 mt-2"
                             type="button"
-                            onClick={() =>
-                                addItem('images', {
-                                    url: '',
-                                    color: 'default',
-                                })
-                            }
+                            onClick={() => uploadImg()}
                         />
+                        <input type="file" id="imageInput" hidden={true} onChange={uploadPhoto} />
                     </div>
                     <div className="mt-3 flex flex- gap-2 justify-left min-w-full overflow-x-auto ">
                         {da?.images?.length > 0 &&
-                            da.images.map(({ url, color }, index) => (
+                            da.images.map(({ id, url, color }, index) => (
                                 <div key={`${url}-${index}`} className="shadow-sm bg-gray-800 rounded">
                                     <div className="p-2 flex justify-between items-center rounded">
                                         <DropDownMenu
@@ -167,7 +200,8 @@ export const FormComponent = ({
                                             size="xs"
                                             color="red"
                                             type="button"
-                                            onClick={() => deleteItem(`images.${index}`)}
+                                            //onClick={() => deleteItem(`images.${index}`)}
+                                            onClick={() => deleteImage(`images.${index}`, id)}
                                             icon={
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"

@@ -28,6 +28,9 @@
       ],
       "@context/*": [
         "context/*"
+      ],
+      "@socket/*":[
+        "socket/*"
       ]
     },
     "allowJs": true,

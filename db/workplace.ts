@@ -1,3 +1,4 @@
+import { CompanyTypes, CompanyVariants, EmployeeType } from '@/interface/Workplace/Company';
 import { StaffType } from '@/interface/Workplace/StaffType';
 import { Db, ObjectId } from 'mongodb';
 
@@ -23,10 +24,24 @@ export const getOneWorkPlace = async (db: Db, id: string, userId: string) => {
     }
 };
 
+export const getUnverifiedWorkplaces = async (db: Db, staffEmail: string) => {
+    try {
+        const data = await db
+            .collection('workplaces')
+            .find({
+                staffs: { $elemMatch: { email: staffEmail, joined: false, userId: '' } },
+            })
+            .toArray();
+        return data;
+    } catch (error) {
+        return;
+    }
+};
+
 export const checkWorkplace = async (db: Db, id: string, workplaceId: string) => {
     try {
         const data = await db.collection('userworkplaces').findOne({ _id: ObjectId(id) });
-        if (data && data.workplacesIds.indexOf(workplaceId) !== -1) {
+        if (data && data.workplacesIds.includes(workplaceId)) {
             return true;
         }
     } catch (e) {
@@ -34,31 +49,90 @@ export const checkWorkplace = async (db: Db, id: string, workplaceId: string) =>
     }
 };
 
-export const createWorkPlace = async (
-    db: Db,
-    body: { workplaceName: string; workplaceCode: string; productCatagory },
-    user: { userId: string; fullName: string; email: string; imgUrl: string },
-) => {
-    const newDate = new Date().toDateString();
-    const _id = new ObjectId();
-    const data = {
-        _id: _id,
-        ...body,
-        createdAt: newDate,
-        staffs: [
-            {
-                ...user,
-                joined: true,
-                joinedDate: newDate,
-                positionLabel: 'admin',
-            },
-        ],
-    };
+export const createNewWorkPlace = async (db: Db, workplaceData: CompanyTypes, userId: string) => {
     try {
-        //await db.collection('workplaces').insertOne(data);
-        //send email to user about work space creation
-        return data;
-    } catch (e) {
+        await db.collection('workplaces').insertOne(workplaceData);
+        await db.collection('userworkplaces').updateOne(
+            {
+                _id: ObjectId(userId),
+            },
+            {
+                $push: {
+                    workplacesIds: workplaceData._id.toString(),
+                },
+            },
+        );
+        return workplaceData;
+    } catch (error) {
+        return;
+    }
+};
+
+export const verifyWorkplace = async (
+    db: Db,
+    workplaceId: string,
+    userEmail: string,
+    userName: string,
+    userId: string,
+    joinedDate: string,
+) => {
+    try {
+        await db.collection('workplaces').updateOne(
+            {
+                _id: ObjectId(workplaceId),
+                staffs: { $elemMatch: { email: userEmail } },
+            },
+            {
+                $set: {
+                    'staffs.$.userId': userId,
+                    'staffs.$.fullName': userName,
+                    'staffs.$.joinedDate': joinedDate,
+                    'staffs.$.joined': true,
+                },
+            },
+        );
+        await db.collection('userworkplaces').updateOne(
+            {
+                _id: ObjectId(userId),
+            },
+            {
+                $push: {
+                    workplacesIds: ObjectId(workplaceId),
+                },
+            },
+        );
+        return true;
+    } catch (error) {
+        return;
+    }
+};
+
+export const createWorkplaceVariant = async (db: Db, variantData: CompanyVariants) => {
+    try {
+        await db.collection('workplaceVariant').insertOne(variantData);
+        //return data and return the returned data
+        return variantData;
+    } catch (error) {
+        console.log('wrror inside workplaceVariant', error);
+        return;
+    }
+};
+
+export const addNewStaffs = async (db: Db, staffs: EmployeeType[], workplaceId: string) => {
+    try {
+        await db.collection('workplaces').updateOne(
+            { _id: ObjectId(workplaceId) },
+            {
+                $push: {
+                    staffs: {
+                        $each: staffs,
+                    },
+                },
+            },
+        );
+        return true;
+    } catch (error) {
+        console.log(error);
         return;
     }
 };

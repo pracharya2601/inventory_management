@@ -13,6 +13,7 @@ import { ProductType } from '@/interface/Product/ProductInterface';
 import { action } from '@context/action';
 import Button from '@/components/elements/Button';
 import { FormComponent } from '@/components/layout/product/kit/FormComponent';
+import { apiPOST } from '@/hooks/middleware/api';
 
 type EditProductProps = {
     variant: CompanyVariants;
@@ -48,8 +49,8 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
 
     const updateProductInformation = (item: ProductType) => {
-        console.log(item);
-        router.push(`/${router.query?.businessId}/view/${itemData._id}`);
+        apiPOST<string, ProductType>(`/products/${item._id}?businessId=${router.query?.businessId}`, item);
+        setTimeout(() => router.push(`/${router.query?.businessId}/view/${itemData._id}`), 2000);
     };
     return (
         <ComponentWrapper>

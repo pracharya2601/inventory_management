@@ -6,8 +6,12 @@ import { useRouter } from 'next/router';
 import Dashboard from '@/components/layout/company/Dashboard';
 import { useContext, useEffect, useState } from 'react';
 import { appContext } from '@context/appcontext';
-import { CompanyTypes } from '@/interface/Workplace/Company';
+import { CompanyTypes, EmployeeType, VerifiedDataPayloadType } from '@/interface/Workplace/Company';
 import BusinessNavbar from '@/components/layout/company/BusinessNavbar';
+import { socket } from 'socket/client';
+import SideBoard from '@/components/layout/sideboard';
+import Staffs from '@/components/layout/company/Staffs';
+import CreateEmployee from '@/components/layout/company/Staffs/CreateEmployee';
 
 const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
     const [companyData, setCompanyData] = useState<CompanyTypes | null>(companydata);
@@ -17,17 +21,41 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
             user: { userdata },
         },
     } = useContext(appContext);
+    const evnetI = router.query?.businessId;
+    const addEmployee = `create-employee-${evnetI}`;
+    const verifyEvent = `staffverify-${evnetI}`;
     useEffect(() => {
         /**
          * @info useeffect is for socket and to update on realtime
          */
-
+        socket.on(`${router.query?.businessId}`, (data: CompanyTypes) => {
+            setCompanyData(data);
+        });
+        socket.on(verifyEvent, (data: VerifiedDataPayloadType) => {
+            const arrStaff: EmployeeType[] | [] = [...companydata.staffs];
+            const rowIndex = arrStaff.findIndex((item: EmployeeType) => item.email === data.email);
+            arrStaff[rowIndex] = {
+                ...arrStaff[rowIndex],
+                ...data,
+            };
+            setCompanyData((prevState) => ({
+                ...prevState,
+                staffs: arrStaff,
+            }));
+        });
+        socket.on(addEmployee, (data: EmployeeType[]) => {
+            const newArr: EmployeeType[] | [] = [...companydata.staffs, ...data];
+            console.log(data, newArr);
+            setCompanyData((prevState) => ({
+                ...prevState,
+                staffs: newArr,
+            }));
+        });
         return () => {
-            setCompanyData(null);
+            socket.disconnect();
         };
     }, []);
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
-    console.log(companyData);
     return (
         <ComponentWrapper>
             <Dashboard
@@ -39,7 +67,22 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
                     />
                 }
             >
-                <div>This is Company Dashboard {companyData.workplaceName}</div>
+                <div className="mt-5 grid grap-cols-1 sm:grid-cols-4 lg:grid-cols-3 content-start pb-20">
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-1 shadow-lg px-2">
+                        <div className="max-w-md">
+                            <div className=" text-lg px-2 mt-2">Employee List</div>
+                            <p className="text-yellow-500 text-xs mb-8 px-2">List of all Employee</p>
+                            <Staffs
+                                staffs={companyData?.staffs}
+                                pos={business?.positionLabel}
+                                key={`staffs-length-${companyData?.staffs.length}`}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-span-1 sm:col-span-2 lg:col-span-1 shadow-lg px-4 h-96">
+                        <CreateEmployee />
+                    </div>
+                </div>
             </Dashboard>
         </ComponentWrapper>
     );

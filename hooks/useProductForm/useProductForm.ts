@@ -43,9 +43,6 @@ export const useProductForm = (formData: ProductType | CreateDataType) => {
 
     const onDropdownChange = (value, name) => {
         onChangeCustomHandeler(value, name, 'string');
-        if (name.includes('skus')) {
-            console.log('Hello, This is skus');
-        }
     };
 
     const onChangeCustomHandeler = (value, name, type) => {

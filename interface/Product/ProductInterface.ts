@@ -16,7 +16,7 @@ interface Guide {
 }
 
 export interface Images {
-    id: number;
+    id: string;
     url: string;
     color: string;
 }
@@ -40,6 +40,11 @@ export interface Skus {
     size: string;
 }
 
+export interface UpdatedAt {
+    date: string;
+    updatedBy: string;
+}
+
 export interface ProductType {
     _id: string;
     name: string;
@@ -50,7 +55,7 @@ export interface ProductType {
     postedBy: PostedBy;
     createdBy: CreatedBy;
     postedAt: string;
-    updatedAt: string[];
+    updatedAt: UpdatedAt[];
     productdetail: ProductDetail[];
     catagory: string[];
     skus: Skus[];
@@ -66,7 +71,7 @@ export interface CreateDataType {
     productdetail: ProductDetail[];
     catagory: string[] | [];
     skus: Skus[];
-    productType: string;
+    productType: 'stock' | 'inventory';
 }
 
 export interface FormDataType {

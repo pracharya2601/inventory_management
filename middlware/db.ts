@@ -6,13 +6,15 @@ declare global {
     namespace NodeJS {
         interface Global {
             mongo: any;
+            gcloud: any;
         }
     }
 }
 
 export default async function database(req, res, next) {
-    const { db, dbClient } = await connectToDB();
+    const { db, dbClient, storage } = await connectToDB();
     req.db = db;
+    req.storage = storage;
     req.dbClinet = dbClient;
 
     next();
