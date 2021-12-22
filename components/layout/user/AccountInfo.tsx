@@ -57,7 +57,7 @@ const AccountInfo = () => {
                         <p>You are not associate with any workplaces</p>
                     </div>
                 )}
-                <div className="flex justify-left gap-3 mt-2 py-2">
+                <div className="flex flex-wrap justify-left gap-3 mt-2 py-2">
                     <Button
                         label="Create Workplace"
                         size="sm"

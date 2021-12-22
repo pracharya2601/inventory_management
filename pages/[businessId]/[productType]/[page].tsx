@@ -16,20 +16,29 @@ import SearchBar from '@/components/layout/searchbar';
 import SideboardOutline from '@/components/layout/sideboard/SideboardOutline';
 import ProductPreview from '@/components/layout/product/ProductPreview';
 import { socket } from 'socket/client';
+import { getProductLists, getSearchProductList } from 'db/products';
+import Pagination from '@/components/layout/product/Pagination';
 
-const ProductList = ({ data }: { data: ProductType[] | [] }) => {
+const PAGE_LIMIT = 10;
+//while changing this need to change on monog query also
+
+const ProductList = ({ data, count }: { data: ProductType[] | []; count: number }) => {
     const [dataList, setDataList] = useState<ProductType[] | []>(data);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [singleData, setSingleData] = useState<ProductType>(null);
     const router = useRouter();
     const businessId = router.query?.businessId;
     const productType = router.query?.productType;
+    const pageNum = router.query?.page;
     const eventListern = `update.${businessId}-${productType}`;
     const addEventListener = `add.${businessId}-${productType}`;
     const {
         state: {
             user: { userdata },
             ui: { toggleOpen },
+            lugItem: {
+                items
+            }
         },
         dispatch,
     } = useContext(appContext);
@@ -38,6 +47,7 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
         /**
          * @info useeffect to update realtime data
          */
+        setDataList(data);
         socket.on(eventListern, (data: ProductType) => {
             const dataArr = [...dataList];
             const index = dataArr.findIndex(({ _id }) => _id === data._id);
@@ -57,20 +67,22 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
                     open: true,
                 }),
             );
-            setSearchTerm(searchTerm);
+            setSearchTerm(router.query?.search as string);
         }
         return () => {
             setSearchTerm('');
+            setDataList([])
         };
     }, [router.asPath]);
+    console.log(items);
 
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
     const onHandleSearchTerm = (e) => {
         const { value } = e.target;
-        const searchValue = value.toLowerCase();
+        const cleanString = value.replace(/[|&;$%@"<>()+,]/g, "").toLowerCase();
         setSearchTerm(value);
         const filteredData: ProductType[] | [] = data.filter((data: ProductType) => {
-            return data.name.toLowerCase().search(searchValue) != -1;
+            return data.name.toLowerCase().search(cleanString) != -1;
         });
         setDataList(filteredData);
     };
@@ -128,8 +140,10 @@ const ProductList = ({ data }: { data: ProductType[] | [] }) => {
                 }
             >
                 {router.query?.productType === 'inventory' || router.query?.productType === 'stock' ? (
-                    <ProductLayout key={router.asPath}>
-                        {dataList.map((item: ProductType, index) => (
+                    <ProductLayout key={router.asPath}
+                        pagination={count > PAGE_LIMIT && <Pagination count={count} limit={PAGE_LIMIT} />}
+                    >
+                        {dataList.length > 0 && dataList.map((item: ProductType, index) => (
                             <ProductRow
                                 key={`${item._id}-${index}`}
                                 item={item}
@@ -166,10 +180,11 @@ export async function getServerSideProps(context: any) {
     const { db } = await connectToDB();
     const businessId = context.query.businessId;
     const productType = context.query.productType;
-    const pageNumber = context.query.page;
+    const pageNumber = context.query.page as string;
+    const skipNumber = pageNumber === '1' ? 0 : +pageNumber - 1 * PAGE_LIMIT;
+    const searchTerm = context.query.search as string;
     const userId = session.user.id;
-    const isUserRelatedtoCompany = await checkWorkplace(db, session.user.id, businessId);
-
+    const isUserRelatedtoCompany = await checkWorkplace(db, userId, businessId);
     if (!isUserRelatedtoCompany) {
         return {
             redirect: {
@@ -178,9 +193,25 @@ export async function getServerSideProps(context: any) {
             },
         };
     }
+    let count = 0;
+    let itemlist = [];
+    if (searchTerm) {
+        const { data, totalCount } = await getSearchProductList(db, businessId, productType, skipNumber, searchTerm)
+        if (totalCount > 0) {
+            itemlist = JSON.parse(JSON.stringify(data));
+            count = totalCount;
+        }
+    } else {
+        const { data, totalCount } = await getProductLists(db, businessId, productType, skipNumber)
+        if (totalCount > 0) {
+            itemlist = JSON.parse(JSON.stringify(data));
+            count = totalCount;
+        }
+    }
     return {
         props: {
-            data: [datas[3], datas[5], datas[5]],
+            data: itemlist,
+            count: count,
         },
     };
 }

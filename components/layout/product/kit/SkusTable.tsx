@@ -45,6 +45,7 @@ export const THead = () => (
                     Color
                     <SideBoard
                         size="small"
+                        sideboardLabel='Color Variant'
                         label={
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -72,6 +73,7 @@ export const THead = () => (
                     Size
                     <SideBoard
                         size="small"
+                        sideboardLabel='Size Variant'
                         label={
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

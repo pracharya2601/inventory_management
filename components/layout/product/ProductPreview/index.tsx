@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import Alert from '@/components/elements/Alert';
 import Button from '@/components/elements/Button';
 import DropDownMenu, { DropDownItem } from '@/components/elements/ddm/DropDownMenu';
+import Input from '@/components/elements/Input';
 import { useItem } from '@/hooks/useItem';
 import { ProductType } from '@/interface/Product/ProductInterface';
 import { action } from '@context/action';
 import { appContext } from '@context/appcontext';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import React, { useContext } from 'react';
 import SideboardOutline from '../../sideboard/SideboardOutline';
 import { Colors, Description, Sizes } from '../kit';
@@ -16,16 +16,13 @@ const ProductPreview = ({ data, staffPosition }: { data: ProductType; staffPosit
     const {
         dispatch,
         state: {
-            workplace: { companydata },
             ui: { toggleOpen },
-            route: { pathName },
         },
     } = useContext(appContext);
 
     const router = useRouter();
     const {
         count,
-        cartIdenty,
         addToCart,
         activeColor,
         activeSize,
@@ -41,22 +38,6 @@ const ProductPreview = ({ data, staffPosition }: { data: ProductType; staffPosit
     } = useItem(data);
     const a = false;
 
-    const onClickHandle = () => {
-        dispatch(
-            action.toggleAction({
-                id: 'processProduct',
-                open: true,
-            }),
-        );
-    };
-    const processBarHandle = () => {
-        dispatch(
-            action.toggleAction({
-                id: 'processProduct',
-                open: false,
-            }),
-        );
-    };
     return (
         <>
             <div className="h-full relative">
@@ -80,7 +61,9 @@ const ProductPreview = ({ data, staffPosition }: { data: ProductType; staffPosit
                         <Button
                             label="Process Order"
                             size="sm"
-                            onClick={() => onClickHandle()}
+                            onClick={() => {
+                                addToCart(true);
+                            }}
                             icon={
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -102,14 +85,6 @@ const ProductPreview = ({ data, staffPosition }: { data: ProductType; staffPosit
                     </div>
                 </div>
             </div>
-            <SideboardOutline
-                open={toggleOpen?.['processProduct']}
-                setOpen={processBarHandle}
-                size="small"
-                noOutsideClick={true}
-            >
-                <h1>Process Order</h1>
-            </SideboardOutline>
         </>
     );
 };

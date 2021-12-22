@@ -6,7 +6,7 @@ export const getOneWorkPlace = async (db: Db, id: string, userId: string) => {
     try {
         const data = await db
             .collection('workplaces')
-            .find({
+            .findOne({
                 $and: [
                     { _id: ObjectId(id) },
                     {
@@ -16,8 +16,7 @@ export const getOneWorkPlace = async (db: Db, id: string, userId: string) => {
                     },
                 ],
             })
-            .toArray();
-        return data[0];
+        return data;
     } catch (e) {
         console.log('get one workplace error', e);
         return;
@@ -41,8 +40,11 @@ export const getUnverifiedWorkplaces = async (db: Db, staffEmail: string) => {
 export const checkWorkplace = async (db: Db, id: string, workplaceId: string) => {
     try {
         const data = await db.collection('userworkplaces').findOne({ _id: ObjectId(id) });
-        if (data && data.workplacesIds.includes(workplaceId)) {
-            return true;
+        const a = data.workplacesIds.find((item) => item.workplaceId === workplaceId);
+        if (data) {
+            return data;
+        } else {
+            return;
         }
     } catch (e) {
         return false;
@@ -58,7 +60,10 @@ export const createNewWorkPlace = async (db: Db, workplaceData: CompanyTypes, us
             },
             {
                 $push: {
-                    workplacesIds: workplaceData._id.toString(),
+                    workplacesIds: {
+                        workplacesIds: workplaceData._id.toString(),
+                        positionLabel: 'admin'
+                    },
                 },
             },
         );
@@ -75,6 +80,7 @@ export const verifyWorkplace = async (
     userName: string,
     userId: string,
     joinedDate: string,
+    positionLabel: string,
 ) => {
     try {
         await db.collection('workplaces').updateOne(
@@ -97,7 +103,7 @@ export const verifyWorkplace = async (
             },
             {
                 $push: {
-                    workplacesIds: ObjectId(workplaceId),
+                    workplacesIds: { workplaceId, positionLabel },
                 },
             },
         );
@@ -118,6 +124,18 @@ export const createWorkplaceVariant = async (db: Db, variantData: CompanyVariant
     }
 };
 
+export const getWorkplaceVariant = async (db: Db, workplaceId: string) => {
+    try {
+        const data = await db.collection('workplaceVariant').findOne({
+            _id: ObjectId(workplaceId)
+        })
+        return data;
+    } catch (error) {
+        console.log(" Error form get workplace variant", error);
+        return;
+    }
+}
+
 export const addNewStaffs = async (db: Db, staffs: EmployeeType[], workplaceId: string) => {
     try {
         await db.collection('workplaces').updateOne(
@@ -137,40 +155,16 @@ export const addNewStaffs = async (db: Db, staffs: EmployeeType[], workplaceId: 
     }
 };
 
-export const addNewStaff = async (db: Db, workspaceId: string, userType: StaffType, email: string) => {
-    //send email to the user
-    const data = {
-        email: email,
-        positionLabel: userType,
-        joined: false,
-    };
-    try {
-        await db.collection('workplaces').updateOne(
-            {
-                _id: workspaceId,
-            },
-            {
-                $push: {
-                    staffs: data,
-                },
-            },
-        );
-        return data;
-        // send email to user here
-    } catch (e) {
-        return;
-    }
-};
 
-export const deleteUnverifiedStaff = async (db: Db, workspaceId: string, userType: StaffType, email: string) => {
+export const deleteUnverifiedStaff = async (db: Db, workspaceId: string, email: string) => {
     try {
         await db.collection('workplaces').updateOne(
             {
-                _id: workspaceId,
+                _id: ObjectId(workspaceId),
             },
             {
                 $pull: {
-                    staffs: { email: email },
+                    staffs: { email: email, joined: false },
                 },
             },
         );
@@ -180,18 +174,35 @@ export const deleteUnverifiedStaff = async (db: Db, workspaceId: string, userTyp
     }
 };
 
-export const deleteVerifiedStaff = async (db: Db, workspaceId: string, userType: StaffType, userId: string) => {
+export const deleteVerifiedStaff = async (db: Db, workspaceId: string, userId: string) => {
     try {
         await db.collection('workplaces').updateOne(
             {
-                _id: workspaceId,
+                _id: ObjectId(workspaceId),
             },
             {
                 $pull: {
-                    staffs: { userId: userId },
+                    staffs: { userId: userId, joined: true },
                 },
             },
         );
+        await db.collection('userworkplaces').updateOne({
+            _id: ObjectId(userId)
+        }, {
+            $pull: {
+                workplacesIds: { workplaceId: workspaceId }
+            }
+        })
+        await db.collection('users').updateOne(
+            {
+                _id: ObjectId(userId),
+            },
+            {
+                $pull: {
+                    workplaces: { workplaceId: workspaceId }
+                }
+            }
+        )
         return userId;
     } catch (e) {
         return;

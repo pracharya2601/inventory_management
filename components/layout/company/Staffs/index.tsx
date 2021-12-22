@@ -1,9 +1,12 @@
 import DropDownMenu, { DropDownItem } from '@/components/elements/ddm/DropDownMenu';
 import Input from '@/components/elements/Input';
+import { apiDELETE } from '@/hooks/middleware/api';
 import { EmployeeType } from '@/interface/Workplace/Company';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
-const Staffs = ({ staffs, pos }: { staffs: EmployeeType[]; pos: string }) => {
+const Staffs = ({ staffs, pos, secret }: { staffs: EmployeeType[]; pos: string; secret: string }) => {
+    const router = useRouter();
     const [state, setState] = useState<EmployeeType[]>(staffs);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const onHandleChange = (e) => {
@@ -18,6 +21,9 @@ const Staffs = ({ staffs, pos }: { staffs: EmployeeType[]; pos: string }) => {
         setSearchTerm('');
         setState(staffs);
     };
+    const onDeleteHandle = async (id: string, verified: boolean) => {
+        await apiDELETE(`/staffs/${router.query?.businessId as string}/${id}?secret=${secret}&&verified=${verified}`)
+    }
     return (
         <div className="px-2">
             <div className="py-2 mb-2 -mt-5 md:max-w-sm">
@@ -32,9 +38,8 @@ const Staffs = ({ staffs, pos }: { staffs: EmployeeType[]; pos: string }) => {
             {state?.map((employee, index) => (
                 <div
                     key={`${employee.joinedDate}-${index}`}
-                    className={`border py-2 pb-3 pl-4 pr-2 mb-2 rounded md:max-w-sm ${
-                        employee.joined ? 'bg-gray-900' : 'bg-gray-700'
-                    } ${employee.positionLabel === 'admin' && 'order-first'}`}
+                    className={`border py-2 pb-3 pl-4 pr-2 mb-2 rounded md:max-w-sm ${employee.joined ? 'bg-gray-900' : 'bg-gray-700'
+                        } ${employee.positionLabel === 'admin' && 'order-first'}`}
                 >
                     <div className="flex justify-between items-center">
                         <div>
@@ -42,7 +47,7 @@ const Staffs = ({ staffs, pos }: { staffs: EmployeeType[]; pos: string }) => {
                             {employee.fullName}
                         </div>
                         <div className="ml-auto">
-                            {employee.positionLabel === 'admin' && <span className="ml-auto mr-2">&#128313;</span>}
+                            {employee.positionLabel === 'admin' && <span className="ml-auto mr-2">&#10070;</span>}
                             {employee.joined ? (
                                 <span className="ml-auto mr-2">&#10004;</span>
                             ) : (
@@ -68,7 +73,7 @@ const Staffs = ({ staffs, pos }: { staffs: EmployeeType[]; pos: string }) => {
                                     </svg>
                                 }
                             >
-                                <DropDownItem label="Remove " onClick={() => alert('hello')} />
+                                <DropDownItem label="Remove " onClick={() => onDeleteHandle(employee.userId || employee.email, employee.joined)} />
                             </DropDownMenu>
                         )}
                     </div>

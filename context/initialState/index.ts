@@ -5,9 +5,7 @@ export const initialState = {
         workplaces: [],
     },
     workplace: {
-        companydata: null,
         variant: {
-            _id: '',
             sizeVariants: [],
             colorVariants: [],
         },
@@ -18,34 +16,33 @@ export const initialState = {
             { label: 'Delivered', id: 'delivered' },
             { label: 'Canceled', id: 'canceled' },
         ],
-        productList: {
-            dataType: '',
-            data: [],
-            initialData: [],
-        },
-        singleData: null,
     },
-    formData: {
-        updateData: null,
-        createData: {
+    lugItem: {
+        items: [],
+        customerInfo: {
+            customerId: '',
             name: '',
-            description: '',
-            listDescription: [{ id: 0, desckey: '', desc: '' }],
-            guide: [{ id: 0, type: '', link: '' }],
-            images: [{ id: 0, url: '', color: '' }],
-            productdetail: [{ id: 0, detailkey: '', detail: '' }],
-            catagory: [],
-            skus: [{ id: 0, color: '', size: '', price: 0, count: 0 }],
-            productType: '',
+            email: '',
+            contactNo: '',
+        },
+        customerAddress: {
+            address: '',
+            tol: '',
+            city: '',
+            state: '',
+            nearByPlaces: [],
+            addressDescription: '',
+        },
+        orderDetail: {
+            subtotal: 0,
+            taxPercent: 10,
+            taxAmt: 0,
+            coupon: 0,
+            shipping: 100,
+            total: 0,
         },
     },
     ui: {
         toggleOpen: null,
-    },
-    route: {
-        pathName: null,
-        renderingPage: '',
-        locale: '',
-        asPath: '',
     },
 };

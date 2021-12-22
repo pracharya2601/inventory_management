@@ -20,10 +20,11 @@ export interface ButtonProps {
     icon?: JSX.Element;
     disabled?: boolean;
     type?: BthType;
-    label?: string;
+    label?: string | JSX.Element;
     variant?: Variant;
     onClick?: () => void;
     customClass?: string;
     size?: Size;
     fullwidth?: boolean;
+    iconSide?: 'left' | 'right';
 }

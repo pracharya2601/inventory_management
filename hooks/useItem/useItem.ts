@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { ProcessProductInfo } from '@/interface/Product/ProcessProductType';
 import { ProductType, Skus } from '@/interface/Product/ProductInterface';
-import { useState } from 'react';
+import { action } from '@context/action';
+import { appContext } from '@context/appcontext';
+import { useContext, useState } from 'react';
 import { colorSizeSeparation, newVariantCalculate, returnArr } from './helper';
 
 import { SType, CType } from './types';
@@ -17,10 +20,7 @@ export const useItem = (items: ProductType) => {
     const [activeImage, setActiveImage] = useState(items.images[0].url);
     const [activeColor, setCC] = useState<string>('');
     const [activeSize, setSS] = useState<string>('');
-    // const [count, setCount] = useState(items.skus.map((itm) => itm.count).reduce((prev, next) => prev + next));
-
-    const [cartIdenty, setCartIdenty] = useState<Skus>({ id: NaN, color: '', size: '', count: NaN, price: NaN });
-
+    const { dispatch } = useContext(appContext);
     const setColorrr = (c: CType) => {
         //update color if it is false so that tick mark is over there;
         setCC(c.color);
@@ -66,23 +66,34 @@ export const useItem = (items: ProductType) => {
         // setSizes(filteredSizes);
     };
 
-    const addToCart = () => {
-        items.skus.forEach(({ color, size, count, price }) => {
-            if (color == activeColor && size == activeSize && count !== 0) {
-                console.log({
-                    name: items.name,
-                    id: items._id,
-                    price: price,
-                    cart_count: 1,
-                });
-                return;
+    const addToCart = (open: boolean) => {
+        if (activeColor && activeSize) {
+            const data: ProcessProductInfo = {
+                imageUrl: items.images?.[0].url,
+                referenceId: items._id,
+                name: items.name,
+                color: activeColor,
+                size: activeSize,
+                price: price,
+                numberOfItem: 1,
+                total: price * 1,
             }
-        });
+            dispatch(action.setProcessItem({
+                item: data
+            }));
+            if (open) {
+                dispatch(
+                    action.toggleAction({
+                        id: 'processProduct',
+                        open: true,
+                    }),
+                );
+            }
+        }
     };
 
     return {
         count,
-        cartIdenty,
         addToCart,
         activeColor,
         activeSize,

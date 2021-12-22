@@ -54,6 +54,7 @@ export async function getServerSideProps(context: any) {
     }
     const { db } = await connectToDB();
     const newData = await getUnverifiedWorkplaces(db, session?.user?.email as string);
+
     const secret = process.env.COMPANY_JWT_SECRET;
     const arrOfSendingData = newData.map((item) => ({
         name: item.workplaceName,

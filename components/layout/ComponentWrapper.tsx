@@ -16,9 +16,9 @@ import Workplaces from './user/Workplaces';
 import { action } from '@context/action';
 import SearchBar from './searchbar';
 import { useRouter } from 'next/router';
-import ProductPreview from './product/ProductPreview';
 import AccountInfo from './user/AccountInfo';
 import CreateWorkplace from './company/CreateWorkplace';
+import ProductProcess from './product/ProductProcess';
 
 interface ComponentWrapperProps {
     children?: JSX.Element | JSX.Element[];
@@ -28,7 +28,6 @@ interface ComponentWrapperProps {
 
 const ComponentWrapper = ({ children, searchBarComponent, productPreview }: ComponentWrapperProps) => {
     const sidebarRef = useRef(null);
-    const accountBarRef = useRef(null);
     const notificationBarRef = useRef(null);
     const router = useRouter();
 
@@ -41,22 +40,11 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
         state: {
             user: { authenticated, workplaces, userdata },
             ui: { toggleOpen },
-            workplace: { productCatagory, singleData },
-            route: { pathName },
+            workplace: { productCatagory },
         },
         dispatch,
     } = useContext(appContext);
 
-    const setsideBarClosePreview = (stat: boolean) => {
-        dispatch(
-            action.toggleAction({
-                id: 'previewProduct',
-                open: false,
-            }),
-        );
-        const routeId = pathName?.id && (pathName?.id as string[]);
-        router.push(`/dashboard/${routeId?.join('/')}`, undefined, { shallow: true });
-    };
 
     return (
         <div className="dark relative min-h-screen w-screen overflow-x-hidden">
@@ -113,22 +101,6 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
                 label="notification"
             ></SideboardOutline>
             <SideboardOutline
-                open={toggleOpen?.['joinworkplace']}
-                label="Join Workplace"
-                setOpen={() => {
-                    dispatch(
-                        action.toggleAction({
-                            id: 'joinworkplace',
-                            open: false,
-                        }),
-                    );
-                }}
-                noOutsideClick={true}
-                size="small"
-            >
-                <h1>Join Workplace</h1>
-            </SideboardOutline>
-            <SideboardOutline
                 open={toggleOpen?.['createworkplace']}
                 label="Create Workplace"
                 setOpen={() => {
@@ -143,6 +115,23 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
                 size="full"
             >
                 <CreateWorkplace />
+            </SideboardOutline>
+            <SideboardOutline
+                open={toggleOpen?.['processProduct']}
+                setOpen={() => {
+                    dispatch(
+                        action.toggleAction({
+                            id: 'processProduct',
+                            open: false,
+                        }),
+                    );
+                }}
+                size="full"
+                noOutsideClick={true}
+                label={`Process Order`}
+                bg="bg-gray-800 text-gray-100 md:border-l z-60"
+            >
+                <ProductProcess />
             </SideboardOutline>
             {productPreview && productPreview}
             <div className="flex-1 dark:bg-gray-900 dark:text-white h-screen overflow-auto">{children}</div>

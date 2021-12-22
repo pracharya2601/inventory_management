@@ -11,6 +11,7 @@ import Dashboard from '@/components/layout/company/Dashboard';
 import BusinessNavbar from '@/components/layout/company/BusinessNavbar';
 import ProductPreviewDetail from '@/components/layout/product/ProductPreview/ProductPreviewDetail';
 import { socket } from 'socket/client';
+import { getSingleProduct } from 'db/products';
 
 const ProductView = ({ data, error }: { data: ProductType; error: { type: string; message: string } | null }) => {
     const [singleProduct, setSingleProduct] = useState<ProductType>(data);
@@ -68,8 +69,8 @@ export async function getServerSideProps(context: any) {
             },
         };
     }
-    const businessId = context.query.businessId;
-    const productId = context.query.productId;
+    const businessId = context.query.businessId as string;
+    const productId = context.query.productId as string;
     const { db } = await connectToDB();
     const isUserRelatedtoCompany = await checkWorkplace(db, session.user.id, businessId);
     if (!isUserRelatedtoCompany) {
@@ -80,16 +81,20 @@ export async function getServerSideProps(context: any) {
             },
         };
     }
-    const data = datas.find(({ _id, createdBy }) => _id === productId && createdBy.id === businessId);
+    let data = null;
+    let error = null;
+    const newData = await getSingleProduct(db, businessId, productId);
+    if (newData === 'null') {
+        error = {
+            type: 'NOT_FOUND',
+            message: 'Data not found',
+        }
+    }
+    data = JSON.parse(JSON.stringify(newData));
     return {
         props: {
-            data: data ? data : null,
-            error: data
-                ? null
-                : {
-                      type: 'NOT_FOUND',
-                      message: 'Data not found',
-                  },
+            data: data,
+            error: error
         },
     };
 }

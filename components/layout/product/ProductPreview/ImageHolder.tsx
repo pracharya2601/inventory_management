@@ -20,9 +20,8 @@ const ImageHolder = ({ activeImage, images, setActiveImage, name }: ImageHolderP
                 {images.map((img) => (
                     <div
                         key={img.url}
-                        className={`h-11 md:h-16 w-11 md:w-16 relative m-1 border-2 rounded ${
-                            activeImage === img.url && 'border-green300'
-                        } hover:border-blud-300 cursor-pointer`}
+                        className={`h-11 md:h-16 w-11 md:w-16 relative m-1 border-2 rounded ${activeImage === img.url && 'border-green300'
+                            } hover:border-blud-300 cursor-pointer`}
                         onClick={() => setActiveImage(img.url)}
                     >
                         <Image src={img.url} layout="fill" objectFit="cover" objectPosition="center" alt={name} />

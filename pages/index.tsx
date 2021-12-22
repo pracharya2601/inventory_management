@@ -20,10 +20,10 @@ const Home = () => {
             user: { userdata },
         },
     } = useContext(appContext);
-    const eventCreate = `create-product-${userdata?._id}`;
+    const eventCreate = `create-product-${userdata?.id}`;
 
     useEffect(() => {
-        socket.on('create-product-61b8d4b97929c75fe82c1851', (value) => {
+        socket.on(eventCreate, (value) => {
             console.log('val', value);
             const neD = data;
             neD.push(value);
@@ -34,6 +34,7 @@ const Home = () => {
             socket.disconnect();
         };
     }, []);
+
     const handleSubmit = (e) => {
         console.log('subbimtteed');
         e.preventDefault();
@@ -43,7 +44,6 @@ const Home = () => {
     const handleChange = (e) => {
         setApple(e.target.value);
     };
-    console.log(data);
 
     return (
         <ComponentWrapper>

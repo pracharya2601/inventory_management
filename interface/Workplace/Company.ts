@@ -35,7 +35,6 @@ export interface CompanyTypes {
     variantSizes: string[];
 }
 export interface CompanyVariants {
-    _id: string;
     colorVariants: string[] | [];
     sizeVariants: string[] | [];
 }

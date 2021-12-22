@@ -12,7 +12,6 @@ import { action } from '@context/action';
 import { UserData, UserSession } from '@/interface/AuthSession';
 import { socket } from 'socket/client';
 import { WorkplaceTypes } from '@/interface/Workplace/WorkplaceListTypes';
-
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <AppProvider>
@@ -31,7 +30,11 @@ const Wrapper = ({ children }) => {
         },
         dispatch,
     } = useContext(appContext);
+    const event = `remove-from-workspace-${userdata?.id}`
     useEffect(() => {
+        socket.on('connect', () => {
+            console.log(socket.id);
+        });
         (async function myFunction() {
             const session: Session = await getSession();
             if (authenticated && userdata) {
@@ -43,13 +46,25 @@ const Wrapper = ({ children }) => {
                 dispatch(action.getUser({ userdata: user }));
             }
         })();
+        socket.on(event, (workplaceId: string) => {
+            if (userdata?.workplaces) {
+                const newArr: WorkplaceTypes[] = [...userdata?.workplaces];
+                const rowIndex = newArr.findIndex((item: WorkplaceTypes) => item.workplaceId === workplaceId);
+                newArr.splice(rowIndex, 1);
+                dispatch(action.getUser({
+                    userdata: {
+                        ...userdata,
+                        workplaces: newArr
+                    }
+                }))
+            }
+        })
         return () => {
             dispatch(action.checkAuthenticated({ authenticated: false }));
             dispatch(action.getUser({ userdata: null }));
             dispatch(
                 action.setVariant({
                     variant: {
-                        _id: '',
                         colorVariants: [],
                         sizeVariants: [],
                     },

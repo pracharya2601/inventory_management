@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useRouter } from 'next/dist/client/router';
 import Input from '@/components/elements/Input';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext } from 'react';
 import { appContext } from '@context/appcontext';
 import { action } from '@context/action';
-import { ProductList, ProductType } from '@/interface/Product/ProductInterface';
 
 type SearchBarProps = {
     searchTerm?: string;
@@ -14,15 +13,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ searchTerm, onChange, handleClear }: SearchBarProps) => {
     const router = useRouter();
-    const id = router.query.id as string[];
-
     const {
-        state: {
-            workplace: {
-                productList: { dataType, data, initialData },
-            },
-            route: { asPath, pathName },
-        },
         dispatch,
     } = useContext(appContext);
 

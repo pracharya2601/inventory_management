@@ -33,12 +33,6 @@ const Privacy = () => {
     const [comp, setComp] = useState([]);
 
     useEffect(() => {
-        // const socket = io(process.env.NEXT_PUBLIC_API_HOST, {
-        //     path: '/api/socketio',
-        // });
-        // props.socket.on('connect', () => {
-        //     console.log('Socket Connected', props.socket.id);
-        // });
 
         socket.on('index', (message: TT) => {
             setComp((prevState) => [...prevState, message]);

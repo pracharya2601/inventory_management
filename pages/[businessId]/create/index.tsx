@@ -1,7 +1,7 @@
 import { getSession } from 'next-auth/client';
 import ComponentWrapper from '@/components/layout/ComponentWrapper';
 import { connectToDB } from 'db/connect';
-import { getOneWorkPlace } from 'db/workplace';
+import { checkWorkplace, getOneWorkPlace, getWorkplaceVariant } from 'db/workplace';
 import React, { useContext, useEffect, useState } from 'react';
 import { appContext } from '@context/appcontext';
 import { useRouter } from 'next/router';
@@ -105,26 +105,14 @@ export async function getServerSideProps(context: any) {
     const businessId = context.query.businessId;
     const userId = session.user.id;
     //instead of company data we have to get variants data and other studff
-    const companyData: CompanyTypes = await getOneWorkPlace(db, businessId as string, userId);
-
-    if (!companyData) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: `/`,
-            },
-        };
-    }
-
-    const companydata = JSON.parse(JSON.stringify(companyData));
+    const variantData = await getWorkplaceVariant(db, businessId as string);
+    const companydata = JSON.parse(JSON.stringify(variantData));
+    console.log(companydata)
     // company variant data need to be render for creating purpose
     return {
         props: {
             companydata,
-            variant: {
-                colorVariants: companyData.variantColors,
-                sizeVariants: companyData.variantSizes,
-            },
+            variant: companydata,
         },
     };
 }

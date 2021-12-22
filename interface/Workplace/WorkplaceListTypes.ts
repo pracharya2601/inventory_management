@@ -3,4 +3,5 @@ export interface WorkplaceTypes {
     positionLabel: string;
     workplaceId: string;
     workplaceName: string;
+    secret?: string;
 }

@@ -14,6 +14,7 @@ import { action } from '@context/action';
 import Button from '@/components/elements/Button';
 import { FormComponent } from '@/components/layout/product/kit/FormComponent';
 import { apiPOST } from '@/hooks/middleware/api';
+import { getSingleProduct } from 'db/products';
 
 type EditProductProps = {
     variant: CompanyVariants;
@@ -38,7 +39,6 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
             dispatch(
                 action.setVariant({
                     variant: {
-                        _id: '',
                         colorVariants: [],
                         sizeVariants: [],
                     },
@@ -103,21 +103,23 @@ export async function getServerSideProps(context: any) {
             },
         };
     }
-    // const companydata = JSON.parse(JSON.stringify(companyData));
-    // company variant data need to be render for creating purpose
-    const data = datas.find(({ _id, createdBy }) => _id === productId && createdBy.id === businessId);
-    //get product with product id
-    if (!data) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: `/${businessId}/`,
-            },
-        };
+
+    let itemData = null;
+    let error = null;
+    const newData = await getSingleProduct(db, businessId, productId);
+
+    if (newData === 'null') {
+        error = {
+            type: 'NOT_FOUND',
+            message: 'Data not Available'
+        }
     }
+    itemData = JSON.parse(JSON.stringify(newData));
+    // const companydata = JSON.parse(JSON.stringify(companyData));
     return {
         props: {
-            itemData: data ? data : null,
+            itemData: itemData,
+            error: error,
             variant: {
                 colorVariants: companyData.variantColors,
                 sizeVariants: companyData.variantSizes,

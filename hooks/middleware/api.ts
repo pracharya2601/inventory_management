@@ -33,3 +33,20 @@ export async function apiPOST<T, BodyType>(path: string, body: BodyType): Promis
         return errors;
     }
 }
+
+export async function apiDELETE(path: string) {
+    const resp = await fetch(`http://localhost:3000/api${path}`, {
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    const { data, errors } = await resp.json();
+    if (resp.ok) {
+        console.log(data);
+        return data;
+    } else {
+        console.log(errors);
+        return errors;
+    }
+}

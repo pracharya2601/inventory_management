@@ -67,6 +67,7 @@ const Button = ({
     customClass,
     variant = 'contained',
     fullwidth = false,
+    iconSide = "left"
 }: ButtonProps) => {
     return (
         <button
@@ -91,9 +92,9 @@ const Button = ({
                 },
             )}
         >
-            <span className="w-7 flex">{icon && icon}</span>
-
+            {icon && iconSide === 'left' && <span className="w-7 flex">{icon}</span>}
             {label && label}
+            {icon && iconSide === 'right' && <span className="w-7 ml-1 flex">{icon}</span>}
         </button>
     );
 };

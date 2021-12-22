@@ -13,7 +13,6 @@ const ProductNavbar = () => {
     } = useContext(appContext);
 
     const productCatagoryURL = (catagoryName: string): string => {
-        //return `http://localhost:3000/dashboard/${pathName?.id[0]}/${catagoryName}/1`;
         return `http://localhost:3000/${router.query?.businessId}/${catagoryName}/1`;
     };
 

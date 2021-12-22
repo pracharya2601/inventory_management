@@ -67,7 +67,7 @@ export interface CreateDataType {
     description: string;
     listDescription: List[];
     guide: Guide[];
-    images: Images[];
+    images: Images[] | [];
     productdetail: ProductDetail[];
     catagory: string[] | [];
     skus: Skus[];

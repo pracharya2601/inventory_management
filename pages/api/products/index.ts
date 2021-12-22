@@ -10,6 +10,7 @@ import { CreateDataType, ProductType } from '@/interface/Product/ProductInterfac
 import { getOneWorkPlace } from 'db/workplace';
 import { CompanyTypes } from '@/interface/Workplace/Company';
 import { Request } from '@/interface/Request';
+import { createProduct } from 'db/products';
 const handeler = nc({ onError });
 handeler.use(middleware);
 
@@ -59,7 +60,10 @@ handeler.post(async (req: Request, res) => {
             postedAt: postedAt,
             postedBy: postedBy,
         };
-        res?.socket?.server?.io?.emit(eventI, newData);
+        const data = await createProduct(req.db, newData);
+        console.log('created data', data);
+        // new data need to add on database before response sending
+        res?.socket?.server?.io?.emit(eventI, data);
         res.status(200).json(JSON.stringify({ data: 'success' }));
     } catch (e) {
         res.status(400).json({ errors: 'Something went wrong' });

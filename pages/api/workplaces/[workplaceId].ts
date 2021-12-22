@@ -40,7 +40,7 @@ handeler.post(async (req: Request, res) => {
         workplaceName: workplaceName,
     };
     try {
-        await verifyWorkplace(req.db, workplaceId, userEmail, fullName, userId, joinedDate);
+        await verifyWorkplace(req.db, workplaceId, userEmail, fullName, userId, joinedDate, positionLabel);
     } catch (error) {
         return res.status(400).json({ errors: 'Server error! Please try again later!!' });
     }

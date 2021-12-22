@@ -3,6 +3,7 @@ import { WorkplaceTypes } from '../Workplace/WorkplaceListTypes';
 import { FormDataType, Images, ProductType, Skus } from '../Product/ProductInterface';
 import { CompanyTypes, CompanyVariants } from '../Workplace/Company';
 import { ProductCatagoryType } from '../Product/ProductCatagory';
+import { CustomerAddress, ProcessingOrderDetail, ProcessProductInfo } from '../Product/ProcessProductType';
 
 export interface UserDataType {
     authenticated: boolean;
@@ -51,12 +52,10 @@ export interface PreviewType {
     [key: string]: PreviewDataType;
 }
 export interface WorkplaceDataType {
-    companydata: CompanyTypes | null;
     variant: CompanyVariants;
     productCatagory: ProductCatagoryType[] | [];
-    productList: ProductDispatchType;
-    singleData: ProductType | null;
 }
+
 
 export interface ToggleOpenType {
     [id: string]: boolean;
@@ -70,17 +69,22 @@ export interface PathNameType {
     [key: string]: string | string[];
 }
 
-export interface RouteType {
-    pathName: PathNameType | null;
-    renderingPage: string;
-    locale: string;
-    asPath: string;
+
+export interface LugItemType {
+    items: ProcessProductInfo[] | [];
+    customerInfo: {
+        customerId?: string;
+        name: string;
+        email: string;
+        contactNo: string;
+    };
+    customerAddress: CustomerAddress;
+    orderDetail: ProcessingOrderDetail;
 }
 
 export interface InitialStateType {
     user: UserDataType;
     workplace: WorkplaceDataType;
     ui: UiType;
-    route: RouteType;
-    formData: FormDataType;
-}
+    lugItem: LugItemType;
+};

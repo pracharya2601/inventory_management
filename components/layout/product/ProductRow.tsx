@@ -3,16 +3,11 @@
 import Button from '@/components/elements/Button';
 import { useItem } from '@/hooks/useItem';
 import { ProductType } from '@/interface/Product/ProductInterface';
-import { action } from '@context/action';
-import { appContext } from '@context/appcontext';
-import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
 import { Colors, Sizes } from './kit';
 
 const ProductRow = ({ item, onView }: { item: ProductType; onView: () => void }) => {
     const {
         count,
-        cartIdenty,
         addToCart,
         activeColor,
         activeSize,
@@ -24,6 +19,7 @@ const ProductRow = ({ item, onView }: { item: ProductType; onView: () => void })
         colors,
         sizes,
     } = useItem(item);
+
     return (
         <tr>
             <td className="px-5 py-3 border-b border-gray-700 dark:border-gray-200 text-sm">
@@ -58,8 +54,20 @@ const ProductRow = ({ item, onView }: { item: ProductType; onView: () => void })
                     <p className="whitespace-no-wrap text-center">{price}</p>
                 )}
             </td>
-            <td className="px-5 py-3 border-b border-gray-700 dark:border-gray-200 text-sm">
-                <Button label="View" size="sm" rounded color="green" onClick={() => onView()} />
+            <td className="border border-gray-900 bg-gray-700 dark:border-gray-200 text-sm hover:bg-gray-800 cursor-pointer" onClick={() => onView()}>
+                <div className='w-full h-full px-3 flex justify-center items-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                        <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+                    </svg>
+                </div>
+            </td>
+            <td className=" border border-gray-700 bg-gray-800 dark:border-gray-200 text-sm hover:bg-gray-700 cursor-pointer" onClick={() => addToCart(false)}>
+                <div className='w-full h-full px-3 flex justify-center items-center'>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                </div>
             </td>
         </tr>
     );
