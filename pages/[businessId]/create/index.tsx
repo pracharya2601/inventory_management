@@ -48,7 +48,6 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
             dispatch(
                 action.setVariant({
                     variant: {
-                        _id: '',
                         colorVariants: [],
                         sizeVariants: [],
                     },
@@ -107,7 +106,6 @@ export async function getServerSideProps(context: any) {
     //instead of company data we have to get variants data and other studff
     const variantData = await getWorkplaceVariant(db, businessId as string);
     const companydata = JSON.parse(JSON.stringify(variantData));
-    console.log(companydata)
     // company variant data need to be render for creating purpose
     return {
         props: {

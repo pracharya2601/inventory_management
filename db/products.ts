@@ -8,9 +8,9 @@ export const getSingleProduct = async (db: Db, workplaceId: string, productId: s
                 { _id: ObjectId(productId) },
                 {
                     'createdBy.id': workplaceId,
-                }
-            ]
-        })
+                },
+            ],
+        });
         return data;
     } catch (e) {
         console.log('Single product error', e);
@@ -23,41 +23,48 @@ export const getProductLists = async (db: Db, workplaceId: string, productType: 
         const query = {
             productType: productType,
             'createdBy.id': workplaceId,
-        }
+        };
         const [listResult, countResult] = await Promise.all([
             db.collection('products').find(query).skip(skipVal).limit(10).toArray(),
-            db.collection('products').countDocuments(query)
-        ])
+            db.collection('products').countDocuments(query),
+        ]);
         return {
             totalCount: countResult,
-            data: listResult
-        }
+            data: listResult,
+        };
     } catch (e) {
         console.log('Single product error', e);
         return;
     }
 };
 
-export const getSearchProductList = async (db: Db, workplaceId: string, productType: string, skipVal: number, searchTerm: string) => {
+export const getSearchProductList = async (
+    db: Db,
+    workplaceId: string,
+    productType: string,
+    skipVal: number,
+    searchTerm: string,
+) => {
     try {
-        await db.collection('products').createIndex({ name: 'text', description: 'text' })
+        await db.collection('products').createIndex({ name: 'text', description: 'text' });
         const query = {
-            $text: { $search: searchTerm }, productType: productType, 'createdBy.id': workplaceId
-        }
+            $text: { $search: searchTerm },
+            productType: productType,
+            'createdBy.id': workplaceId,
+        };
         const [listResult, countResult] = await Promise.all([
             await db.collection('products').find(query).skip(skipVal).limit(10).toArray(query),
-            await db.collection('products').countDocuments(query)
-
-        ])
+            await db.collection('products').countDocuments(query),
+        ]);
         return {
             totalCount: countResult,
             data: listResult,
-        }
+        };
     } catch (error) {
         console.log('Error on get search product list', error);
         return;
     }
-}
+};
 
 export const createProduct = async (db: Db, product: ProductType) => {
     try {

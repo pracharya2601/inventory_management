@@ -13,11 +13,13 @@ export const initialState = {
             { label: 'Inventory', id: 'inventory' },
             { label: 'Stock', id: 'stock' },
             { label: 'Processing', id: 'processing' },
+            { label: 'Shipped', id: 'Shipped' },
             { label: 'Delivered', id: 'delivered' },
             { label: 'Canceled', id: 'canceled' },
         ],
     },
     lugItem: {
+        businessId: '',
         items: [],
         customerInfo: {
             customerId: '',
@@ -30,7 +32,7 @@ export const initialState = {
             tol: '',
             city: '',
             state: '',
-            nearByPlaces: [],
+            nearByPlaces: [''],
             addressDescription: '',
         },
         orderDetail: {

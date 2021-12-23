@@ -5,6 +5,7 @@ import { CreateDataType, ProductType } from '@/interface/Product/ProductInterfac
 import { SkusTable, SkusTableBodyHolder, SkusTableWrapper } from './SkusTable';
 import Image from 'next/image';
 import { useProductForm } from '@/hooks/useProductForm';
+import { useRouter } from 'next/router';
 
 export const FormComponent = ({
     data,
@@ -13,6 +14,8 @@ export const FormComponent = ({
     data: ProductType | CreateDataType;
     onSubmit?: (item: ProductType | CreateDataType) => void;
 }) => {
+    const router = useRouter();
+    const productId = router.query?.productId;
     const { handleOnChange, handleOnChangeArray, onDropdownChange, da, deleteItem, addItem, colors, sizes } =
         useProductForm(data);
 
@@ -43,9 +46,12 @@ export const FormComponent = ({
     };
     const deleteImage = async (name: string, filename: string) => {
         deleteItem(name);
-        await fetch(`http://localhost:3000/api/file?file=${filename}`, {
-            method: 'DELETE',
-        });
+        if (!productId) {
+            //not delete image while updating
+            await fetch(`http://localhost:3000/api/file?file=${filename}`, {
+                method: 'DELETE',
+            });
+        }
     };
 
     const uploadImg = () => {

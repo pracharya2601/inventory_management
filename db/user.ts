@@ -8,7 +8,7 @@ export const getUserById = async (db: Db, id: string) => {
     const data = await db.collection('users').findOne({ _id: ObjectId(id) });
     const workplaces = data.workplaces?.map((item) => ({
       ...item,
-      secret: encrypt({ workplaceId: item.workplaceId, positionLabel: item.positionLabel })
+      secret: encrypt({ workplaceId: item.workplaceId, positionLabel: item.positionLabel, workplaceName: item.workplaceName })
     }))
     return { ...data, workplaces };
   } catch (e) {

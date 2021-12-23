@@ -21,7 +21,7 @@ handeler.post(async (req: Request, res) => {
     const userId = req.user?.id;
     const joinedDate = new Date().toISOString();
     const eventI = `create-employee-${workplaceId}`;
-    const positionData = decrypt<{ positionLabel: string, workplaceId: string }>(secret);
+    const positionData = decrypt<{ positionLabel: string; workplaceId: string }>(secret);
 
     if (positionData.workplaceId === workplaceId && positionData.positionLabel === 'admin') {
         const newStaffs = staffs.map((st) => ({
@@ -50,7 +50,7 @@ handeler.delete(async (req: Request, res) => {
     const email = req.query.email as string;
     const deletedDate = new Date().toISOString();
     const eventI = `delete-employee-${workplaceId}`;
-    const positionData = decrypt<{ positionLabel: string, workplaceId: string }>(secret);
+    const positionData = decrypt<{ positionLabel: string; workplaceId: string }>(secret);
 
     console.log(workplaceId, email);
     if (positionData.workplaceId === workplaceId && positionData.positionLabel === 'admin') {
@@ -64,5 +64,5 @@ handeler.delete(async (req: Request, res) => {
     } else {
         res.status(403).json({ errors: 'Not authorize to Update employee.' });
     }
-})
+});
 export default handeler;

@@ -6,7 +6,6 @@ import { Db, MongoClient } from 'mongodb';
 import { NextApiRequest } from 'next';
 
 import datas from '../../../db.json';
-import handler from '../hello';
 import { ProductType } from '@/interface/Product/ProductInterface';
 import { Request } from '@/interface/Request';
 

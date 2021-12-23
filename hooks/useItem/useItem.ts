@@ -77,10 +77,12 @@ export const useItem = (items: ProductType) => {
                 price: price,
                 numberOfItem: 1,
                 total: price * 1,
-            }
-            dispatch(action.setProcessItem({
-                item: data
-            }));
+            };
+            dispatch(
+                action.setProcessItem({
+                    item: data,
+                }),
+            );
             if (open) {
                 dispatch(
                     action.toggleAction({

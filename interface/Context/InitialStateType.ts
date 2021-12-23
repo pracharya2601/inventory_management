@@ -56,7 +56,6 @@ export interface WorkplaceDataType {
     productCatagory: ProductCatagoryType[] | [];
 }
 
-
 export interface ToggleOpenType {
     [id: string]: boolean;
 }
@@ -69,8 +68,8 @@ export interface PathNameType {
     [key: string]: string | string[];
 }
 
-
 export interface LugItemType {
+    businessId: string;
     items: ProcessProductInfo[] | [];
     customerInfo: {
         customerId?: string;
@@ -87,4 +86,4 @@ export interface InitialStateType {
     workplace: WorkplaceDataType;
     ui: UiType;
     lugItem: LugItemType;
-};
+}

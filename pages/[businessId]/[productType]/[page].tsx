@@ -1,7 +1,6 @@
 import { getSession } from 'next-auth/client';
 import ComponentWrapper from '@/components/layout/ComponentWrapper';
 import { connectToDB } from 'db/connect';
-import datas from 'db.json';
 import { checkWorkplace } from 'db/workplace';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
@@ -27,7 +26,7 @@ const ProductList = ({ data, count }: { data: ProductType[] | []; count: number 
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [singleData, setSingleData] = useState<ProductType>(null);
     const router = useRouter();
-    const businessId = router.query?.businessId;
+    const businessId = router.query?.businessId as string;
     const productType = router.query?.productType;
     const pageNum = router.query?.page;
     const eventListern = `update.${businessId}-${productType}`;
@@ -36,9 +35,7 @@ const ProductList = ({ data, count }: { data: ProductType[] | []; count: number 
         state: {
             user: { userdata },
             ui: { toggleOpen },
-            lugItem: {
-                items
-            }
+            lugItem,
         },
         dispatch,
     } = useContext(appContext);
@@ -48,6 +45,19 @@ const ProductList = ({ data, count }: { data: ProductType[] | []; count: number 
          * @info useeffect to update realtime data
          */
         setDataList(data);
+        if (businessId !== lugItem.businessId) {
+            dispatch(
+                action.removeItem({
+                    index: 0,
+                    stat: 'all',
+                }),
+            );
+            dispatch(
+                action.setBusinessId({
+                    businessId: businessId,
+                }),
+            );
+        }
         socket.on(eventListern, (data: ProductType) => {
             const dataArr = [...dataList];
             const index = dataArr.findIndex(({ _id }) => _id === data._id);
@@ -71,15 +81,14 @@ const ProductList = ({ data, count }: { data: ProductType[] | []; count: number 
         }
         return () => {
             setSearchTerm('');
-            setDataList([])
+            setDataList([]);
         };
     }, [router.asPath]);
-    console.log(items);
 
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
     const onHandleSearchTerm = (e) => {
         const { value } = e.target;
-        const cleanString = value.replace(/[|&;$%@"<>()+,]/g, "").toLowerCase();
+        const cleanString = value.replace(/[|&;$%@"<>()+,]/g, '').toLowerCase();
         setSearchTerm(value);
         const filteredData: ProductType[] | [] = data.filter((data: ProductType) => {
             return data.name.toLowerCase().search(cleanString) != -1;
@@ -140,24 +149,26 @@ const ProductList = ({ data, count }: { data: ProductType[] | []; count: number 
                 }
             >
                 {router.query?.productType === 'inventory' || router.query?.productType === 'stock' ? (
-                    <ProductLayout key={router.asPath}
+                    <ProductLayout
+                        key={router.asPath}
                         pagination={count > PAGE_LIMIT && <Pagination count={count} limit={PAGE_LIMIT} />}
                     >
-                        {dataList.length > 0 && dataList.map((item: ProductType, index) => (
-                            <ProductRow
-                                key={`${item._id}-${index}`}
-                                item={item}
-                                onView={() => {
-                                    setSingleData(item);
-                                    dispatch(
-                                        action.toggleAction({
-                                            id: 'previewProduct',
-                                            open: true,
-                                        }),
-                                    );
-                                }}
-                            />
-                        ))}
+                        {dataList.length > 0 &&
+                            dataList.map((item: ProductType, index) => (
+                                <ProductRow
+                                    key={`${item._id}-${index}`}
+                                    item={item}
+                                    onView={() => {
+                                        setSingleData(item);
+                                        dispatch(
+                                            action.toggleAction({
+                                                id: 'previewProduct',
+                                                open: true,
+                                            }),
+                                        );
+                                    }}
+                                />
+                            ))}
                     </ProductLayout>
                 ) : (
                     <ProductLayout></ProductLayout>
@@ -196,13 +207,13 @@ export async function getServerSideProps(context: any) {
     let count = 0;
     let itemlist = [];
     if (searchTerm) {
-        const { data, totalCount } = await getSearchProductList(db, businessId, productType, skipNumber, searchTerm)
+        const { data, totalCount } = await getSearchProductList(db, businessId, productType, skipNumber, searchTerm);
         if (totalCount > 0) {
             itemlist = JSON.parse(JSON.stringify(data));
             count = totalCount;
         }
     } else {
-        const { data, totalCount } = await getProductLists(db, businessId, productType, skipNumber)
+        const { data, totalCount } = await getProductLists(db, businessId, productType, skipNumber);
         if (totalCount > 0) {
             itemlist = JSON.parse(JSON.stringify(data));
             count = totalCount;

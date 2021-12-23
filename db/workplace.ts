@@ -4,18 +4,16 @@ import { Db, ObjectId } from 'mongodb';
 
 export const getOneWorkPlace = async (db: Db, id: string, userId: string) => {
     try {
-        const data = await db
-            .collection('workplaces')
-            .findOne({
-                $and: [
-                    { _id: ObjectId(id) },
-                    {
-                        staffs: {
-                            $elemMatch: { userId: userId },
-                        },
+        const data = await db.collection('workplaces').findOne({
+            $and: [
+                { _id: ObjectId(id) },
+                {
+                    staffs: {
+                        $elemMatch: { userId: userId },
                     },
-                ],
-            })
+                },
+            ],
+        });
         return data;
     } catch (e) {
         console.log('get one workplace error', e);
@@ -62,7 +60,7 @@ export const createNewWorkPlace = async (db: Db, workplaceData: CompanyTypes, us
                 $push: {
                     workplacesIds: {
                         workplacesIds: workplaceData._id.toString(),
-                        positionLabel: 'admin'
+                        positionLabel: 'admin',
                     },
                 },
             },
@@ -127,14 +125,14 @@ export const createWorkplaceVariant = async (db: Db, variantData: CompanyVariant
 export const getWorkplaceVariant = async (db: Db, workplaceId: string) => {
     try {
         const data = await db.collection('workplaceVariant').findOne({
-            _id: ObjectId(workplaceId)
-        })
+            _id: ObjectId(workplaceId),
+        });
         return data;
     } catch (error) {
-        console.log(" Error form get workplace variant", error);
+        console.log(' Error form get workplace variant', error);
         return;
     }
-}
+};
 
 export const addNewStaffs = async (db: Db, staffs: EmployeeType[], workplaceId: string) => {
     try {
@@ -154,7 +152,6 @@ export const addNewStaffs = async (db: Db, staffs: EmployeeType[], workplaceId: 
         return;
     }
 };
-
 
 export const deleteUnverifiedStaff = async (db: Db, workspaceId: string, email: string) => {
     try {
@@ -186,23 +183,26 @@ export const deleteVerifiedStaff = async (db: Db, workspaceId: string, userId: s
                 },
             },
         );
-        await db.collection('userworkplaces').updateOne({
-            _id: ObjectId(userId)
-        }, {
-            $pull: {
-                workplacesIds: { workplaceId: workspaceId }
-            }
-        })
+        await db.collection('userworkplaces').updateOne(
+            {
+                _id: ObjectId(userId),
+            },
+            {
+                $pull: {
+                    workplacesIds: { workplaceId: workspaceId },
+                },
+            },
+        );
         await db.collection('users').updateOne(
             {
                 _id: ObjectId(userId),
             },
             {
                 $pull: {
-                    workplaces: { workplaceId: workspaceId }
-                }
-            }
-        )
+                    workplaces: { workplaceId: workspaceId },
+                },
+            },
+        );
         return userId;
     } catch (e) {
         return;

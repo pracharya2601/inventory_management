@@ -1,16 +1,6 @@
 import nc from 'next-connect';
 import onError from 'middlware/error';
 import middleware from 'middlware/all';
-
-import { Db, MongoClient, ObjectId } from 'mongodb';
-import { NextApiRequest } from 'next';
-
-import datas from '../../../db.json';
-import dbdelivered from '../../../dbdelevered.json';
-import dbprocessing from '../../../dbprocessing.json';
-import { CreateDataType, ProductType } from '@/interface/Product/ProductInterface';
-import { getOneWorkPlace } from 'db/workplace';
-import { CompanyTypes } from '@/interface/Workplace/Company';
 import { Request } from '@/interface/Request';
 
 const handeler = nc({ onError });

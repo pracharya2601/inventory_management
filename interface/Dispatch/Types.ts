@@ -9,6 +9,7 @@ export enum Types {
 
     ToggleOpen = 'TOGGLE_OPEN',
 
+    BusinessID = 'BUSINESS_ID',
     ProcessAddItem = 'PROCESS_ADD_ITEM',
     RemoveItem = 'REMOVE_ITEM',
     UpdateItem = 'UPDATE_ITEM',
