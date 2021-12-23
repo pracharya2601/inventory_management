@@ -4,19 +4,41 @@ import Input from '@/components/elements/Input';
 import { apiPOST } from '@/hooks/middleware/api';
 import { createStaff } from '@/hooks/useCreateWorkplace/createStaff';
 import { CreateStaffFormType } from '@/interface/Workplace/Company';
+import { action } from '@context/action';
+import { appContext } from '@context/appcontext';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
 
-const CreateEmployee = ({ secret }: { secret?: string }) => {
+const CreateEmployee = ({ secret, position }: { secret?: string; position?: string }) => {
     const router = useRouter();
-    const { staffs, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff } = createStaff();
+    const { staffs, error, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff } = createStaff();
+    const { dispatch } = useContext(appContext);
     const onSubmitHandle = async (e) => {
         e.preventDefault();
-        const resDta = await apiPOST<{ data?: string; errors?: string }, CreateStaffFormType[]>(
-            `/staffs/${router.query?.businessId}?secret=${secret}`,
-            staffs,
-        );
-        if (resDta.data) {
-            console.log(resDta);
+        if (error) {
+            dispatch(
+                action.setAlert({
+                    type: 'danger',
+                    value: 'Please fillout all the form',
+                }),
+            );
+        } else {
+            if (position === 'admin') {
+                const resDta = await apiPOST<{ data?: string; errors?: string }, CreateStaffFormType[]>(
+                    `/staffs/${router.query?.businessId}?secret=${secret}`,
+                    staffs,
+                );
+                if (resDta.data) {
+                    console.log(resDta);
+                }
+            } else {
+                dispatch(
+                    action.setAlert({
+                        type: 'warning',
+                        value: 'You are not an admin',
+                    }),
+                );
+            }
         }
     };
     return (

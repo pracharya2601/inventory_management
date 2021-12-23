@@ -62,6 +62,7 @@ export interface ToggleOpenType {
 
 export interface UiType {
     toggleOpen: ToggleOpenType | null;
+    alert: Array<{ type: 'danger' | 'warning' | 'success' | 'notification'; value: string }> | [];
 }
 
 export interface PathNameType {

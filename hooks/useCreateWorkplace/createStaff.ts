@@ -1,8 +1,23 @@
 import { CreateStaffFormType } from '@/interface/Workplace/Company';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const createStaff = () => {
     const [staffs, setStaffs] = useState<CreateStaffFormType[]>([{ email: '', positionLabel: '', fullName: '' }]);
+    const [error, setError] = useState<boolean>(true);
+    useEffect(() => {
+        staffs.forEach((staff) => {
+            for (const key in staff) {
+                if (staff[key] == '') {
+                    return setError(true);
+                } else if (staffs[key] !== '') {
+                    setError(false);
+                } else {
+                    setError(true);
+                }
+            }
+        });
+    }, [staffs]);
+    console.log(error);
 
     const onStaffsHandleChange = (e) => {
         const { name, value } = e.target;
@@ -38,5 +53,5 @@ export const createStaff = () => {
         }
     };
 
-    return { staffs, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff };
+    return { staffs, error, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff };
 };

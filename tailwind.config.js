@@ -13,6 +13,7 @@ module.exports = {
     },
     theme: {
         zIndex: {
+            x: -10,
             0: 0,
             10: 10,
             20: 20,

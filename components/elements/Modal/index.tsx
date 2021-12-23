@@ -22,8 +22,13 @@ const Modal = ({
                 <div
                     className="fixed top-0 left-0 h-screen w-screen z-60 opacity-100 flex justify-center items-center"
                     style={{ backgroundColor: `rgb(0,0,0, 0.7)` }}
+                    onClick={() => setActive(false)}
+                    id="modal_wrapper"
                 >
-                    <div className="border rounded bg-gray-900 opacity-100 min-h-sm max-w-screen-md">
+                    <div
+                        className="border rounded bg-gray-900 opacity-100 min-h-sm max-w-screen-md"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <div className="p-3 flex justify-between">
                             <div className="mr-10 ">{heading || `Question ?`}</div>
                             <Button

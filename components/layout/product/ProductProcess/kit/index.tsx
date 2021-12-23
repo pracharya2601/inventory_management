@@ -9,7 +9,7 @@ import { OrderPaymentStatus, ProcessProductPayloadType } from '@/interface/Produ
 import { action } from '@context/action';
 import { appContext } from '@context/appcontext';
 import { useRouter } from 'next/router';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 type ProcessProductPost = Omit<
     ProcessProductPayloadType,
@@ -33,6 +33,29 @@ export const ProcessOrderButton = () => {
         paymentId: '',
         amount: 0,
     });
+
+    const firstRender = useRef(null);
+    useEffect(() => {
+        if (!firstRender.current) {
+            firstRender.current = true;
+            return;
+        }
+        if (lugItem.items?.length === 0) {
+            //no item selected
+            dispatch(
+                action.setAlert({
+                    type: 'danger',
+                    value: 'Please select Item before Continue',
+                }),
+            );
+            close();
+            return;
+        }
+    }, [state]);
+    const close = () => {
+        const a = document.getElementById('modal_wrapper');
+        a.click();
+    };
     const onChangeHandle = (name: string, value: string | boolean) => {
         setState((prevState) => ({
             ...prevState,

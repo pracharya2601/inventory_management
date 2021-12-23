@@ -11,11 +11,11 @@ export const initialState = {
         },
         productCatagory: [
             { label: 'Inventory', id: 'inventory' },
-            { label: 'Stock', id: 'stock' },
             { label: 'Processing', id: 'processing' },
             { label: 'Shipped', id: 'Shipped' },
             { label: 'Delivered', id: 'delivered' },
             { label: 'Canceled', id: 'canceled' },
+            { label: 'Draft', id: 'draft' },
         ],
     },
     lugItem: {
@@ -46,5 +46,6 @@ export const initialState = {
     },
     ui: {
         toggleOpen: null,
+        alert: [],
     },
 };

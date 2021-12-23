@@ -19,13 +19,13 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
     const {
         state: {
             user: { userdata },
-            workplace: { productCatagory }
+            workplace: { productCatagory },
         },
     } = useContext(appContext);
     const companyId = router.query?.businessId;
     const addEmployee = `create-employee-${companyId}`;
     const verifyEvent = `staffverify-${companyId}`;
-    const deleteEmployee = `delete-employee-${companyId}`
+    const deleteEmployee = `delete-employee-${companyId}`;
     useEffect(() => {
         /**
          * @info useeffect is for socket and to update on realtime
@@ -69,7 +69,7 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === companyId);
     const routeChange = (url: string) => {
         router.push(url);
-    }
+    };
     return (
         <ComponentWrapper>
             <Dashboard
@@ -84,18 +84,37 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
                 <>
                     <div>
                         Need to work on: <br />
-                        Other stuff like graph visulation<br />
+                        Other stuff like graph visulation
+                        <br />
                         Total number of sale <br />
                         Low level product warning notification <br />
                     </div>
-                    <div className='hidden md:block'>
-                        <div className='flex flex-wrap gap-2 justify-center sm:justify-start mt-3'>
-                            <div key={`companydashboard-createitem`} className='flex justify-center items-center rounded py-2 px-2 w-full sm:w-max'>
-                                <Button label="Add Item" customClass='w-full sm:w-40 h-20 sm:h-40' size='lg' color="purple" onClick={() => routeChange(`/${companyId}/create`)} />
+                    <div className="hidden md:block">
+                        <div className="flex flex-wrap gap-2 justify-center sm:justify-start mt-3">
+                            <div
+                                key={`companydashboard-createitem`}
+                                className="flex justify-center items-center rounded py-2 px-2 w-full sm:w-max"
+                            >
+                                <Button
+                                    label="Add Item"
+                                    customClass="w-full sm:w-40 h-20 sm:h-40"
+                                    size="lg"
+                                    color="purple"
+                                    onClick={() => routeChange(`/${companyId}/create`)}
+                                />
                             </div>
                             {productCatagory.map((item) => (
-                                <div key={`companydashboard-${item.id}`} className='flex justify-center items-center rounded py-2 px-2 w-full sm:w-max'>
-                                    <Button label={item.label} customClass='w-full sm:w-40 h-20 sm:h-40' size='lg' color="purple" onClick={() => routeChange(`/${companyId}/${item.id}/1`)} />
+                                <div
+                                    key={`companydashboard-${item.id}`}
+                                    className="flex justify-center items-center rounded py-2 px-2 w-full sm:w-max"
+                                >
+                                    <Button
+                                        label={item.label}
+                                        customClass="w-full sm:w-40 h-20 sm:h-40"
+                                        size="lg"
+                                        color="purple"
+                                        onClick={() => routeChange(`/${companyId}/${item.id}/1`)}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -114,7 +133,7 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
                             </div>
                         </div>
                         <div className="col-span-1 sm:col-span-2 lg:col-span-1 shadow-lg px-4 h-96">
-                            <CreateEmployee secret={business?.secret} />
+                            <CreateEmployee secret={business?.secret} position={business?.positionLabel} />
                         </div>
                     </div>
                 </>

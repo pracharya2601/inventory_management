@@ -19,6 +19,8 @@ import { useRouter } from 'next/router';
 import AccountInfo from './user/AccountInfo';
 import CreateWorkplace from './company/CreateWorkplace';
 import ProductProcess from './product/ProductProcess';
+import Button from '../elements/Button';
+import Notification from './Notification';
 
 interface ComponentWrapperProps {
     children?: JSX.Element | JSX.Element[];
@@ -28,24 +30,17 @@ interface ComponentWrapperProps {
 
 const ComponentWrapper = ({ children, searchBarComponent, productPreview }: ComponentWrapperProps) => {
     const sidebarRef = useRef(null);
-    const notificationBarRef = useRef(null);
     const router = useRouter();
-
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [notiOpen, setNotiOpen] = useState(false);
     useOutsideClick(sidebarRef, setSidebarOpen);
-    useOutsideClick(notificationBarRef, setNotiOpen);
-
     const {
         state: {
             user: { authenticated, workplaces, userdata },
-            ui: { toggleOpen },
+            ui: { toggleOpen, alert },
             workplace: { productCatagory },
         },
         dispatch,
     } = useContext(appContext);
-
-
     return (
         <div className="dark relative min-h-screen w-screen overflow-x-hidden">
             {toggleOpen?.viewSearchBar && searchBarComponent && searchBarComponent}
@@ -58,7 +53,6 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
                     <HomeButton />
                 </span>
                 <span className="flex items-center">
-                    {authenticated && <NotificationButton setOpen={setNotiOpen} />}
                     {authenticated && <ProfileButton />}
                     {!authenticated && <SigninButton />}
                     {authenticated && <SignoutButton />}
@@ -95,12 +89,6 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
                 <AccountInfo />
             </SideboardOutline>
             <SideboardOutline
-                open={notiOpen}
-                setOpen={setNotiOpen}
-                size="small"
-                label="notification"
-            ></SideboardOutline>
-            <SideboardOutline
                 open={toggleOpen?.['createworkplace']}
                 label="Create Workplace"
                 setOpen={() => {
@@ -133,6 +121,25 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
             >
                 <ProductProcess />
             </SideboardOutline>
+            {alert.map(({ type, value }, index: number) => (
+                <Notification
+                    key={`item-${index}-${type}`}
+                    type={type}
+                    value={value}
+                    index={index}
+                    onClick={() => {
+                        dispatch(
+                            action.deleteAlert({
+                                index: index,
+                            }),
+                        );
+                    }}
+                    lastItem={alert.length - 1 === index ? true : false}
+                    clearAll={() => {
+                        dispatch(action.deleteAlert({ index: -1 }));
+                    }}
+                />
+            ))}
             {productPreview && productPreview}
             <div className="flex-1 dark:bg-gray-900 dark:text-white h-screen overflow-auto">{children}</div>
         </div>
