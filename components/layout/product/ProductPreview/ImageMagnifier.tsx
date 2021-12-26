@@ -16,32 +16,40 @@ const ImageMagnifier = ({
     const [showMagnifier, setShowMagnifier] = useState(false);
     return (
         <div>
-            <img
-                src={src}
-                onMouseEnter={(e) => {
-                    // update image size and turn-on magnifier
-                    const elem = e.currentTarget;
-                    const { width, height } = elem.getBoundingClientRect();
-                    setSize([width, height]);
-                    setShowMagnifier(true);
-                }}
-                onMouseMove={(e) => {
-                    // update cursor position
-                    const elem = e.currentTarget;
-                    const { top, left } = elem.getBoundingClientRect();
+            {src ? (
+                <img
+                    src={src || 'holder.png'}
+                    onMouseEnter={(e) => {
+                        // update image size and turn-on magnifier
+                        const elem = e.currentTarget;
+                        const { width, height } = elem.getBoundingClientRect();
+                        setSize([width, height]);
+                        setShowMagnifier(true);
+                    }}
+                    onMouseMove={(e) => {
+                        // update cursor position
+                        const elem = e.currentTarget;
+                        const { top, left } = elem.getBoundingClientRect();
 
-                    // calculate cursor position on the image
-                    const x = e.pageX - left - window.pageXOffset;
-                    const y = e.pageY - top - window.pageYOffset;
-                    setXY([x, y]);
-                }}
-                onMouseLeave={() => {
-                    // close magnifier
-                    setShowMagnifier(false);
-                }}
-                alt={'img'}
-            />
-            <div className="hidden md:block">
+                        // calculate cursor position on the image
+                        const x = e.pageX - left - window.pageXOffset;
+                        const y = e.pageY - top - window.pageYOffset;
+                        setXY([x, y]);
+                    }}
+                    onMouseLeave={() => {
+                        // close magnifier
+                        setShowMagnifier(false);
+                    }}
+                    alt={'img'}
+                />
+            ) : (
+                <img
+                    src={'/holder.png'}
+                    alt={'img'}
+                />
+            )}
+
+            {src && <div className="hidden md:block">
                 <div
                     style={{
                         display: showMagnifier ? '' : 'none',
@@ -70,7 +78,7 @@ const ImageMagnifier = ({
                         backgroundPositionY: `${-y * zoomLevel + magnifierHeight / 2}px`,
                     }}
                 ></div>
-            </div>
+            </div>}
         </div>
     );
 };

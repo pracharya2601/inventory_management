@@ -13,14 +13,7 @@ const ProductLayout = ({ children, pagination }: ProductLayoutProps) => {
             <ProductNavbar />
             <div className="overflow-x-auto sticky top-10">
                 <div className="inline-block min-w-full shadow overflow-hidden">
-                    {children && (
-                        <table className="min-w-full leading-normal">
-                            <thead>
-                                <TableHead />
-                            </thead>
-                            <tbody>{children}</tbody>
-                        </table>
-                    )}
+                    {children && children}
                     {!children && <div className="h-96 flex justify-center items-center">No data Found</div>}
                 </div>
             </div>
@@ -29,50 +22,3 @@ const ProductLayout = ({ children, pagination }: ProductLayoutProps) => {
     );
 };
 export default ProductLayout;
-
-export const TableHead = () => (
-    <tr>
-        <th
-            scope="col"
-            className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-        >
-            Name
-        </th>
-        <th
-            scope="col"
-            className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-        >
-            Color
-        </th>
-        <th
-            scope="col"
-            className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-        >
-            Size
-        </th>
-        <th
-            scope="col"
-            className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-        >
-            Count
-        </th>
-        <th
-            scope="col"
-            className="px-5 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-        >
-            Price
-        </th>
-        <th
-            scope="col"
-            className="px-4 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-        >
-            Detail
-        </th>
-        <th
-            scope="col"
-            className="px-3 py-3  border-b border-gray-700 dark:border-gray-200  text-left text-sm uppercase font-semibold"
-        >
-            Process
-        </th>
-    </tr>
-);

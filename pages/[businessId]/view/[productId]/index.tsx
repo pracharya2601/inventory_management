@@ -29,7 +29,7 @@ const ProductView = ({ data, error }: { data: ProductType; error: { type: string
         /**
          * @info useeffect is for socket and to update on realtime
          */
-
+        setSingleProduct(data);
         socket.on(eventListern, (data: ProductType) => {
             console.log('sdsssd');
             if (singleProduct?._id === data._id) {

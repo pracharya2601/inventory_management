@@ -1,5 +1,6 @@
 import DropDownMenu, { DropDownItem } from '@/components/elements/ddm/DropDownMenu';
 import Input from '@/components/elements/Input';
+import Modal from '@/components/elements/Modal';
 import { apiDELETE } from '@/hooks/middleware/api';
 import { EmployeeType } from '@/interface/Workplace/Company';
 import { useRouter } from 'next/router';
@@ -73,7 +74,13 @@ const Staffs = ({ staffs, pos, secret }: { staffs: EmployeeType[]; pos: string; 
                                     </svg>
                                 }
                             >
-                                <DropDownItem label="Remove " onClick={() => onDeleteHandle(employee.userId || employee.email, employee.joined)} />
+                                {/* <DropDownItem label="Remove " onClick={() => onDeleteHandle(employee.userId || employee.email, employee.joined)} /> */}
+                                <Modal
+                                    heading="Are you sure want to delete this employee?"
+                                    label={<DropDownItem label='Remove' />}
+                                    onClick={() => onDeleteHandle(employee.userId || employee.email, employee.joined)}
+                                >
+                                </Modal>
                             </DropDownMenu>
                         )}
                     </div>

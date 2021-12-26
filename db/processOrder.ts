@@ -1,4 +1,4 @@
-import { ProcessProductInfo } from '@/interface/Product/ProcessProductType';
+import { ProcessProductInfo, ProcessProductPayloadType } from '@/interface/Product/ProcessProductType';
 import { getSingleProduct } from './products';
 import { Db, ObjectId } from 'mongodb';
 import { Skus } from '@/interface/Product/ProductInterface';
@@ -26,8 +26,8 @@ const updateLenthyData = async (
                 type === 'process'
                     ? sku.count - itm.numberOfItem
                     : type === 'cancel'
-                    ? sku.count + itm.numberOfItem
-                    : sku.count;
+                        ? sku.count + itm.numberOfItem
+                        : sku.count;
             return {
                 ...sku,
                 count: count,
@@ -93,3 +93,13 @@ export const processOrder = async (db: Db, items: ProcessProductInfo[], business
         }
     }
 };
+
+export const uploadProcessedData = async (db: Db, data: ProcessProductPayloadType) => {
+    try {
+        await db.collection('static_products').insertOne(data);
+        return data;
+    } catch (error) {
+        console.log('error on upload processed data functin', error);
+        return;
+    }
+}

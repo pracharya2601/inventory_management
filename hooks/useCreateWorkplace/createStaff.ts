@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 
 export const createStaff = () => {
     const [staffs, setStaffs] = useState<CreateStaffFormType[]>([{ email: '', positionLabel: '', fullName: '' }]);
-    const [error, setError] = useState<boolean>(true);
+    const [createstaffError, setError] = useState<boolean>(true);
+
     useEffect(() => {
         staffs.forEach((staff) => {
             for (const key in staff) {
@@ -17,17 +18,16 @@ export const createStaff = () => {
             }
         });
     }, [staffs]);
-    console.log(error);
 
     const onStaffsHandleChange = (e) => {
         const { name, value } = e.target;
         handler(name, value);
     };
-    const onStaffDropdown = (name, value) => {
+    const onStaffDropdown = (name: string, value: string) => {
         handler(name, value);
     };
 
-    const handler = (name, value) => {
+    const handler = (name: string, value: string) => {
         const a = name.split('.');
         if (a.length === 3) {
             const arrDta = [...staffs];
@@ -53,5 +53,5 @@ export const createStaff = () => {
         }
     };
 
-    return { staffs, error, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff };
+    return { staffs, createstaffError, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff };
 };

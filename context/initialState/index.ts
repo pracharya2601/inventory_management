@@ -12,7 +12,7 @@ export const initialState = {
         productCatagory: [
             { label: 'Inventory', id: 'inventory' },
             { label: 'Processing', id: 'processing' },
-            { label: 'Shipped', id: 'Shipped' },
+            { label: 'Shipped', id: 'shipped' },
             { label: 'Delivered', id: 'delivered' },
             { label: 'Canceled', id: 'canceled' },
             { label: 'Draft', id: 'draft' },

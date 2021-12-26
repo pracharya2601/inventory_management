@@ -1,62 +1,105 @@
 [
   {
-    "_id": "61ab1443c4abcc6fa4e46f52",
+    "_id": {
+      "$oid": "61c520664ac0c31428a253c7"
+    },
+    "businessId": "61bbf8d17f212436c4dd5662",
     "productType": "processing",
     "customerInfo": {
-      "customerId": "61ab1443c4abcc6fa4e46f78",
-      "name": "Customer James",
-      "contactNo": "5106821708",
-      "email": "customerjames@gmail.com"
+      "customerId": "",
+      "name": "John Cornell",
+      "email": "johncornell@gmail.com",
+      "contactNo": "",
+      "contaceNo": "1525252525"
     },
     "customerAddress": {
-      "address": "Basundhara Chowk",
-      "tol": "07",
-      "city": "Basundhara",
-      "state": "Central State",
+      "address": "1518 Beau Rivage",
+      "tol": "44600",
+      "city": "San Pablo",
+      "state": "CA",
       "nearByPlaces": [
-        "Bidut pradhikaran",
-        "Chirayou Hospital"
+        "Beau Rivage building"
       ],
-      "addressDesctiption": "This address description is the one helps to deliver item easily and efficiently. which makes everybody win win situation."
+      "addressDescription": "Corner of beaurivage building"
     },
     "items": [
       {
-        "imageUrl": "https://imgs.michaels.com/MAM/assets/1/726D45CA1C364650A39CD1B336F03305/img/91F89859AE004153A24E7852F8666F0F/10093625_r.jpg?fit=inside|540:540",
-        "referenceId": "productid goes here",
-        "name": "Item name goes here",
-        "color": "Color || empty",
-        "size": "Size || empty",
-        "price": 12000,
-        "numberOfItem": 1
+        "imageUrl": "https://storage.googleapis.com/product-files-v1/2ce5d243-e43f-4f45-ac4f-e3d96675a043.webp",
+        "referenceId": "61bd18dbdcef85266cc4f341",
+        "name": "nike shoe",
+        "color": "white",
+        "size": "medium",
+        "price": {
+          "$numberInt": "2500"
+        },
+        "numberOfItem": {
+          "$numberInt": "1"
+        },
+        "total": {
+          "$numberInt": "2500"
+        }
+      },
+      {
+        "imageUrl": "https://storage.googleapis.com/product-files-v1/2ce5d243-e43f-4f45-ac4f-e3d96675a043.webp",
+        "referenceId": "61bd19bcdcef85266cc4f342",
+        "name": "New Sport Shoe for New Customer",
+        "color": "blue",
+        "size": "medium",
+        "price": {
+          "$numberInt": "1800"
+        },
+        "numberOfItem": {
+          "$numberInt": "1"
+        },
+        "total": {
+          "$numberInt": "1800"
+        }
       }
     ],
     "orderDetail": {
-      "subtotal": 2500,
-      "tax": 100,
-      "coupon": 500,
-      "shipping": 100,
-      "total": 2200
+      "subtotal": {
+        "$numberInt": "4300"
+      },
+      "taxPercent": {
+        "$numberInt": "10"
+      },
+      "taxAmt": {
+        "$numberInt": "430"
+      },
+      "coupon": {
+        "$numberInt": "0"
+      },
+      "shipping": {
+        "$numberInt": "100"
+      },
+      "total": {
+        "$numberInt": "4830"
+      }
     },
     "soldBy": {
-      "name": "Vuntu Inventory",
-      "businessId": "618d600cc71b2ca07b352e8c"
+      "name": "Kathmandu Mall",
+      "businessId": "61bbf8d17f212436c4dd5662"
     },
     "stat": [
       {
-        "stat": "processed | canceled",
-        "by": "userid"
+        "stat": "processed",
+        "by": "61325b3296e4eb481c819011",
+        "date": "2021-12-24T01:26:27.668Z"
       }
     ],
     "orderCreatedBy": {
-      "name": "Prakash acharya",
-      "userId": "id of the user"
+      "name": "Prakash Acharya",
+      "userId": "61325b3296e4eb481c819011"
     },
     "paymentStatus": {
-      "status": true,
-      "method": "online | inperson",
-      "delivery": "mercant | delevery company",
-      "paymentId": "paymentId",
-      "amount": 2200
-    }
+      "status": false,
+      "method": "cashondelivery",
+      "delivery": "",
+      "paymentId": "",
+      "amount": {
+        "$numberInt": "0"
+      }
+    },
+    "createdAt": "2021-12-24T01:26:27.668Z"
   }
 ]

@@ -2,19 +2,20 @@ import { getSession } from 'next-auth/client';
 import ComponentWrapper from '@/components/layout/ComponentWrapper';
 import { connectToDB } from 'db/connect';
 import { getOneWorkPlace } from 'db/workplace';
-import datas from 'db.json';
 import { useRouter } from 'next/router';
 import React, { useContext, useEffect, useState } from 'react';
 import { appContext } from '@context/appcontext';
 import Dashboard from '@/components/layout/company/Dashboard';
 import BusinessNavbar from '@/components/layout/company/BusinessNavbar';
-import { CompanyTypes, CompanyVariants } from '@/interface/Workplace/Company';
+import { CompanyVariants } from '@/interface/Workplace/Company';
 import { ProductType } from '@/interface/Product/ProductInterface';
 import { action } from '@context/action';
 import Button from '@/components/elements/Button';
-import { FormComponent } from '@/components/layout/product/kit/FormComponent';
 import { apiPOST } from '@/hooks/middleware/api';
 import { getSingleProduct } from 'db/products';
+import { useProductForm } from '@/hooks/useProductForm';
+import ProductForm from '@/components/layout/product/kit/ProductForm';
+import Modal from '@/components/elements/Modal';
 
 type EditProductProps = {
     variant: CompanyVariants;
@@ -29,6 +30,9 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
         },
         dispatch,
     } = useContext(appContext);
+    const { handleOnChange, handleOnChangeArray, onDropdownChange, da, deleteItem, addItem, colors, sizes, uploadPhoto, deleteImage, error, validate } =
+        useProductForm<ProductType>(itemData);
+
     useEffect(() => {
         dispatch(
             action.setVariant({
@@ -48,8 +52,9 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
     }, []);
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
 
-    const updateProductInformation = (item: ProductType) => {
-        apiPOST<string, ProductType>(`/products/${item._id}?businessId=${router.query?.businessId}`, item);
+    const updateProductInformation = async () => {
+
+        await apiPOST<string, ProductType>(`/products/${da._id}?businessId=${router.query?.businessId}`, da);
         setTimeout(() => router.push(`/${router.query?.businessId}/view/${itemData._id}`), 2000);
     };
     return (
@@ -70,7 +75,34 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
                             <Button label="Request your Employerr to make admin" />
                         </div>
                     ) : (
-                        <FormComponent data={itemData} onSubmit={updateProductInformation} />
+                        // <FormComponent data={itemData} onSubmit={updateProductInformation} />
+                        <ProductForm
+                            data={da}
+                            handleOnChange={handleOnChange}
+                            handleOnChangeArray={handleOnChangeArray}
+                            onDropdownChange={onDropdownChange}
+                            deleteItem={deleteItem}
+                            addItem={addItem}
+                            colors={colors}
+                            sizes={sizes}
+                            uploadPhoto={uploadPhoto}
+                            deleteImage={deleteImage}
+                            submitButton={
+                                <Modal
+                                    heading='Are you sure you want to submit the form?'
+                                    onClick={() => updateProductInformation()}
+                                    label={
+                                        <Button type="button" label="Submit" color="green" customClass="w-52" size="sm" />
+                                    }
+                                    taskWhileOpening={() => {
+                                        validate(da)
+                                    }}
+                                    error={error ? true : false}
+                                >
+
+                                </Modal>
+                            }
+                        />
                     )}
                 </>
             </Dashboard>

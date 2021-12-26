@@ -13,8 +13,9 @@ interface ImageHolderProps {
 const ImageHolder = ({ activeImage, images, setActiveImage, name }: ImageHolderProps) => {
     return (
         <div className="w-full mt-10 md:w-96 flex flex-col items-center">
-            <div className="h-64 w-64 relative m-1">
+            <div className={`h-64 w-64 relative m-1 ${!activeImage && 'shadow-2xl'}`}>
                 <ImageMagnifier src={activeImage} />
+                {!activeImage && <span className="absolute top-0 uppercase ml-24 mt-24">No Image</span>}
             </div>
             <div className="flex flex-wrap w-full justify-center">
                 {images.map((img) => (
@@ -24,7 +25,8 @@ const ImageHolder = ({ activeImage, images, setActiveImage, name }: ImageHolderP
                             } hover:border-blud-300 cursor-pointer`}
                         onClick={() => setActiveImage(img.url)}
                     >
-                        <Image src={img.url} layout="fill" objectFit="cover" objectPosition="center" alt={name} />
+                        {img.url && <Image src={img.url} layout="fill" objectFit="cover" objectPosition="center" alt={name} />}
+                        {!img.url && <Image src={`/holder.png`} layout="fill" objectFit="cover" objectPosition="center" alt={name} />}
                     </div>
                 ))}
             </div>

@@ -30,11 +30,12 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
         /**
          * @info useeffect is for socket and to update on realtime
          */
+        setCompanyData(companydata)
         socket.on(`${router.query?.businessId}`, (data: CompanyTypes) => {
             setCompanyData(data);
         });
         socket.on(verifyEvent, (data: VerifiedDataPayloadType) => {
-            const arrStaff: EmployeeType[] | [] = [...companydata.staffs];
+            const arrStaff: EmployeeType[] | [] = [...companyData.staffs];
             const rowIndex = arrStaff.findIndex((item: EmployeeType) => item.email === data.email);
             arrStaff[rowIndex] = {
                 ...arrStaff[rowIndex],
@@ -46,17 +47,19 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
             }));
         });
         socket.on(addEmployee, (data: EmployeeType[]) => {
-            const newArr: EmployeeType[] | [] = [...companydata.staffs, ...data];
-            console.log(data, newArr);
+            const newArr: EmployeeType[] | [] = [...companyData.staffs, ...data];
             setCompanyData((prevState) => ({
                 ...prevState,
                 staffs: newArr,
             }));
         });
-        socket.on(deleteEmployee, (data: string) => {
-            const newArr: EmployeeType[] | [] = [...companydata.staffs];
-            const rowIndex = newArr.findIndex((item: EmployeeType) => item.email === data || item.userId === data);
+        socket.on(deleteEmployee, (data: { val: string, type: boolean }) => {
+            const newArr: EmployeeType[] = [...companyData.staffs];
+            const rowIndex = newArr.findIndex((item: EmployeeType) => {
+                return data.type ? item.userId === data.val : item.email === data.val
+            });
             newArr.splice(rowIndex, 1);
+            console.log('2', newArr);
             setCompanyData((prevState) => ({
                 ...prevState,
                 staffs: newArr,
@@ -64,8 +67,10 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
         });
         return () => {
             socket.disconnect();
+            setCompanyData(null);
         };
-    }, []);
+    }, [router.asPath]);
+
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === companyId);
     const routeChange = (url: string) => {
         router.push(url);

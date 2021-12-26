@@ -33,11 +33,15 @@ export interface OrderPaymentStatus {
     paymentId?: string;
     amount: number;
 }
+export interface StatChange {
+    stat: string; by: string; date: string; name: string;
+}
 
 export interface ProcessProductPayloadType {
     _id?: string;
     businessId?: string;
     productType: 'processing';
+    createdAt: string;
     customerInfo: {
         customerId?: string;
         name: string;
@@ -51,7 +55,7 @@ export interface ProcessProductPayloadType {
         name: string;
         businessId: string;
     };
-    stat: Array<{ stat: 'processed' | 'canceled'; by: string }>;
+    stat: StatChange[];
     orderCreatedBy: {
         name: string;
         userId: string;

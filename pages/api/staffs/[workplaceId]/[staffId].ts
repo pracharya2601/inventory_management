@@ -27,29 +27,30 @@ handeler.delete(async (req: Request, res) => {
 
     //update in the future about who delete the text
     //const deletedDate = new Date().toISOString();
+
+
     const eventI = `delete-employee-${workplaceId}`;
     const eventII = `remove-from-workspace-${staffId}`;
     const positionData = decrypt<{ positionLabel: string; workplaceId: string }>(secret);
-    if (positionData.workplaceId === workplaceId && positionData.positionLabel === 'admin') {
-        try {
-            if (verified === 'true' && userId === staffId) {
-                return res.status(402).json({ errors: 'You cannot remove yourself from the company.' });
-            }
-            if (verified === 'true') {
-                await deleteVerifiedStaff(req.db, workplaceId, staffId);
-            }
-            if (verified === 'false') {
-                await deleteUnverifiedStaff(req.db, workplaceId, staffId);
-            }
-        } catch (error) {
-            return res.status(400).json({ errors: 'Server error! Please try again later!!' });
+    if (positionData.workplaceId !== workplaceId) {
+        return res.status(402).json({ errors: 'Not Authorize' });
+    }
+    if (positionData.positionLabel !== 'admin') {
+        return res.status(402).json({ errors: 'You cannot remove staff from the company.' });
+    }
+    try {
+        if (verified === 'true') {
+            await deleteVerifiedStaff(req.db, workplaceId, staffId);
         }
-        res?.socket?.server?.io?.emit(eventI, staffId);
+        if (verified === 'false') {
+            await deleteUnverifiedStaff(req.db, workplaceId, staffId);
+        }
+        res?.socket?.server?.io?.emit(eventI, { val: staffId, verified: verified === 'true' ? true : false });
         if (verified === 'true') {
             res?.socket?.server?.io?.emit(eventII, staffId);
         }
         res.status(200).json(JSON.stringify({ data: 'Success' }));
-    } else {
+    } catch (error) {
         res.status(403).json({ errors: 'Not authorize to Update employee.' });
     }
 });

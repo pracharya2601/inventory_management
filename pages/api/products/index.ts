@@ -34,6 +34,7 @@ handeler.post(async (req: Request, res) => {
 
     //for socket event
     const eventI = `add.${businessId}-${body.productType}`;
+    const productId = new ObjectId();
     try {
         const compData: CompanyTypes = await getOneWorkPlace(req.db, businessId as string, userId);
         //check user is admin or not to post data
@@ -54,7 +55,7 @@ handeler.post(async (req: Request, res) => {
         const postedAt = new Date().toISOString();
         const newData: ProductType = {
             ...body,
-            _id: new ObjectId(),
+            _id: productId,
             updatedAt: [updatedAt],
             createdBy: createdBy,
             postedAt: postedAt,
@@ -64,7 +65,7 @@ handeler.post(async (req: Request, res) => {
         console.log('created data', data);
         // new data need to add on database before response sending
         res?.socket?.server?.io?.emit(eventI, data);
-        res.status(200).json(JSON.stringify({ data: 'success' }));
+        res.status(200).json(JSON.stringify({ data: productId }));
     } catch (e) {
         res.status(400).json({ errors: 'Something went wrong' });
     }

@@ -9,25 +9,47 @@
  * @deleteItem takes name as a parameter separated with dot
  */
 
-import { CreateDataType, ProductType } from '@/interface/Product/ProductInterface';
+import { CreateDataType } from '@/interface/Product/ProductInterface';
+import { action } from '@context/action';
 import { appContext } from '@context/appcontext';
+import { productFormValidation } from 'middlware/validation';
+import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react';
 
-export const useProductForm = (formData: ProductType | CreateDataType) => {
+export function useProductForm<T>(formData: T) {
+    const router = useRouter();
+    const productId = router.query?.productId;
     const {
         state: {
             workplace: { variant },
         },
+        dispatch
     } = useContext(appContext);
 
-    const [data, setData] = useState<ProductType | CreateDataType>(formData);
+    const [data, setData] = useState<T>(formData);
     const [colors, setColors] = useState<string[] | []>(variant.colorVariants);
     const [sizes, setSizes] = useState<string[] | []>(variant.sizeVariants);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         setColors(variant.colorVariants);
         setSizes(variant.sizeVariants);
     }, [variant]);
+
+    useEffect(() => {
+        for (const key in error) {
+            dispatch(action.setAlert({
+                type: 'warning',
+                value: error[key]
+            }))
+        }
+    }, [error])
+
+    const validate = (data) => {
+        const itemError = productFormValidation(data);
+        setError(itemError);
+    }
+
 
     const handleOnChange = (e) => {
         const { name, value, type } = e.target;
@@ -103,6 +125,41 @@ export const useProductForm = (formData: ProductType | CreateDataType) => {
             }
         }
     };
+    const uploadPhoto = async (e) => {
+        const a = Date.now()
+        const file = e.target.files[0];
+        const filename = `${a}-${encodeURIComponent(file.name)}`;
+        const res = await fetch(`http://localhost:3000/api/file?file=${filename}`);
+        const { url, fields } = await res.json();
+        const formData = new FormData();
+        Object.entries({ ...fields, file }).forEach(([key, value]) => {
+            formData.append(key, value as string);
+        });
+        const upload = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+        if (upload.ok) {
+            console.log('url', `${upload.url}${filename}`);
+            addItem('images', {
+                id: filename,
+                url: `${upload.url}${filename}`,
+                color: 'default',
+            });
+            console.log('Uploaded successfully!');
+        } else {
+            console.error('Upload failed.');
+        }
+    };
+    const deleteImage = async (name: string, filename: string) => {
+        deleteItem(name);
+        if (!productId) {
+            //not delete image while updating
+            await fetch(`http://localhost:3000/api/file?file=${filename}`, {
+                method: 'DELETE',
+            });
+        }
+    };
 
     return {
         handleOnChange,
@@ -115,5 +172,9 @@ export const useProductForm = (formData: ProductType | CreateDataType) => {
         sizes,
         setColors,
         setSizes,
+        uploadPhoto,
+        deleteImage,
+        error,
+        validate
     };
 };

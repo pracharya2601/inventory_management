@@ -1,18 +1,20 @@
 import { getSession } from 'next-auth/client';
 import ComponentWrapper from '@/components/layout/ComponentWrapper';
 import { connectToDB } from 'db/connect';
-import { checkWorkplace, getOneWorkPlace, getWorkplaceVariant } from 'db/workplace';
+import { getWorkplaceVariant } from 'db/workplace';
 import React, { useContext, useEffect, useState } from 'react';
 import { appContext } from '@context/appcontext';
 import { useRouter } from 'next/router';
 import Dashboard from '@/components/layout/company/Dashboard';
 import BusinessNavbar from '@/components/layout/company/BusinessNavbar';
-import { CompanyTypes, CompanyVariants } from '@/interface/Workplace/Company';
-import { FormComponent } from '@/components/layout/product/kit/FormComponent';
+import { CompanyVariants } from '@/interface/Workplace/Company';
 import { CreateDataType } from '@/interface/Product/ProductInterface';
 import Button from '@/components/elements/Button';
 import { action } from '@context/action';
 import { apiPOST } from '@/hooks/middleware/api';
+import ProductForm from '@/components/layout/product/kit/ProductForm';
+import { useProductForm } from '@/hooks/useProductForm';
+import Modal from '@/components/elements/Modal';
 
 const initialData: CreateDataType = {
     name: '',
@@ -27,9 +29,6 @@ const initialData: CreateDataType = {
 };
 
 const CreateData = ({ variant }: { variant: CompanyVariants }) => {
-    /**
-     * @needhook move this state and usestate to the hooks and useeffect for realtime data fetching
-     */
     const router = useRouter();
     const {
         state: {
@@ -37,6 +36,8 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
         },
         dispatch,
     } = useContext(appContext);
+    const { handleOnChange, handleOnChangeArray, onDropdownChange, da, deleteItem, addItem, colors, sizes, uploadPhoto, deleteImage, error, validate } =
+        useProductForm<CreateDataType>(initialData);
 
     useEffect(() => {
         dispatch(
@@ -56,13 +57,25 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
         };
     }, []);
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
-    const createProductSubmit = async (item: CreateDataType) => {
+    const createProductSubmit = async () => {
         const { data, errors } = await apiPOST<{ data: string; errors: string }, CreateDataType>(
             `/products?businessId=${router.query?.businessId}`,
-            item,
+            da,
         );
-        console.log(data, errors);
+        if (data) {
+            dispatch(action.setAlert({
+                type: 'success',
+                value: `Successfully Uploaded`,
+            }))
+            router.push(`/${router.query?.businessId}/view/${data}`);
+        } else {
+            dispatch(action.setAlert({
+                type: 'danger',
+                value: errors,
+            }))
+        }
     };
+    console.log(error);
 
     return (
         <ComponentWrapper>
@@ -82,7 +95,38 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
                             <Button label="Request your Employerr to make admin" />
                         </div>
                     ) : (
-                        <FormComponent data={initialData} onSubmit={createProductSubmit} />
+                        <ProductForm
+                            data={da}
+                            handleOnChange={handleOnChange}
+                            handleOnChangeArray={handleOnChangeArray}
+                            onDropdownChange={onDropdownChange}
+                            deleteItem={deleteItem}
+                            addItem={addItem}
+                            colors={colors}
+                            sizes={sizes}
+                            uploadPhoto={uploadPhoto}
+                            deleteImage={deleteImage}
+                            submitButton={
+                                <Modal
+                                    heading='Are you sure you want to submit the form?'
+                                    onClick={() => createProductSubmit()}
+                                    label={
+                                        <Button type="button" label="Submit" color="green" customClass="w-52" size="sm" />
+                                    }
+                                    taskWhileOpening={() => {
+                                        validate(da)
+                                    }}
+                                    error={error ? true : false}
+                                >
+                                    <div>
+                                        Item Preview:
+                                        Number of Items: 123123
+                                        Total Price: 123123
+                                    </div>
+
+                                </Modal>
+                            }
+                        />
                     )}
                 </>
             </Dashboard>
@@ -102,7 +146,6 @@ export async function getServerSideProps(context: any) {
     }
     const { db } = await connectToDB();
     const businessId = context.query.businessId;
-    const userId = session.user.id;
     //instead of company data we have to get variants data and other studff
     const variantData = await getWorkplaceVariant(db, businessId as string);
     const companydata = JSON.parse(JSON.stringify(variantData));
