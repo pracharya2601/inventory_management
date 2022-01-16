@@ -12,9 +12,16 @@ import { action } from '@context/action';
 import { UserData, UserSession } from '@/interface/AuthSession';
 import { socket } from 'socket/client';
 import { WorkplaceTypes } from '@/interface/Workplace/WorkplaceListTypes';
+import MetaTag from '@/components/layout/Meta/MetaTag';
 function MyApp({ Component, pageProps }: AppProps) {
     return (
         <AppProvider>
+            <MetaTag
+                title="Inventory Management"
+                description="Inventory Mangement Wholesale for Business and retail suppliers"
+                currentURL="www.prakashacharya.com"
+                previewImage="https://storage.googleapis.com/product-files-v1/1642204061214-inv-1.png"
+            />
             <Wrapper>
                 <Component {...pageProps} />
             </Wrapper>

@@ -76,12 +76,22 @@ export const createProduct = async (db: Db, product: ProductType) => {
     }
 };
 
-export const updateProduct = async (db: Db, product: ProductType) => {
+export const updateProduct = async (db: Db, { _id, ...product }: ProductType) => {
     try {
-        await db.collection('products').updateOne(product);
-        return product;
+        const data = await db.collection('products').findOneAndUpdate({
+            _id: ObjectId(_id)
+        }, {
+            $set: product
+        }, {
+            returnNewDocument: true
+        });
+        if (!data) {
+            return;
+        }
+        return data.value;
     } catch (error) {
         console.log('error on update product', error);
+        return;
     }
 };
 
