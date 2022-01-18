@@ -12,9 +12,8 @@ declare global {
 }
 
 export default async function database(req, res, next) {
-    const { db, dbClient, storage } = await connectToDB();
+    const { db, dbClient } = await connectToDB();
     req.db = db;
-    req.storage = storage;
     req.dbClinet = dbClient;
 
     next();

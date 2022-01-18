@@ -5,7 +5,6 @@ import middleware from 'middlware/all';
 import { Db, MongoClient, ObjectId } from 'mongodb';
 import { NextApiRequest } from 'next';
 
-import datas from '../../../db.json';
 import { CreateDataType, ProductType } from '@/interface/Product/ProductInterface';
 import { getOneWorkPlace } from 'db/workplace';
 import { CompanyTypes } from '@/interface/Workplace/Company';
@@ -14,19 +13,6 @@ import { createProduct } from 'db/products';
 const handeler = nc({ onError });
 handeler.use(middleware);
 
-handeler.get(async (req: Request, res) => {
-    const productType = req.query.productType;
-    const page = req.query.productType;
-    const companyId = req.query.companyId;
-    const search = req.query.search;
-
-    const data = datas;
-    if (data) {
-        res.status(200).json(JSON.stringify({ data }));
-    } else {
-        res.status(400).json({ errors: 'Not Authorize' });
-    }
-});
 handeler.post(async (req: Request, res) => {
     const body: CreateDataType = req.body;
     const businessId = req.query.businessId;

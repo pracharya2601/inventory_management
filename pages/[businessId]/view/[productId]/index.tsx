@@ -1,7 +1,6 @@
 import { getSession } from 'next-auth/client';
 import ComponentWrapper from '@/components/layout/ComponentWrapper';
 import { connectToDB } from 'db/connect';
-import datas from 'db.json';
 import { checkWorkplace } from 'db/workplace';
 import { ProductType } from '@/interface/Product/ProductInterface';
 import React, { useContext, useEffect, useState } from 'react';
