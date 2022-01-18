@@ -54,7 +54,7 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
 
     const updateProductInformation = async () => {
 
-        await apiPOST<string, ProductType>(`/products/${da._id}?businessId=${router.query?.businessId}`, da);
+        await apiPOST<string, ProductType>(`/products/${da._id}?businessId=${router.query?.businessId}&&secret=${business.secret}`, da);
         setTimeout(() => router.push(`/${router.query?.businessId}/view/${itemData._id}`), 2000);
     };
     return (

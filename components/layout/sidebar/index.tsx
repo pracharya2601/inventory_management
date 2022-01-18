@@ -18,15 +18,13 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
     const router = useRouter();
     return (
         <div
-            className={`${
-                !open && '-translate-x-full'
-            } flex flex-col z-50 bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform transition duration-200 ease-in-out`}
+            className={`${!open && '-translate-x-full'
+                } flex flex-col z-50 bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-gray-100 w-64 space-y-6 py-7 px-2 absolute inset-y-0 left-0 transform transition duration-200 ease-in-out`}
             ref={sidebarRef}
         >
             <button
-                className={`bg-${
-                    open ? 'red' : 'blue'
-                }-900 text-white p-2 rounded-r absolute bottom-0 right-0 mb-10 -mr-9 `}
+                className={`bg-${open ? 'red' : 'blue'
+                    }-900 text-white p-2 rounded-r absolute bottom-0 right-0 mb-10 -mr-9 `}
                 onClick={() => setOpen(!open)}
             >
                 {open ? (
@@ -76,9 +74,9 @@ const Sidebar = ({ setOpen, open, sidebarItems, sidebarItemsBottom }: SideBarPro
             <nav className="flex-1 flex flex-col justify-between h-full overflow-x-visible overflow-y-auto">
                 <div className="pb-1">
                     <SidebarItem
-                        onClick={() => router.push('/dashboard')}
+                        onClick={() => router.push('/')}
                         label="Dashboard"
-                        markIcon={router.asPath === '/dashboard' ? true : false}
+                        markIcon={router.asPath === '/' ? true : false}
                         icon={
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

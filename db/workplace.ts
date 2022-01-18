@@ -1,5 +1,4 @@
 import { CompanyTypes, CompanyVariants, EmployeeType } from '@/interface/Workplace/Company';
-import { StaffType } from '@/interface/Workplace/StaffType';
 import { Db, ObjectId } from 'mongodb';
 
 export const getOneWorkPlace = async (db: Db, id: string, userId: string) => {
