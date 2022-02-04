@@ -37,7 +37,7 @@ const Wrapper = ({ children }) => {
         },
         dispatch,
     } = useContext(appContext);
-    const event = `remove-from-workspace-${userdata?.id}`
+    const event = `remove-from-workspace-${userdata?.id}`;
     useEffect(() => {
         socket.on('connect', () => {
             console.log(socket.id);
@@ -58,14 +58,16 @@ const Wrapper = ({ children }) => {
                 const newArr: WorkplaceTypes[] = [...userdata?.workplaces];
                 const rowIndex = newArr.findIndex((item: WorkplaceTypes) => item.workplaceId === workplaceId);
                 newArr.splice(rowIndex, 1);
-                dispatch(action.getUser({
-                    userdata: {
-                        ...userdata,
-                        workplaces: newArr
-                    }
-                }))
+                dispatch(
+                    action.getUser({
+                        userdata: {
+                            ...userdata,
+                            workplaces: newArr,
+                        },
+                    }),
+                );
             }
-        })
+        });
         return () => {
             dispatch(action.checkAuthenticated({ authenticated: false }));
             dispatch(action.getUser({ userdata: null }));

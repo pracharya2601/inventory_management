@@ -4,6 +4,15 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { Session } from 'next-auth';
 import { WorkplaceTypes } from '../Workplace/WorkplaceListTypes';
 
+export interface AddressType {
+    address: string;
+    ward: string;
+    city: string;
+    district: string;
+    state: string;
+    zip: string;
+}
+
 export interface PostFrontMatter {
     title: string;
     summary: string;
@@ -33,5 +42,7 @@ export interface UserData extends Session {
     image: string;
     email: string;
     name: string;
+    address?: AddressType;
     workplaces: WorkplaceTypes[] | [];
+    hasUpdated?: boolean;
 }

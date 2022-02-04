@@ -13,13 +13,23 @@ export default (req, res) =>
             secret: process.env.JWT_SECRET,
         },
         providers: [
+            Providers.Email({
+                server: {
+                    host: process.env.EMAIL_SMTP_HOST,
+                    port: Number(process.env.EMAIL_SMTP_PORT),
+                    auth: {
+                        user: process.env.EMAIL_SMTP_USER,
+                        pass: process.env.EMAIL_SMTP_PASSWORD,
+                    },
+                },
+                from: process.env.EMAIL_SMTP_FROM,
+            }),
             Providers.Google({
                 clientId: process.env.GOOGLE_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_CLIENT_SECRET,
                 authorizationUrl:
                     'https://accounts.google.com/o/oauth2/v2/auth?prompt=consent&access_type=offline&response_type=code',
-                scope:
-                    'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+                scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
             }),
             Providers.Facebook({
                 clientId: process.env.FACEBOOK_CLIENT_ID,
@@ -29,7 +39,9 @@ export default (req, res) =>
         database: process.env.DATABASE_URL,
         pages: {
             signIn: '/signin',
-            error: '/signinerror',
+            error: '/auth/signinerror',
+            newUser: '/auth/newUser?type=new',
+            verifyRequest: '/auth/verifyRequest',
         },
         callbacks: {
             async session(session: any, user) {

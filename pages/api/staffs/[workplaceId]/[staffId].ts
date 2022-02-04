@@ -28,7 +28,6 @@ handeler.delete(async (req: Request, res) => {
     //update in the future about who delete the text
     //const deletedDate = new Date().toISOString();
 
-
     const eventI = `delete-employee-${workplaceId}`;
     const eventII = `remove-from-workspace-${staffId}`;
     const positionData = decrypt<{ positionLabel: string; workplaceId: string }>(secret);

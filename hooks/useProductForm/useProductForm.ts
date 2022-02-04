@@ -23,7 +23,7 @@ export function useProductForm<T>(formData: T) {
         state: {
             workplace: { variant },
         },
-        dispatch
+        dispatch,
     } = useContext(appContext);
 
     const [data, setData] = useState<T>(formData);
@@ -38,18 +38,19 @@ export function useProductForm<T>(formData: T) {
 
     useEffect(() => {
         for (const key in error) {
-            dispatch(action.setAlert({
-                type: 'warning',
-                value: error[key]
-            }))
+            dispatch(
+                action.setAlert({
+                    type: 'warning',
+                    value: error[key],
+                }),
+            );
         }
-    }, [error])
+    }, [error]);
 
     const validate = (data) => {
         const itemError = productFormValidation(data);
         setError(itemError);
-    }
-
+    };
 
     const handleOnChange = (e) => {
         const { name, value, type } = e.target;
@@ -126,7 +127,7 @@ export function useProductForm<T>(formData: T) {
         }
     };
     const uploadPhoto = async (e) => {
-        const a = Date.now()
+        const a = Date.now();
         const file = e.target.files[0];
         const filename = `${a}-${encodeURIComponent(file.name)}`;
         const res = await fetch(`http://localhost:3000/api/file?file=${filename}`);
@@ -175,6 +176,6 @@ export function useProductForm<T>(formData: T) {
         uploadPhoto,
         deleteImage,
         error,
-        validate
+        validate,
     };
-};
+}

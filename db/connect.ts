@@ -27,7 +27,7 @@ export const connectToDB = async () => {
         console.log('connected to DB');
     }
 
-    const db: Db = global.mongo.client.db('inventory');
+    const db: Db = global.mongo.client.db(process.env.DATABASE_NAME);
     // const storage: Storage = global.gcloud;
 
     return { db, dbClient: global.mongo.client };

@@ -5,4 +5,6 @@ export interface AvatarProps {
     img?: string;
     size?: 'small' | 'normal' | 'big' | 'monster';
     type?: 'square' | 'rounded' | 'full';
+    isEdit?: boolean;
+    onUpload?: () => void;
 }

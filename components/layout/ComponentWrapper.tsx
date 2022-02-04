@@ -104,23 +104,25 @@ const ComponentWrapper = ({ children, searchBarComponent, productPreview }: Comp
             >
                 <CreateWorkplace />
             </SideboardOutline>
-            <SideboardOutline
-                open={toggleOpen?.['processProduct']}
-                setOpen={() => {
-                    dispatch(
-                        action.toggleAction({
-                            id: 'processProduct',
-                            open: false,
-                        }),
-                    );
-                }}
-                size="full"
-                noOutsideClick={true}
-                label={`Process Order`}
-                bg="bg-gray-800 text-gray-100 md:border-l z-60"
-            >
-                <ProductProcess />
-            </SideboardOutline>
+            {userdata?.workplaces?.length > 0 && (
+                <SideboardOutline
+                    open={toggleOpen?.['processProduct']}
+                    setOpen={() => {
+                        dispatch(
+                            action.toggleAction({
+                                id: 'processProduct',
+                                open: false,
+                            }),
+                        );
+                    }}
+                    size="full"
+                    noOutsideClick={true}
+                    label={`Process Order`}
+                    bg="bg-gray-800 text-gray-100 md:border-l z-60"
+                >
+                    <ProductProcess />
+                </SideboardOutline>
+            )}
             {alert.map(({ type, value }, index: number) => (
                 <Notification
                     key={`item-${index}-${type}`}

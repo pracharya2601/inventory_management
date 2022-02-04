@@ -17,7 +17,7 @@ import CreateStaffForm from './Staffs/CreateStaffForm';
 import ColorVariantComponent from './Variant/kit/ColorVariantComponent';
 
 //workplaceData.staffs.${index}.email
-const prevColors = ['red', 'blue', 'green', 'yellow', 'white', 'teal', 'purple']
+const prevColors = ['red', 'blue', 'green', 'yellow', 'white', 'teal', 'purple'];
 const CreateWorkplace = () => {
     const {
         dispatch,
@@ -27,19 +27,22 @@ const CreateWorkplace = () => {
     } = useContext(appContext);
     const router = useRouter();
     const { data, handleOnChange } = useCreateWorkplaces();
-    const { staffs, createstaffError, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff } = createStaff();
+    const { staffs, createstaffError, onStaffsHandleChange, onStaffDropdown, addMoreStaff, deleteStaff } =
+        createStaff();
     const { colors, addColor, removeColor } = useVariant(prevColors, 'colors');
     const { sizes, addSize, removeSize } = useVariant(prevColors, 'sizes');
     const [error, setError] = useState(null);
 
     useEffect(() => {
         for (const key in error) {
-            dispatch(action.setAlert({
-                type: 'warning',
-                value: error[key]
-            }))
+            dispatch(
+                action.setAlert({
+                    type: 'warning',
+                    value: error[key],
+                }),
+            );
         }
-    }, [error])
+    }, [error]);
 
     const errorValidator = () => {
         const newData = {
@@ -52,11 +55,11 @@ const CreateWorkplace = () => {
                 ...data.workplaceVariant,
                 colorVariants: colors,
                 sizeVariants: sizes,
-            }
-        }
+            },
+        };
         const formerror = createWorkplaceFormValidation(newData);
         setError(formerror);
-    }
+    };
 
     const handleSubmit = async () => {
         const newData = {
@@ -69,8 +72,9 @@ const CreateWorkplace = () => {
                 ...data.workplaceVariant,
                 colorVariants: colors,
                 sizeVariants: sizes,
-            }
-        }
+            },
+        };
+        console.log(newData);
         const resData = await apiPOST<{ data?: WorkplaceTypes; errors?: string }, CreateCompanyType>(
             `/workplaces`,
             newData,
@@ -130,9 +134,7 @@ const CreateWorkplace = () => {
                         &#x26A0; When you create a Workpacse you dont need to add yourself as a staff. You will
                         automatically be an admin.
                     </p>
-                    <p className="text-red-500 text-xs mb-2">
-                        &#x26A0; Please add minimum of one employee.
-                    </p>
+                    <p className="text-red-500 text-xs mb-2">&#x26A0; Please add minimum of one employee.</p>
                     <CreateStaffForm
                         staffs={staffs}
                         onHandleChange={onStaffsHandleChange}
@@ -148,12 +150,7 @@ const CreateWorkplace = () => {
                         Other variants options feature will be added in the future
                     </p>
                     <div className="text-lg mb-2">Color Variants</div>
-                    <ColorVariantComponent
-                        colors={colors}
-                        addColor={addColor}
-                        removeColor={removeColor}
-                        w="w-80"
-                    >
+                    <ColorVariantComponent colors={colors} addColor={addColor} removeColor={removeColor} w="w-80">
                         <p className="text-yellow-500 text-xs mt-1">To add color type on the typebox.</p>
                         <p className="text-yellow-500 text-xs mt-px mb-2">To remove color click on cross sign.</p>
                     </ColorVariantComponent>
@@ -189,14 +186,16 @@ const CreateWorkplace = () => {
                     onClick={() => handleSubmit()}
                 >
                     <div className="h-20 flex justify-center items-center px-3">
-                        {error ? <span className='text-yellow-500'>
-                            Make sure to fill out all the forms before continue!
-                        </span> : <span className="text-purple-500">
-                            Well Done! Congratulation you are creating a workplace
-                        </span>}
-
+                        {error ? (
+                            <span className="text-yellow-500">
+                                Make sure to fill out all the forms before continue!
+                            </span>
+                        ) : (
+                            <span className="text-purple-500">
+                                Well Done! Congratulation you are creating a workplace
+                            </span>
+                        )}
                     </div>
-
                 </Modal>
             </form>
         </div>

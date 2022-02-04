@@ -1,23 +1,63 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { signIn, getSession } from 'next-auth/client';
 import Button from '@/components/elements/Button';
 import { HomeButton } from '@/components/layout/NavButtons';
+import Input from '@/components/elements/Input';
 
 const Signin = (props) => {
+    const [email, setEmail] = useState('');
+    const [myalert, setElert] = useState({
+        type: '',
+        message: '',
+    });
     return (
         <div className="dark bg-gray-900 py-10 px-3 fixed h-screen w-screen">
             <div className="flex flex-col m-auto mt-5 w-full w-3/4 md:w-96 max-w-md px-4 py-8 rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
                 <div className=" flex flex-col items-center mb-6 text-md font-light text-gray-600 dark:text-white">
                     <HomeButton />
-                    <p className='text-gray-200'>Login to your account</p>
+                    <p className="text-gray-200">Login to your account</p>
                 </div>
                 <div className="flex flex-col gap-4 item-center">
+                    <div className="flex flex-col gap-3">
+                        <Input
+                            placeholder="Signin with Email"
+                            onChange={(e) => setEmail(e.target.value)}
+                            type="email"
+                            value={email}
+                            icon={
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-6 w-6"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                    />
+                                </svg>
+                            }
+                        />
+                        <Button
+                            color="green"
+                            label={'Signin with Email'}
+                            size="sm"
+                            onClick={() => signIn('email', { email: email })}
+                        />
+                    </div>
+                    <div className="border-b" />
+                    <div className="text-gray-200 text-sm">Signin with other options</div>
                     <Button
                         label="Facebook"
                         color="blue"
                         fullwidth
-                        onClick={() => signIn('facebook')}
+                        // onClick={() => signIn('facebook')}
+                        onClick={() => alert('Sorry! This Feaature is not available yet. Try our passwordless login.')}
                         icon={
                             <svg
                                 width="20"
@@ -35,7 +75,10 @@ const Signin = (props) => {
                         label="Google"
                         color="red"
                         fullwidth
-                        onClick={() => signIn('google', { callbackUrl: `${process.env.NEXT_PUBLIC_API_HOST}${props.callbackUrl}` })}
+                        // onClick={() =>
+                        //     signIn('google', { callbackUrl: `${process.env.NEXT_PUBLIC_API_HOST}${props.callbackUrl}` })
+                        // }
+                        onClick={() => alert('Sorry! This Feaature is not available yet. Try our passwordless login.')}
                         icon={
                             <svg
                                 width="20"

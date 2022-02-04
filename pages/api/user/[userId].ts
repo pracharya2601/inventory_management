@@ -9,6 +9,7 @@ handeler.use(middleware);
 
 handeler.get(async (req: Request, res) => {
     const data = await getUserById(req.db, req.query.userId as string);
+    console.log('get user route', data);
     res.status(200).json(JSON.stringify({ data }));
 });
 

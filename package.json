@@ -42,6 +42,7 @@
     "next": "^10.0.3",
     "next-auth": "^3.29.0",
     "next-connect": "^0.10.2",
+    "nodemailer": "^6.7.2",
     "postcss": "^8.2.1",
     "postcss-import": "^13.0.0",
     "react": "^17.0.1",

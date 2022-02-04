@@ -1,18 +1,38 @@
 /* eslint-disable prettier/prettier */
-import { decrypt, encrypt } from '@/hooks/middleware/encrypt';
+import { encrypt } from '@/hooks/middleware/encrypt';
 import { WorkplaceTypes } from '@/interface/Workplace/WorkplaceListTypes';
 import { Db, ObjectId } from 'mongodb'
 
 export const getUserById = async (db: Db, id: string) => {
   try {
     const data = await db.collection('users').findOne({ _id: ObjectId(id) });
-    const workplaces = data.workplaces?.map((item) => ({
+    return { ...data, workplaces: data.workplaces?.map((item) => ({
       ...item,
       secret: encrypt({ workplaceId: item.workplaceId, positionLabel: item.positionLabel, workplaceName: item.workplaceName })
-    }))
-    return { ...data, workplaces };
+    }))};
+
   } catch (e) {
     console.log("this is the error", e)
+    return;
+  }
+}
+
+export const updateUserInfo = async (db:Db, userId: string, data: any) => {
+  try {
+    await db.collection('users').updateOne(
+      {
+        _id: ObjectId(userId),
+      }, {
+        $set: {
+          "name": data.name,
+          "image": data.image,
+          "address": data.address,
+          "hasUpdated": true,
+        }
+      }
+    )
+    return true;
+  } catch(error) {
     return;
   }
 }

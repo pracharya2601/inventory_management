@@ -5,6 +5,7 @@ import { appContext } from '@context/appcontext';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import { signOut } from 'next-auth/client';
+import { UserHeading } from './kit';
 
 const AccountInfo = () => {
     const router = useRouter();
@@ -19,11 +20,8 @@ const AccountInfo = () => {
     }
     return (
         <>
-            <div className="flex flex-col items-center mb-5">
-                <Avatar img={userdata.image} size="monster" />
-                <div className="text-3xl mt-5">{userdata?.name}</div>
-                <div className="text-xl mt-2 mb-2">{userdata?.email}</div>
-                <Button label="Logout" size="sm" color="red" onClick={() => signOut()} />
+            <div className="mx-auto w-full max-w-lg mt-5">
+                <UserHeading />
             </div>
             <div className="flex-1 max-w-2xl mx-auto mt-3 shadow-lg p-3 bg-gray-900 rounded mb-5">
                 <div className="text-2xl">Workplaces:</div>

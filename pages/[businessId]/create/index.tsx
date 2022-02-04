@@ -36,8 +36,20 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
         },
         dispatch,
     } = useContext(appContext);
-    const { handleOnChange, handleOnChangeArray, onDropdownChange, da, deleteItem, addItem, colors, sizes, uploadPhoto, deleteImage, error, validate } =
-        useProductForm<CreateDataType>(initialData);
+    const {
+        handleOnChange,
+        handleOnChangeArray,
+        onDropdownChange,
+        da,
+        deleteItem,
+        addItem,
+        colors,
+        sizes,
+        uploadPhoto,
+        deleteImage,
+        error,
+        validate,
+    } = useProductForm<CreateDataType>(initialData);
 
     useEffect(() => {
         dispatch(
@@ -63,19 +75,22 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
             da,
         );
         if (data) {
-            dispatch(action.setAlert({
-                type: 'success',
-                value: `Successfully Uploaded`,
-            }))
+            dispatch(
+                action.setAlert({
+                    type: 'success',
+                    value: `Successfully Uploaded`,
+                }),
+            );
             router.push(`/${router.query?.businessId}/view/${data}`);
         } else {
-            dispatch(action.setAlert({
-                type: 'danger',
-                value: errors,
-            }))
+            dispatch(
+                action.setAlert({
+                    type: 'danger',
+                    value: errors,
+                }),
+            );
         }
     };
-    console.log(error);
 
     return (
         <ComponentWrapper>
@@ -108,22 +123,23 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
                             deleteImage={deleteImage}
                             submitButton={
                                 <Modal
-                                    heading='Are you sure you want to submit the form?'
+                                    heading="Are you sure you want to submit the form?"
                                     onClick={() => createProductSubmit()}
                                     label={
-                                        <Button type="button" label="Submit" color="green" customClass="w-52" size="sm" />
+                                        <Button
+                                            type="button"
+                                            label="Submit"
+                                            color="green"
+                                            customClass="w-52"
+                                            size="sm"
+                                        />
                                     }
                                     taskWhileOpening={() => {
-                                        validate(da)
+                                        validate(da);
                                     }}
                                     error={error ? true : false}
                                 >
-                                    <div>
-                                        Item Preview:
-                                        Number of Items: 123123
-                                        Total Price: 123123
-                                    </div>
-
+                                    <div>Item Preview: Number of Items: 123123 Total Price: 123123</div>
                                 </Modal>
                             }
                         />

@@ -75,8 +75,7 @@ const ProductProcess = () => {
                                             </div>
                                             {item.color && (
                                                 <div className="px-2">
-                                                    Color:{' '}
-                                                    <span className="text-lg font-semibold">{item.color}</span>
+                                                    Color: <span className="text-lg font-semibold">{item.color}</span>
                                                 </div>
                                             )}
                                             {item.size && (
@@ -129,9 +128,7 @@ const ProductProcess = () => {
                                                     }
                                                 }}
                                             />
-                                            <span className="px-4 py-2 bg-gray-900 rounded">
-                                                {item.numberOfItem}
-                                            </span>
+                                            <span className="px-4 py-2 bg-gray-900 rounded">{item.numberOfItem}</span>
                                             <Button
                                                 size="xs"
                                                 icon={
@@ -221,7 +218,6 @@ const ProductProcess = () => {
                         )}
                     </div>
                 </div>
-
             </div>
             <UserForm />
         </div>
