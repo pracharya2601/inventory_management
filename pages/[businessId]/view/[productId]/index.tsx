@@ -87,13 +87,13 @@ export async function getServerSideProps(context: any) {
         error = {
             type: 'NOT_FOUND',
             message: 'Data not found',
-        }
+        };
     }
     data = JSON.parse(JSON.stringify(newData));
     return {
         props: {
             data: data,
-            error: error
+            error: error,
         },
     };
 }

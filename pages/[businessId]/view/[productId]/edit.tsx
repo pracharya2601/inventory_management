@@ -1,9 +1,9 @@
 import { getSession } from 'next-auth/client';
 import ComponentWrapper from '@/components/layout/ComponentWrapper';
 import { connectToDB } from 'db/connect';
-import { getOneWorkPlace } from 'db/workplace';
+import { getWorkplaceVariant } from 'db/workplace';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { appContext } from '@context/appcontext';
 import Dashboard from '@/components/layout/company/Dashboard';
 import BusinessNavbar from '@/components/layout/company/BusinessNavbar';
@@ -30,8 +30,20 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
         },
         dispatch,
     } = useContext(appContext);
-    const { handleOnChange, handleOnChangeArray, onDropdownChange, da, deleteItem, addItem, colors, sizes, uploadPhoto, deleteImage, error, validate } =
-        useProductForm<ProductType>(itemData);
+    const {
+        handleOnChange,
+        handleOnChangeArray,
+        onDropdownChange,
+        da,
+        deleteItem,
+        addItem,
+        colors,
+        sizes,
+        uploadPhoto,
+        deleteImage,
+        error,
+        validate,
+    } = useProductForm<ProductType>(itemData);
 
     useEffect(() => {
         dispatch(
@@ -53,8 +65,10 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
     const business = userdata?.workplaces.find(({ workplaceId }) => workplaceId === router.query?.businessId);
 
     const updateProductInformation = async () => {
-
-        await apiPOST<string, ProductType>(`/products/${da._id}?businessId=${router.query?.businessId}&&secret=${business.secret}`, da);
+        await apiPOST<string, ProductType>(
+            `/products/${da._id}?businessId=${router.query?.businessId}&&secret=${business.secret}`,
+            da,
+        );
         setTimeout(() => router.push(`/${router.query?.businessId}/view/${itemData._id}`), 2000);
     };
     return (
@@ -75,7 +89,6 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
                             <Button label="Request your Employerr to make admin" />
                         </div>
                     ) : (
-                        // <FormComponent data={itemData} onSubmit={updateProductInformation} />
                         <ProductForm
                             data={da}
                             handleOnChange={handleOnChange}
@@ -89,18 +102,22 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
                             deleteImage={deleteImage}
                             submitButton={
                                 <Modal
-                                    heading='Are you sure you want to submit the form?'
+                                    heading="Are you sure you want to submit the form?"
                                     onClick={() => updateProductInformation()}
                                     label={
-                                        <Button type="button" label="Submit" color="green" customClass="w-52" size="sm" />
+                                        <Button
+                                            type="button"
+                                            label="Submit"
+                                            color="green"
+                                            customClass="w-52"
+                                            size="sm"
+                                        />
                                     }
                                     taskWhileOpening={() => {
-                                        validate(da)
+                                        validate(da);
                                     }}
                                     error={error ? true : false}
-                                >
-
-                                </Modal>
+                                ></Modal>
                             }
                         />
                     )}
@@ -122,20 +139,9 @@ export async function getServerSideProps(context: any) {
     }
     const { db } = await connectToDB();
     const businessId = context.query.businessId;
-    const userId = session.user.id;
     const productId = context.query.productId;
     //instead of company data we have to get variants data and other studff
-    const companyData = await getOneWorkPlace(db, businessId as string, userId);
-
-    if (!companyData) {
-        return {
-            redirect: {
-                permanent: false,
-                destination: `/`,
-            },
-        };
-    }
-
+    const variantData = JSON.parse(JSON.stringify(await getWorkplaceVariant(db, businessId as string)));
     let itemData = null;
     let error = null;
     const newData = await getSingleProduct(db, businessId, productId);
@@ -143,19 +149,15 @@ export async function getServerSideProps(context: any) {
     if (newData === 'null') {
         error = {
             type: 'NOT_FOUND',
-            message: 'Data not Available'
-        }
+            message: 'Data not Available',
+        };
     }
     itemData = JSON.parse(JSON.stringify(newData));
-    // const companydata = JSON.parse(JSON.stringify(companyData));
     return {
         props: {
             itemData: itemData,
             error: error,
-            variant: {
-                colorVariants: companyData.variantColors,
-                sizeVariants: companyData.variantSizes,
-            },
+            variant: variantData,
         },
     };
 }

@@ -81,6 +81,7 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
                     value: `Successfully Uploaded`,
                 }),
             );
+            window.localStorage.removeItem(router.query?.businessId as string);
             router.push(`/${router.query?.businessId}/view/${data}`);
         } else {
             dispatch(
@@ -168,7 +169,6 @@ export async function getServerSideProps(context: any) {
     // company variant data need to be render for creating purpose
     return {
         props: {
-            companydata,
             variant: companydata,
         },
     };

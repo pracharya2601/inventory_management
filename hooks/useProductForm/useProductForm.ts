@@ -14,11 +14,13 @@ import { action } from '@context/action';
 import { appContext } from '@context/appcontext';
 import { productFormValidation } from 'middlware/validation';
 import { useRouter } from 'next/router';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 
 export function useProductForm<T>(formData: T) {
     const router = useRouter();
+    const firstRender = useRef(true);
     const productId = router.query?.productId;
+    const businessId = router.query?.businessId as string;
     const {
         state: {
             workplace: { variant },
@@ -46,6 +48,23 @@ export function useProductForm<T>(formData: T) {
             );
         }
     }, [error]);
+
+    useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false;
+            return;
+        }
+        if (productId) {
+            return;
+        }
+        window.localStorage.setItem(businessId, JSON.stringify(data));
+    }, [data]);
+
+    useEffect(() => {
+        if (productId) return;
+        const data = window.localStorage.getItem(businessId);
+        setData(JSON.parse(data));
+    }, []);
 
     const validate = (data) => {
         const itemError = productFormValidation(data);
@@ -100,6 +119,14 @@ export function useProductForm<T>(formData: T) {
             }));
         }
     };
+    const addImageData = (valueObj) => {
+        const arrOfData = data['images'];
+        const newData = [valueObj, ...arrOfData];
+        setData((prevState) => ({
+            ...prevState,
+            ['images']: newData,
+        }));
+    };
 
     const deleteItem = (name) => {
         const a = name.split('.');
@@ -141,8 +168,7 @@ export function useProductForm<T>(formData: T) {
             body: formData,
         });
         if (upload.ok) {
-            console.log('url', `${upload.url}${filename}`);
-            addItem('images', {
+            addImageData({
                 id: filename,
                 url: `${upload.url}${filename}`,
                 color: 'default',
