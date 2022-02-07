@@ -8,6 +8,12 @@ module.exports = withBundleAnalyzer({
     publicRuntimeConfig: {
         // add your public runtime environment variables here with NEXT_PUBLIC_*** prefix
     },
+    env: {
+        SHARING_IMAGE_API_KEY: 'AIzaSyC48M6kJwSUHCGrKaeQWOIf5M7TEtBWg4k',
+        SHARING_IMAGE_AUTH_DOMAIN: 'my-own-project-661c3.firebaseapp.com',
+        SHARING_IMAGE_PROJECT_ID: 'my-own-project-661c3',
+        NEXT_PUBLIC_API_HOST: 'http://localhost:3000',
+    },
     images: {
         domains: [
             'imgs.michaels.com',
@@ -19,6 +25,11 @@ module.exports = withBundleAnalyzer({
     },
     webpack: (config) => {
         // extend your webpack configuration here
+        config.module.rules.push({
+            test: /\.svg$/i,
+            issuer: /\.[jt]sx?$/,
+            use: ['@svgr/webpack'],
+        });
         return config;
     },
 });

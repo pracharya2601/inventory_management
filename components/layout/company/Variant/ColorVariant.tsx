@@ -13,7 +13,7 @@ const ColorVariant = () => {
         dispatch,
     } = useContext(appContext);
 
-    const { colors, addColor, removeColor } = useVariant(variant.colorVariants, 'colors')
+    const { colors, addColor, removeColor } = useVariant(variant.colorVariants, 'colors');
 
     const updateHandle = () => {
         const arrayEquals = () => {
@@ -38,12 +38,7 @@ const ColorVariant = () => {
     return (
         <>
             <div className="flex flex-col px-3 mt-2">
-                <ColorVariantComponent
-                    colors={colors}
-                    addColor={addColor}
-                    removeColor={removeColor}
-                    w='w80'
-                >
+                <ColorVariantComponent colors={colors} addColor={addColor} removeColor={removeColor} w="w80">
                     <div className="flex justify-between mt-2">
                         <Button
                             label="Reset"

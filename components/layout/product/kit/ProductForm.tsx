@@ -1,7 +1,6 @@
 import Button from '@/components/elements/Button';
 import DropDownMenu, { DropDownItem } from '@/components/elements/ddm/DropDownMenu';
 import Input from '@/components/elements/Input';
-import Image from 'next/image';
 import { SkusTable, SkusTableBodyHolder, SkusTableWrapper } from './SkusTable';
 
 const ProductForm = ({
@@ -12,15 +11,12 @@ const ProductForm = ({
     deleteItem,
     addItem,
     colors,
+    colorSearchBox,
     sizes,
-    uploadPhoto,
-    deleteImage,
+    sizeSearchBox,
     submitButton,
+    imageComponent,
 }: any) => {
-    const uploadImg = () => {
-        const fileInp = document.getElementById('imageInput');
-        fileInp.click();
-    };
     return (
         <form
             onSubmit={(e) => {
@@ -51,7 +47,7 @@ const ProductForm = ({
                     name="description"
                     onChange={(e) => handleOnChange(e)}
                 ></textarea>
-                {data.listDescription.map(({ id, desckey, desc }, index) => (
+                {data?.listDescription.map(({ id, desckey, desc }, index) => (
                     <div className="my-1 w-full flex gap-1" key={`${id}-listDescription`}>
                         <div className="flex-initial">
                             <Input
@@ -126,79 +122,7 @@ const ProductForm = ({
                         addItem('productdetail', { id: data?.productdetail.length + 1, detailkey: '', detail: '' })
                     }
                 />
-                <div className="mt-3 flex flex-col items-left">
-                    <p className="text-lg">Images</p>
-                    <Button
-                        label="Add Image"
-                        size="sm"
-                        customClass="w-28 mt-2"
-                        type="button"
-                        onClick={() => uploadImg()}
-                    />
-                    <input type="file" id="imageInput" hidden={true} onChange={uploadPhoto} />
-                </div>
-                <div className="mt-3 flex flex- gap-2 justify-left min-w-full overflow-x-auto ">
-                    {data?.images?.length > 0 &&
-                        data.images.map(({ id, url, color }, index) => (
-                            <div key={`${url}-${index}`} className="shadow-sm bg-gray-800 rounded">
-                                <div className="p-2 flex justify-between items-center rounded">
-                                    <DropDownMenu
-                                        label={
-                                            <div
-                                                style={{ backgroundColor: color }}
-                                                className="px-2 py-1 rounded cursor-pointer -mb-1"
-                                            >
-                                                {color || 'default'} &#10225;{''}
-                                            </div>
-                                        }
-                                        dropSide="right"
-                                    >
-                                        {colors?.map((item) => (
-                                            <DropDownItem
-                                                label={item}
-                                                key={`${item}-${url}`}
-                                                onClick={() => onDropdownChange(item, `images.${index}.color`)}
-                                            />
-                                        ))}
-                                    </DropDownMenu>
-                                    <Button
-                                        size="xs"
-                                        color="red"
-                                        type="button"
-                                        //onClick={() => deleteItem(`images.${index}`)}
-                                        onClick={() => deleteImage(`images.${index}`, id)}
-                                        icon={
-                                            <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                className="h-6 w-6"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M6 18L18 6M6 6l12 12"
-                                                />
-                                            </svg>
-                                        }
-                                    />
-                                </div>
-                                <div className="h-80 w-80 relative m-1 border">
-                                    {url && (
-                                        <Image
-                                            src={url}
-                                            layout="fill"
-                                            objectFit="contain"
-                                            objectPosition="center"
-                                            alt={url}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                        ))}
-                </div>
+                {imageComponent && imageComponent}
                 <p className="text-md mt-9 mb-2">Product Variant</p>
                 <SkusTable
                     addNewButton={
@@ -225,17 +149,21 @@ const ProductForm = ({
                                 <SkusTableBodyHolder key={`skus-${index}`}>
                                     <SkusTableWrapper>
                                         <DropDownMenu label={sku.color || 'Select'} dropSide="right">
-                                            {colors?.map((item) => (
-                                                <DropDownItem
-                                                    label={item}
-                                                    key={`${item}-sku-color${index}`}
-                                                    onClick={() => onDropdownChange(item, `skus.${index}.color`)}
-                                                />
-                                            ))}
+                                            {colorSearchBox}
+                                            {colors?.map((item) => {
+                                                return (
+                                                    <DropDownItem
+                                                        label={item}
+                                                        key={`${item}-sku-color${index}`}
+                                                        onClick={() => onDropdownChange(item, `skus.${index}.color`)}
+                                                    />
+                                                );
+                                            })}
                                         </DropDownMenu>
                                     </SkusTableWrapper>
                                     <SkusTableWrapper>
                                         <DropDownMenu label={sku.size || 'Select'} dropSide="left">
+                                            {sizeSearchBox}
                                             {sizes?.map((item) => (
                                                 <DropDownItem
                                                     label={item}
@@ -304,7 +232,6 @@ const ProductForm = ({
             </div>
             <div className="fixed flex items-center justify-center gap-4 bottom-0 right-0 p-2 w-full z-40 bg-gray-900">
                 <div className="w-52 pb-2">{submitButton}</div>
-                {/* <Button type="submit" label="Submit" color="green" customClass="w-52" size="sm" /> */}
             </div>
         </form>
     );

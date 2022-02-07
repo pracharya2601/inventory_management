@@ -16,13 +16,20 @@ import { getSingleProduct } from 'db/products';
 import { useProductForm } from '@/hooks/useProductForm';
 import ProductForm from '@/components/layout/product/kit/ProductForm';
 import Modal from '@/components/elements/Modal';
+import { encrypt } from '@/hooks/middleware/encrypt';
+import CreateQrCode from '@/components/layout/product/kit/CreateQrCode';
+import Input from '@/components/elements/Input';
+import { useProduceImageUpload } from '@/hooks/useProductForm/useProductImageUpload';
+import { UploadImageForm } from '@/components/layout/product/kit/UploadImageForm';
 
 type EditProductProps = {
     variant: CompanyVariants;
     itemData: ProductType;
+    imageuploadId: string;
+    mobileImageUpload: { url: string; pin: string };
 };
 
-const EditProduct = ({ itemData, variant }: EditProductProps) => {
+const EditProduct = ({ itemData, variant, mobileImageUpload, imageuploadId }: EditProductProps) => {
     const router = useRouter();
     const {
         state: {
@@ -39,11 +46,12 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
         addItem,
         colors,
         sizes,
-        uploadPhoto,
-        deleteImage,
         error,
         validate,
+        searchVal,
+        onchangeSearchHandle,
     } = useProductForm<ProductType>(itemData);
+    const { images, uploadPhoto, deleteImage, changeImgColor } = useProduceImageUpload(imageuploadId, itemData.images);
 
     useEffect(() => {
         dispatch(
@@ -67,7 +75,7 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
     const updateProductInformation = async () => {
         await apiPOST<string, ProductType>(
             `/products/${da._id}?businessId=${router.query?.businessId}&&secret=${business.secret}`,
-            da,
+            { ...da, images },
         );
         setTimeout(() => router.push(`/${router.query?.businessId}/view/${itemData._id}`), 2000);
     };
@@ -97,7 +105,41 @@ const EditProduct = ({ itemData, variant }: EditProductProps) => {
                             deleteItem={deleteItem}
                             addItem={addItem}
                             colors={colors}
+                            imageComponent={
+                                <UploadImageForm
+                                    mobileShareComponent={
+                                        <CreateQrCode value={mobileImageUpload?.url} pin={mobileImageUpload?.pin} />
+                                    }
+                                    uploadPhoto={uploadPhoto}
+                                    images={images}
+                                    colors={colors}
+                                    onDropdownChange={changeImgColor}
+                                    deleteImage={deleteImage}
+                                />
+                            }
+                            colorSearchBox={
+                                <div className="p-2">
+                                    <Input
+                                        placeholder="Search"
+                                        square
+                                        id="color"
+                                        value={searchVal.color}
+                                        onChange={onchangeSearchHandle}
+                                    />
+                                </div>
+                            }
                             sizes={sizes}
+                            sizeSearchBox={
+                                <div className="p-2">
+                                    <Input
+                                        placeholder="Search"
+                                        square
+                                        id="size"
+                                        value={searchVal.size}
+                                        onChange={onchangeSearchHandle}
+                                    />
+                                </div>
+                            }
                             uploadPhoto={uploadPhoto}
                             deleteImage={deleteImage}
                             submitButton={
@@ -138,15 +180,19 @@ export async function getServerSideProps(context: any) {
         };
     }
     const { db } = await connectToDB();
-    const businessId = context.query.businessId;
-    const productId = context.query.productId;
+    const businessId = context.query.businessId as string;
+    const productId = context.query.productId as string;
+    const connectId = Math.floor(1000 + Math.random() * 9000).toString();
+    const storeId = `${businessId}${session.user.id}-${connectId}`;
+    const token = encrypt(storeId);
+    const scanUrl = `${process.env.NEXT_PUBLIC_API_HOST}/imageupload/${token}`;
     //instead of company data we have to get variants data and other studff
     const variantData = JSON.parse(JSON.stringify(await getWorkplaceVariant(db, businessId as string)));
     let itemData = null;
     let error = null;
     const newData = await getSingleProduct(db, businessId, productId);
 
-    if (newData === 'null') {
+    if (newData === null) {
         error = {
             type: 'NOT_FOUND',
             message: 'Data not Available',
@@ -158,6 +204,11 @@ export async function getServerSideProps(context: any) {
             itemData: itemData,
             error: error,
             variant: variantData,
+            imageuploadId: `${businessId}${session.user.id}`,
+            mobileImageUpload: {
+                url: scanUrl,
+                pin: connectId,
+            },
         },
     };
 }

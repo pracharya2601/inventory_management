@@ -1,4 +1,3 @@
-
 import nc from 'next-connect';
 import onError from 'middlware/error';
 import middleware from 'middlware/all';

@@ -2,7 +2,7 @@ import { getSession } from 'next-auth/client';
 import ComponentWrapper from '@/components/layout/ComponentWrapper';
 import { connectToDB } from 'db/connect';
 import { getWorkplaceVariant } from 'db/workplace';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { appContext } from '@context/appcontext';
 import { useRouter } from 'next/router';
 import Dashboard from '@/components/layout/company/Dashboard';
@@ -15,6 +15,11 @@ import { apiPOST } from '@/hooks/middleware/api';
 import ProductForm from '@/components/layout/product/kit/ProductForm';
 import { useProductForm } from '@/hooks/useProductForm';
 import Modal from '@/components/elements/Modal';
+import Input from '@/components/elements/Input';
+import { encrypt } from '@/hooks/middleware/encrypt';
+import CreateQrCode from '@/components/layout/product/kit/CreateQrCode';
+import { useProduceImageUpload } from '@/hooks/useProductForm/useProductImageUpload';
+import { UploadImageForm } from '@/components/layout/product/kit/UploadImageForm';
 
 const initialData: CreateDataType = {
     name: '',
@@ -28,7 +33,15 @@ const initialData: CreateDataType = {
     productType: 'inventory',
 };
 
-const CreateData = ({ variant }: { variant: CompanyVariants }) => {
+const CreateData = ({
+    variant,
+    imageuploadId,
+    mobileImageUpload,
+}: {
+    variant: CompanyVariants;
+    imageuploadId: string;
+    mobileImageUpload: { url: string; pin: string };
+}) => {
     const router = useRouter();
     const {
         state: {
@@ -45,11 +58,13 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
         addItem,
         colors,
         sizes,
-        uploadPhoto,
-        deleteImage,
         error,
         validate,
+        searchVal,
+        onchangeSearchHandle,
     } = useProductForm<CreateDataType>(initialData);
+
+    const { images, uploadPhoto, deleteImage, changeImgColor } = useProduceImageUpload(imageuploadId, []);
 
     useEffect(() => {
         dispatch(
@@ -72,7 +87,7 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
     const createProductSubmit = async () => {
         const { data, errors } = await apiPOST<{ data: string; errors: string }, CreateDataType>(
             `/products?businessId=${router.query?.businessId}`,
-            da,
+            { ...da, images: [] },
         );
         if (data) {
             dispatch(
@@ -92,6 +107,7 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
             );
         }
     };
+    console.log(images, '...................');
 
     return (
         <ComponentWrapper>
@@ -119,7 +135,41 @@ const CreateData = ({ variant }: { variant: CompanyVariants }) => {
                             deleteItem={deleteItem}
                             addItem={addItem}
                             colors={colors}
+                            imageComponent={
+                                <UploadImageForm
+                                    mobileShareComponent={
+                                        <CreateQrCode value={mobileImageUpload?.url} pin={mobileImageUpload?.pin} />
+                                    }
+                                    uploadPhoto={uploadPhoto}
+                                    images={images}
+                                    colors={colors}
+                                    onDropdownChange={changeImgColor}
+                                    deleteImage={deleteImage}
+                                />
+                            }
+                            colorSearchBox={
+                                <div className="p-2">
+                                    <Input
+                                        placeholder="Search"
+                                        square
+                                        id="color"
+                                        value={searchVal.color}
+                                        onChange={onchangeSearchHandle}
+                                    />
+                                </div>
+                            }
                             sizes={sizes}
+                            sizeSearchBox={
+                                <div className="p-2">
+                                    <Input
+                                        placeholder="Search"
+                                        square
+                                        id="size"
+                                        value={searchVal.size}
+                                        onChange={onchangeSearchHandle}
+                                    />
+                                </div>
+                            }
                             uploadPhoto={uploadPhoto}
                             deleteImage={deleteImage}
                             submitButton={
@@ -163,13 +213,23 @@ export async function getServerSideProps(context: any) {
     }
     const { db } = await connectToDB();
     const businessId = context.query.businessId;
+    const connectId = Math.floor(1000 + Math.random() * 9000).toString();
+    const storeId = `${businessId}${session.user.id}-${connectId}`;
+    const token = encrypt(storeId);
+    const scanUrl = `${process.env.NEXT_PUBLIC_API_HOST}/imageupload/${token}`;
     //instead of company data we have to get variants data and other studff
     const variantData = await getWorkplaceVariant(db, businessId as string);
     const companydata = JSON.parse(JSON.stringify(variantData));
+    console.log('scanning url ................................', scanUrl);
     // company variant data need to be render for creating purpose
     return {
         props: {
             variant: companydata,
+            imageuploadId: `${businessId}${session.user.id}`,
+            mobileImageUpload: {
+                url: scanUrl,
+                pin: connectId,
+            },
         },
     };
 }

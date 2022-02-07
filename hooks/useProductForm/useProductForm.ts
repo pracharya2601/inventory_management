@@ -9,7 +9,6 @@
  * @deleteItem takes name as a parameter separated with dot
  */
 
-import { CreateDataType } from '@/interface/Product/ProductInterface';
 import { action } from '@context/action';
 import { appContext } from '@context/appcontext';
 import { productFormValidation } from 'middlware/validation';
@@ -32,6 +31,25 @@ export function useProductForm<T>(formData: T) {
     const [colors, setColors] = useState<string[] | []>(variant.colorVariants);
     const [sizes, setSizes] = useState<string[] | []>(variant.sizeVariants);
     const [error, setError] = useState(null);
+    const [searchVal, setSearch] = useState({
+        color: '',
+        size: '',
+    });
+
+    const onchangeSearchHandle = (e) => {
+        const { value, id } = e.target;
+        setSearch((prevState) => ({
+            ...prevState,
+            [id]: value,
+        }));
+        const cleanString = value.replace(/[|&;$%@"<>()+,]/g, '').toLowerCase();
+        const lists = id === 'color' ? variant.colorVariants : variant.sizeVariants;
+        const filteredData = lists.filter((data: any) => {
+            return data.toLowerCase().search(cleanString) != -1;
+        });
+        if (id === 'color') setColors(filteredData.length > 0 ? filteredData : variant.sizeVariants);
+        else setSizes(filteredData.length > 0 ? filteredData : variant.sizeVariants);
+    };
 
     useEffect(() => {
         setColors(variant.colorVariants);
@@ -48,6 +66,12 @@ export function useProductForm<T>(formData: T) {
             );
         }
     }, [error]);
+    useEffect(() => {
+        if (productId) return;
+        const data = window.localStorage.getItem(businessId);
+        if (data === 'null') return;
+        setData(JSON.parse(data));
+    }, []);
 
     useEffect(() => {
         if (firstRender.current) {
@@ -59,12 +83,6 @@ export function useProductForm<T>(formData: T) {
         }
         window.localStorage.setItem(businessId, JSON.stringify(data));
     }, [data]);
-
-    useEffect(() => {
-        if (productId) return;
-        const data = window.localStorage.getItem(businessId);
-        setData(JSON.parse(data));
-    }, []);
 
     const validate = (data) => {
         const itemError = productFormValidation(data);
@@ -119,16 +137,8 @@ export function useProductForm<T>(formData: T) {
             }));
         }
     };
-    const addImageData = (valueObj) => {
-        const arrOfData = data['images'];
-        const newData = [valueObj, ...arrOfData];
-        setData((prevState) => ({
-            ...prevState,
-            ['images']: newData,
-        }));
-    };
 
-    const deleteItem = (name) => {
+    const deleteItem = async (name) => {
         const a = name.split('.');
         if (a.length == 2) {
             const arrOfData = data[a[0]];
@@ -153,40 +163,6 @@ export function useProductForm<T>(formData: T) {
             }
         }
     };
-    const uploadPhoto = async (e) => {
-        const a = Date.now();
-        const file = e.target.files[0];
-        const filename = `${a}-${encodeURIComponent(file.name)}`;
-        const res = await fetch(`http://localhost:3000/api/file?file=${filename}`);
-        const { url, fields } = await res.json();
-        const formData = new FormData();
-        Object.entries({ ...fields, file }).forEach(([key, value]) => {
-            formData.append(key, value as string);
-        });
-        const upload = await fetch(url, {
-            method: 'POST',
-            body: formData,
-        });
-        if (upload.ok) {
-            addImageData({
-                id: filename,
-                url: `${upload.url}${filename}`,
-                color: 'default',
-            });
-            console.log('Uploaded successfully!');
-        } else {
-            console.error('Upload failed.');
-        }
-    };
-    const deleteImage = async (name: string, filename: string) => {
-        deleteItem(name);
-        if (!productId) {
-            //not delete image while updating
-            await fetch(`http://localhost:3000/api/file?file=${filename}`, {
-                method: 'DELETE',
-            });
-        }
-    };
 
     return {
         handleOnChange,
@@ -199,9 +175,9 @@ export function useProductForm<T>(formData: T) {
         sizes,
         setColors,
         setSizes,
-        uploadPhoto,
-        deleteImage,
         error,
         validate,
+        searchVal,
+        onchangeSearchHandle,
     };
 }

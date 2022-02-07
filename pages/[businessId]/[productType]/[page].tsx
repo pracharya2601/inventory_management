@@ -17,14 +17,9 @@ interface OtherType extends Omit<ProcessProductPayloadType, 'businessId'> {
 
 const ProductList = ({ data, count, dataType }: { data: any[] | []; count: number; dataType: string }) => {
     if (dataType === 'inventory' || dataType === 'draft') {
-        return (
-            <Inventory data={data as ProductType[]} count={count as number} />
-        )
-    }
-    else {
-        return (
-            <Other data={data as Array<OtherType>} count={count as number} />
-        )
+        return <Inventory data={data as ProductType[]} count={count as number} />;
+    } else {
+        return <Other data={data as Array<OtherType>} count={count as number} />;
     }
 };
 

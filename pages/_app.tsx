@@ -44,6 +44,7 @@ const Wrapper = ({ children }) => {
         });
         (async function myFunction() {
             const session: Session = await getSession();
+            console.log('session', session);
             if (authenticated && userdata) {
                 return;
             }

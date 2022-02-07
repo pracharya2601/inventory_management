@@ -5,7 +5,7 @@ export const getOneWorkPlace = async (db: Db, id: string, userId: string) => {
     try {
         const data = await db.collection('workplaces').findOne({
             $and: [
-                { _id: ObjectId(id) },
+                { _id: new ObjectId(id.trim()) },
                 {
                     staffs: {
                         $elemMatch: { userId: userId },

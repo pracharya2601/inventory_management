@@ -30,7 +30,7 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
         /**
          * @info useeffect is for socket and to update on realtime
          */
-        setCompanyData(companydata)
+        setCompanyData(companydata);
         socket.on(`${router.query?.businessId}`, (data: CompanyTypes) => {
             setCompanyData(data);
         });
@@ -53,10 +53,10 @@ const CompanyDashboard = ({ companydata }: { companydata: CompanyTypes }) => {
                 staffs: newArr,
             }));
         });
-        socket.on(deleteEmployee, (data: { val: string, type: boolean }) => {
+        socket.on(deleteEmployee, (data: { val: string; type: boolean }) => {
             const newArr: EmployeeType[] = [...companyData.staffs];
             const rowIndex = newArr.findIndex((item: EmployeeType) => {
-                return data.type ? item.userId === data.val : item.email === data.val
+                return data.type ? item.userId === data.val : item.email === data.val;
             });
             newArr.splice(rowIndex, 1);
             console.log('2', newArr);

@@ -5,6 +5,7 @@ import { appContext } from '@context/appcontext';
 import Button from '@/components/elements/Button';
 import { action } from '@context/action';
 import { useRouter } from 'next/router';
+import CreateQrCode from '@/components/layout/product/kit/CreateQrCode';
 
 const reasons = [
     {
@@ -31,6 +32,7 @@ const Home = () => {
         <ComponentWrapper>
             <div className="w-full mt-10 p-5 sm:p-10 gap-3">
                 <div className=" rounded p-5 sm:p-10">
+                    <CreateQrCode value="https://www.google.com" pin="1234" />
                     <div className="text-2xl md:text-3xl my-2">Why Creating your own Company dashboard?</div>
                     {reasons.map(({ heading, description }) => (
                         <div className="bg-gray-700 rounded px-3 py-5 my-4" key={`${heading}-reason`}>
@@ -69,6 +71,7 @@ const Home = () => {
 };
 
 export async function getServerSideProps(context: any) {
+    console.log('context', context.req['user-agent']);
     const session = await getSession(context);
     if (!session || !session.user) {
         return {

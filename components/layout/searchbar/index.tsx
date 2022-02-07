@@ -13,9 +13,7 @@ type SearchBarProps = {
 
 const SearchBar = ({ searchTerm, onChange, handleClear }: SearchBarProps) => {
     const router = useRouter();
-    const {
-        dispatch,
-    } = useContext(appContext);
+    const { dispatch } = useContext(appContext);
 
     const onSubmitHandle = (e) => {
         e.preventDefault();

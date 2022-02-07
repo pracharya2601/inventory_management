@@ -1,51 +1,48 @@
-import { DropDownInputColor } from ".";
+import { DropDownInputColor } from '.';
 
 const ColorVariantComponent = ({
-  colors,
-  addColor,
-  removeColor,
-  children,
-  w
+    colors,
+    addColor,
+    removeColor,
+    children,
+    w,
 }: {
-  colors: string[] | [];
-  addColor: (val: string) => void;
-  removeColor: (index: number, all: boolean) => void;
-  children?: JSX.Element | JSX.Element[];
-  w?: string;
+    colors: string[] | [];
+    addColor: (val: string) => void;
+    removeColor: (index: number, all: boolean) => void;
+    children?: JSX.Element | JSX.Element[];
+    w?: string;
 }) => (
-  <>
-    <DropDownInputColor
-      w={w}
-      setVal={(value) => {
-        addColor(value);
-      }}
-    />
-    {children}
-    <div className="flex flex-wrap py-2 gap-2">
-      {colors?.map((color: string, index: number) => (
-        <div
-          key={`${color}-${index}`}
-          className="border py-1 pl-3 pr-1 rounded flex space-between gap-4"
-        >
-          <div className="h-6 w-10 flex-1 ml-2" style={{ background: color }} />
-          {color}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 cursor-pointer"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            onClick={() => removeColor(index, false)}
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-              clipRule="evenodd"
-            />
-          </svg>
+    <>
+        <DropDownInputColor
+            w={w}
+            setVal={(value) => {
+                addColor(value);
+            }}
+        />
+        {children}
+        <div className="flex flex-wrap py-2 gap-2">
+            {colors?.map((color: string, index: number) => (
+                <div key={`${color}-${index}`} className="border py-1 pl-3 pr-1 rounded flex space-between gap-4">
+                    <div className="h-6 w-10 flex-1 ml-2" style={{ background: color }} />
+                    {color}
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5 cursor-pointer"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        onClick={() => removeColor(index, false)}
+                    >
+                        <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
-  </>
+    </>
 );
 
 export default ColorVariantComponent;

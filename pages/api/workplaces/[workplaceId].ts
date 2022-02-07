@@ -14,7 +14,7 @@ const handeler = nc({ onError });
 handeler.use(middleware);
 
 handeler.get(async (req: Request, res) => {
-    const data = await getOneWorkPlace(req.db, req.query.workplaceId as string, req.user.id);
+    const data = await getOneWorkPlace(req.db, req.query.workplaceId as string, req.user.id as string);
     if (data) {
         res.status(200).json(JSON.stringify({ data }));
     } else {
